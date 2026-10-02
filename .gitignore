@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.playwright-mcp/
+.DS_Store
+
+# Private planning notes. Remove a line to publish that file with the repo.
+CONTENT-INVENTORY.md
+HIRING-SIGNALS.md
+PROJECT-CONTENT-DRAFTS.md
+REBUILD-PLAN.md
+SITE-STRUCTURE.md
