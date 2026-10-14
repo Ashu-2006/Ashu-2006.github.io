@@ -1,0 +1,176 @@
+/* A bone sheet from first paint, so the prerendered page never flashes before the loader mounts. Removed once it does; a failsafe lifts it if script never runs. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js:not(.loader-on):not(.intro-done) body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-loader);
+    background: var(--bone);
+    animation: loader-failsafe 0.01s 4s forwards;
+  }
+}
+@keyframes loader-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.loader {
+  --d: min(50vmin, 440px);
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-loader);
+  pointer-events: none;
+}
+
+.loader__ground {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--bone);
+  overflow: hidden;
+}
+.loader__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  background-size: 256px 256px;
+}
+
+.loader__deck {
+  position: relative;
+  width: calc(var(--d) * 1.4);
+  height: calc(var(--d) * 1.12);
+}
+
+.loader__platter {
+  position: absolute;
+  left: 0;
+  top: calc(var(--d) * 0.06);
+  width: var(--d);
+  height: var(--d);
+  border-radius: 50%;
+  background: var(--chocolate-2);
+  box-shadow: calc(var(--d) * 0.028) calc(var(--d) * 0.034) 0 var(--bone-3);
+}
+
+.loader__record {
+  position: absolute;
+  inset: 2.2%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 0 38.5%, var(--chocolate) 39% 41.5%, transparent 42% 94%, var(--chocolate) 94.5%),
+    repeating-radial-gradient(circle, var(--chocolate) 0 1.6px, #3a2619 2.1px 2.7px, var(--chocolate) 3.2px 4.4px);
+  will-change: transform;
+}
+.loader__label {
+  position: absolute;
+  inset: 33%;
+  border-radius: 50%;
+  background: linear-gradient(
+    180deg,
+    var(--bone) 0 33%,
+    var(--poppy) 33% 44%,
+    var(--bone) 44% 46.5%,
+    var(--rust) 46.5% 57.5%,
+    var(--bone) 57.5% 60%,
+    var(--harvest) 60% 71%,
+    var(--bone) 71%
+  );
+}
+
+/* Light sits still while the grooves turn under it */
+.loader__sheen {
+  position: absolute;
+  inset: 2.2%;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 26deg,
+    rgba(241, 226, 192, 0.17) 44deg,
+    transparent 62deg 206deg,
+    rgba(241, 226, 192, 0.12) 224deg,
+    transparent 242deg
+  );
+  -webkit-mask: radial-gradient(circle, transparent 0 34%, #000 34.6%);
+  mask: radial-gradient(circle, transparent 0 34%, #000 34.6%);
+}
+.loader__spindle {
+  position: absolute;
+  inset: 48.6%;
+  border-radius: 50%;
+  background: var(--chocolate);
+}
+
+.loader__arm {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.loader__arm-shadow path {
+  fill: none;
+  stroke: rgba(42, 26, 18, 0.2);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+}
+.loader__arm-shadow rect {
+  fill: rgba(42, 26, 18, 0.2);
+}
+.loader__base {
+  fill: var(--chocolate-3);
+}
+.loader__tube {
+  fill: none;
+  stroke: var(--chocolate);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+}
+.loader__glint {
+  fill: none;
+  stroke: var(--bone-3);
+  stroke-width: 0.7;
+  stroke-linecap: round;
+  opacity: 0.7;
+}
+.loader__weight {
+  fill: var(--chocolate);
+}
+.loader__shell {
+  fill: var(--rust);
+}
+.loader__cap {
+  fill: var(--harvest);
+  stroke: var(--chocolate);
+  stroke-width: 1.4;
+}
+
+/* Same pill-ended stripes as the route wipe: the round ends sit off-screen, so the cover is complete at the midpoint */
+.loader__bands {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  overflow: hidden;
+}
+.loader__bands i {
+  display: block;
+  width: calc(100% + 36vh);
+  margin-left: -18vh;
+  margin-block: -1px;
+  border-radius: 999px;
+  transform: translateX(-101%);
+}
+.loader__bands i:nth-child(1) {
+  background: var(--poppy);
+}
+.loader__bands i:nth-child(2) {
+  background: var(--rust);
+}
+.loader__bands i:nth-child(3) {
+  background: var(--harvest);
+}

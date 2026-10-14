@@ -276,7 +276,6 @@ export function mountScrambles(scope: ParentNode = document) {
     resizeRaf = requestAnimationFrame(() => instances.forEach((s) => s.layoutRows()));
   };
   window.addEventListener("resize", relayout);
-  document.fonts?.ready.then(relayout);
 
   return instances;
 }

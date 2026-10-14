@@ -1,0 +1,100 @@
+:root {
+  /* 70s harvest palette */
+  --chocolate: #2a1a12;
+  --chocolate-2: #3b271c;
+  --chocolate-3: #4d3426;
+  --bone: #f1e2c0;
+  --bone-2: #e6d3ab;
+  --bone-3: #d6bf92;
+  --harvest: #e4a62c;
+  --rust: #d25f27;
+  --poppy: #bf3426;
+  /* The encore ground: poppy deepened so bone text passes AA (5.0:1); --poppy stays for stripes and accents */
+  --poppy-deep: #b02e21;
+  --avocado: #5f6829;
+  --avocado-2: #4f5722;
+  --walnut: #6b3f22;
+
+  --font-display: "Fraunces", "Cooper Black", Georgia, serif;
+  --font-text: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-pixel: "Press Start 2P", ui-monospace, monospace;
+
+  /* Fraunces at its softest and wonkiest is the 70s voice; every display setting goes through this */
+  --display-axes: "SOFT" 100, "WONK" 1;
+
+  --fs-mega: clamp(68px, 15.2vw, 292px);
+  --fs-1: clamp(52px, 8.4vw, 156px);
+  --fs-2: clamp(38px, 4.8vw, 88px);
+  --fs-3: clamp(26px, 2.5vw, 44px);
+  --fs-lead: clamp(20px, 1.55vw, 27px);
+  --fs-body: clamp(17px, 1.12vw, 19px);
+  --fs-small: 14px;
+
+  --gutter: 20px;
+  --section-y: clamp(120px, 16vw, 260px);
+  --head-h: 76px;
+  --grid-gap: clamp(16px, 2vw, 32px);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --z-stage: 3;
+  --z-content: 2;
+  --z-head: 40;
+  --z-menu: 39;
+  --z-wipe: 60;
+  --z-grain: 70;
+  --z-cursor: 80;
+  --z-loader: 90;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 64px;
+    --head-h: 88px;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --gutter: max(140px, 9.75vw);
+  }
+}
+
+/* Section grounds. Every section declares one, and the header reads it to pick its own ink */
+[data-theme="bone"] {
+  --bg: var(--bone);
+  --fg: var(--chocolate);
+  --muted: #6a5443;
+  --line: rgba(42, 26, 18, 0.16);
+  --accent: var(--poppy);
+}
+[data-theme="chocolate"] {
+  --bg: var(--chocolate);
+  --fg: var(--bone);
+  --muted: #b9a584;
+  --line: rgba(241, 226, 192, 0.14);
+  --accent: var(--harvest);
+}
+[data-theme="harvest"] {
+  --bg: var(--harvest);
+  --fg: var(--chocolate);
+  --muted: #563912;
+  --line: rgba(42, 26, 18, 0.2);
+  --accent: var(--poppy);
+}
+[data-theme="avocado"] {
+  --bg: var(--avocado);
+  --fg: var(--bone);
+  --muted: #e9e3bd;
+  --line: rgba(241, 226, 192, 0.2);
+  --accent: var(--harvest);
+}
+[data-theme="poppy"] {
+  --bg: var(--poppy-deep);
+  --fg: var(--bone);
+  --muted: #f6d3b4;
+  --line: rgba(241, 226, 192, 0.26);
+  --accent: var(--harvest);
+}

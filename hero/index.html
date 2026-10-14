@@ -4,8 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ashutosh Rana</title>
+    <script>document.documentElement.dataset.js = "";</script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="description" content="Ashutosh Rana, product designer." />
+    <meta name="description" content="Ashutosh Rana, product designer. Design and frontend at ArmorIQ, lead product design at Ivish AI. Interfaces built for real data." />
+    <meta property="og:title" content="Ashutosh Rana" />
+    <meta name="theme-color" content="#f9f9f9" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,82 +17,28 @@
     />
     <link rel="preload" as="image" href="/images/photo-1.jpg" />
   </head>
-  <body>
+  <body id="top" data-page="home">
+    <main id="main">
     <section class="hero" data-state="intro" id="hero">
-      <header class="page-grid site-header">
-        <a class="logo" href="./" aria-label="Ashutosh Rana, home">
-          <svg viewBox="0 0 256 256" fill="none" role="img" aria-hidden="true">
-            <path
-              d="M58 176c10-44 30-96 52-96 18 0 6 58-8 92m8-92c26-6 44 10 40 40-3 26-20 54-44 56m44-60c18 34 40 52 70 44"
-              stroke="currentColor"
-              stroke-width="15"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </a>
-        <nav class="site-nav" aria-label="Site">
-          <a href="#work">Work</a>
-          <a href="#projects">Projects</a>
-          <a href="#about">About</a>
-          <a href="#writing">Writing</a>
-          <a href="#contact">Contact</a>
-        </nav>
-      </header>
+      <!--@header-->
 
       <div class="hero-stage page-x">
         <h1 class="display" aria-label="Ashutosh Rana">
-          <span class="line-first" data-mask><span data-word style="--at: 100ms"><span data-scramble data-grow="right" data-radius="140">Ashutosh</span></span></span>
+          <span class="line-first" data-mask><span data-word data-reveal><span data-scramble data-grow="right" data-radius="140">Ashutosh</span></span></span>
           <span class="slot" aria-hidden="true"><span data-slot-inner></span></span>
-          <span class="line-last" data-mask><span data-word style="--at: 160ms"><span data-scramble data-grow="right" data-radius="140">Rana</span></span></span>
+          <span class="line-last" data-mask><span data-word data-reveal><span data-scramble data-grow="right" data-radius="140">Rana</span></span></span>
         </h1>
       </div>
 
       <div class="page-grid hero-foot">
-        <p class="intro" data-enter="intro" data-scramble data-radius="80">I’m a product [designer|🎨]. I run design and frontend at [ArmorIQ|🛡️] and lead product design at Ivish AI. I like interfaces that hold up under real [data|📊], dense tables, and a good [typeface|🔤].</p>
-        <span class="arrow" data-enter="arrow" aria-hidden="true">↓</span>
+        <p class="intro" data-reveal data-scramble data-radius="80">Product [designer|🎨]. I read the codebase before I open Figma. Design and frontend at [ArmorIQ|🛡️], lead product design at Ivish AI. Interfaces built for real [data|📊], not the happy-path mockup.</p>
       </div>
     </section>
 
-    <section class="work" id="work" aria-labelledby="work-title">
-      <div class="work-track">
-        <div class="work-stage">
-          <div class="work-cards">
-            <figure class="work-card" data-card data-project="0"><img src="/work/work-01.jpg" alt="" loading="lazy" decoding="async" /><figcaption>ArmorIQ</figcaption></figure>
-            <figure class="work-card" data-card data-project="0"><img src="/work/work-02.jpg" alt="" loading="lazy" decoding="async" /><figcaption>ArmorIQ</figcaption></figure>
-            <figure class="work-card" data-card data-project="1"><img src="/work/work-03.jpg" alt="" loading="lazy" decoding="async" /><figcaption>Ivish AI</figcaption></figure>
-            <figure class="work-card" data-card data-project="1"><img src="/work/work-04.jpg" alt="" loading="lazy" decoding="async" /><figcaption>Ivish AI</figcaption></figure>
-            <figure class="work-card" data-card data-project="2"><img src="/work/work-05.jpg" alt="" loading="lazy" decoding="async" /><figcaption>Shopstr</figcaption></figure>
-            <figure class="work-card" data-card data-project="2"><img src="/work/work-06.jpg" alt="" loading="lazy" decoding="async" /><figcaption>Shopstr</figcaption></figure>
-            <figure class="work-card" data-card data-project="3"><img src="/work/work-07.jpg" alt="" loading="lazy" decoding="async" /><figcaption>Freelance</figcaption></figure>
-            <figure class="work-card" data-card data-project="3"><img src="/work/work-08.jpg" alt="" loading="lazy" decoding="async" /><figcaption>Freelance</figcaption></figure>
-            <figure class="work-card" data-card data-project="4"><img src="/work/work-09.jpg" alt="" loading="lazy" decoding="async" /><figcaption>Playground</figcaption></figure>
-            <figure class="work-card" data-card data-project="4"><img src="/work/work-10.jpg" alt="" loading="lazy" decoding="async" /><figcaption>Playground</figcaption></figure>
-          </div>
-
-          <div class="work-head">
-            <p class="work-eyebrow">Selected work</p>
-            <h2 class="work-title" id="work-title">Designed,<br />then shipped.</h2>
-          </div>
-
-          <nav class="work-rail" aria-label="Projects">
-            <button type="button" data-goto="0"><span>ArmorIQ</span></button>
-            <button type="button" data-goto="1"><span>Ivish AI</span></button>
-            <button type="button" data-goto="2"><span>Shopstr</span></button>
-            <button type="button" data-goto="3"><span>Freelance</span></button>
-            <button type="button" data-goto="4"><span>Playground</span></button>
-          </nav>
-
-          <div class="work-meta" aria-live="polite">
-            <p data-meta="0"><span class="work-index">01 / 05</span><strong>ArmorIQ</strong><span>Security for AI agents. Design and frontend.</span></p>
-            <p data-meta="1"><span class="work-index">02 / 05</span><strong>Ivish AI</strong><span>Lead product design.</span></p>
-            <p data-meta="2"><span class="work-index">03 / 05</span><strong>Shopstr</strong><span>Nostr marketplace. Summer of Bitcoin.</span></p>
-            <p data-meta="3"><span class="work-index">04 / 05</span><strong>Freelance</strong><span>Product design and build for clients.</span></p>
-            <p data-meta="4"><span class="work-index">05 / 05</span><strong>Playground</strong><span>Motion, type and interface experiments.</span></p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!--@gallery-->
+    <!--@home-->
+    </main>
+    <!--@footer-->
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
