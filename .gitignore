@@ -15,3 +15,7 @@ hero/work/
 hero/about/
 hero/playground/
 hero/404.html
+
+# Screenshots from research and verification runs stay local (about 180 MB); the .md write-ups are committed
+.research/**/*.png
+.research/**/*.jpg
