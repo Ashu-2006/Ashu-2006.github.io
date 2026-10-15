@@ -1,0 +1,191 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-sans);
+  font-size: var(--t-sm);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  overflow-x: clip;
+}
+
+img,
+video,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+  padding: 0;
+}
+ul,
+ol {
+  list-style: none;
+}
+
+em {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+::selection {
+  background: var(--cobalt);
+  color: var(--on-cobalt);
+}
+
+:focus-visible {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 3px;
+  border-radius: var(--r-xs);
+}
+
+#main {
+  outline: none;
+  position: relative;
+  z-index: var(--z-page);
+}
+
+/* Shell. The OS desktop sits behind the frame; the frame is the "browser window" the switch collapses. */
+#os {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  visibility: hidden;
+}
+#frame {
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+}
+
+/* Labels: the mono voice */
+.label {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+
+/* Masks. -0.25em/+0.25em keeps tight leading from clipping ascenders; 130% overshoot hides it fully. */
+.mask {
+  display: block;
+  overflow: hidden;
+  margin-block: -0.25em;
+  padding-block: 0.25em;
+}
+.mask__in {
+  display: block;
+}
+.line {
+  overflow-clip-margin: 0.35em;
+}
+
+/* Parallax media: inner box is 110% tall so the drift never shows an edge */
+.plx {
+  position: relative;
+  overflow: hidden;
+}
+.plx__in {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -5%;
+  height: 110%;
+}
+.plx__in > img,
+.plx__in > video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Pre-reveal states, so nothing flashes before JS runs. Reduced motion skips them. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal="rise"] {
+    transform: translateY(130%);
+  }
+  .js [data-reveal="lines"],
+  .js [data-reveal="scramble"],
+  .js [data-reveal="up"] {
+    visibility: hidden;
+  }
+  .js [data-reveal="media"]:not([data-revealed]) {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+
+.page-x {
+  padding-inline: var(--gutter);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition: none !important;
+  }
+}

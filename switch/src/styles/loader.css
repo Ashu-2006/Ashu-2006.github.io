@@ -1,0 +1,64 @@
+/*
+ * First-visit loader. A pre-paint paper cover (body::before) hides the pre-rendered page until the
+ * loader mounts and sets html[data-loaded]; a 4s fail-safe drops it if the script never runs.
+ */
+html.js:not([data-boot="os"]):not([data-loaded]) body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-os-window) + 20);
+  background: var(--paper);
+  animation: loader-failsafe 0.01s linear 4s forwards;
+}
+@keyframes loader-failsafe {
+  to {
+    visibility: hidden;
+  }
+}
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-os-window) + 20);
+  background: var(--paper);
+  color: var(--ink);
+}
+.loader.is-sweep {
+  background: transparent;
+}
+.loader.is-sweep .loader__inner,
+.loader.is-sweep .loader__count {
+  display: none;
+}
+
+.loader__inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap);
+  padding-inline: 5vw;
+}
+.loader__name {
+  width: 100%;
+  font-size: var(--t-xl);
+}
+.loader__sub {
+  color: var(--ink-2);
+}
+.loader__count {
+  position: absolute;
+  left: 50%;
+  bottom: var(--gutter);
+  transform: translateX(-50%);
+  font-variant-numeric: tabular-nums;
+}
+
+.loader__sheet {
+  position: absolute;
+  inset: 0;
+  transform: translateY(calc(100% + 40px));
+  will-change: transform;
+}

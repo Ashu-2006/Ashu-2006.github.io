@@ -1,0 +1,622 @@
+/* Case page. The auge details structure, condensed: sticky hero, paper sheet, sticky blend title. */
+
+.case {
+  --case-bar-y: calc(var(--gutter) * 0.9);
+  --case-step: calc(var(--section-y) * 0.5);
+  position: relative;
+}
+
+/* Clip keeps the 200dvh hero stage from showing below a short sheet; it is not a scroll container, so sticky still works */
+.case__track {
+  position: relative;
+  overflow: clip;
+}
+
+/* Shared 12-column grid inside a .page-x block */
+.case__info,
+.case__summary,
+.case__blocks,
+.case__block,
+.case__mod,
+.case__decision-in,
+.case__result,
+.case__next,
+.case__caption {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--gap);
+}
+
+/* Title: a full-viewport sticky layer with zero height in flow. It lives over the hero only: paper text on scrims,
+   and it masks out before the sheet reaches it, so it never overprints body copy or the cobalt band. */
+.case__head {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  margin-bottom: -100dvh;
+  z-index: 3;
+  pointer-events: none;
+  color: var(--paper);
+}
+.case__title {
+  position: absolute;
+  top: 0;
+  left: var(--gutter);
+  right: var(--gutter);
+  font-size: clamp(64px, 10vw, 180px);
+  font-weight: 600;
+  line-height: 0.85;
+  letter-spacing: var(--track-display);
+  text-align: center;
+  text-wrap: balance;
+  /* A soft local shadow keeps paper type legible in flight, between the bottom and top scrims */
+  text-shadow: 0 0 0.4em color-mix(in srgb, var(--ink) 40%, transparent);
+  will-change: transform;
+}
+.case__word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  margin-block: -0.1em;
+  padding-block: 0.1em;
+}
+.case__word-in {
+  display: inline-block;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .js .case__word-in {
+    transform: translateY(130%);
+  }
+}
+/* Reads the compact title size, its top offset and the gap above the caption, so JS never hardcodes them */
+.case__probe {
+  position: absolute;
+  top: var(--case-bar-y);
+  font-size: var(--t-md);
+  padding-bottom: var(--gap);
+  visibility: hidden;
+}
+
+/* Hero: sticky for the first viewport of scroll, then it slides away under the sheet */
+.case__stage {
+  position: relative;
+  z-index: 0;
+  height: 200dvh;
+  margin-bottom: -100dvh;
+}
+.case__hero {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--ink);
+}
+.case__hero-media {
+  position: absolute;
+  inset: -10%;
+  will-change: transform;
+}
+.case__hero-media > img,
+.case__hero-media > video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* A static top scrim gives the header and the compact title a dark field over light covers */
+.case__hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--ink) 45%, transparent), transparent 140px);
+}
+/* Photos with UI at the top start below the header zone, so their own top bar never sits under the site nav */
+.case__hero--inset .case__hero-media {
+  top: calc(var(--gutter) + 58px);
+  bottom: -20%;
+  transform-origin: 50% 0;
+}
+/* UI captures are framed whole on the ink stage, between the header zone and the title zone */
+.case__hero--framed .case__hero-media {
+  inset: calc(var(--gutter) + 58px) var(--gutter) calc(100dvh - var(--case-title-top, 70dvh) + var(--gap));
+  transform-origin: 50% 0;
+}
+.case__hero--framed .case__hero-media > img,
+.case__hero--framed .case__hero-media > video {
+  object-fit: contain;
+  object-position: 50% 50%;
+}
+.case__hero-dim {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  opacity: 0;
+}
+
+.case__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100dvh;
+  transform: translateY(-100%);
+  padding-bottom: var(--gutter);
+  color: var(--paper);
+  align-items: end;
+  z-index: 1;
+}
+/* The bottom scrim belongs to the caption: at rest it covers the lower 62% of the hero (title and caption),
+   and it travels with the caption so the caption keeps a dark field once the sheet has risen */
+.case__caption::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 62dvh;
+  z-index: -1;
+  background: linear-gradient(to top, color-mix(in srgb, var(--ink) 62%, transparent), color-mix(in srgb, var(--ink) 28%, transparent) 61%, transparent);
+  pointer-events: none;
+}
+.case__headline {
+  grid-column: 1 / span 7;
+  font-size: var(--t-md);
+  line-height: 1.15;
+}
+.case__index {
+  grid-column: 11 / -1;
+  justify-self: end;
+}
+
+/* The sheet: paper that slides up over the hero */
+.case__sheet {
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+  padding-top: calc(var(--case-step) * 0.75);
+}
+
+/* Info band */
+.case__facts {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  row-gap: var(--gap);
+}
+.case__fact dt {
+  color: var(--mute);
+  margin-bottom: calc(var(--gap) * 0.75);
+}
+.case__fact dd {
+  font-size: var(--t-sm);
+  line-height: 1.35;
+}
+.case__fact--year {
+  grid-column: 1 / span 2;
+}
+.case__fact--org {
+  grid-column: 3 / span 2;
+}
+.case__fact--role {
+  grid-column: 5 / span 3;
+}
+.case__fact--kind {
+  grid-column: 8 / span 2;
+}
+.case__fact--status {
+  grid-column: 10 / -1;
+}
+.case__fact--status dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--gap) * 0.5);
+  align-items: center;
+}
+.case__links {
+  display: contents;
+}
+.case__pill,
+.case__btn {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 0.7em 0.95em 0.65em;
+  border-radius: var(--r-xs);
+  border: 1px solid var(--line);
+}
+.case__pill {
+  border-color: var(--ink);
+}
+.case__pill--solid {
+  background: var(--cobalt);
+  border-color: var(--cobalt);
+  color: var(--on-cobalt);
+}
+.case__btn {
+  transition:
+    background-color var(--dur-xs) var(--ease-out),
+    color var(--dur-xs) var(--ease-out),
+    border-color var(--dur-xs) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .case__btn:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+}
+
+/* Summary */
+.case__summary {
+  padding-top: var(--case-step);
+}
+.case__block-label {
+  grid-column: 1 / span 2;
+  color: var(--mute);
+  padding-top: 0.6em;
+}
+.case__lede {
+  grid-column: 3 / span 9;
+  font-size: var(--t-lg);
+  font-weight: 450;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-wrap: pretty;
+}
+
+/* Problem and work: a label column, then the text as short side-by-side columns */
+.case__blocks {
+  padding-top: var(--case-step);
+  row-gap: calc(var(--case-step) * 0.6);
+}
+.case__block {
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+}
+/* Text columns sit on the page grid: a 10-column subgrid from column 3, items spanning 7, 5 or 3 columns */
+.case__block-text {
+  grid-column: 3 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  row-gap: calc(var(--gap) * 1.5);
+  font-size: var(--t-sm);
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+.case__block-text > * {
+  grid-column: span var(--span, 5);
+  padding-right: var(--gap);
+}
+.case__block-text p {
+  max-width: 46ch;
+}
+.case__col {
+  border-top: 1px solid var(--line);
+  padding-top: calc(var(--gap) * 0.75);
+}
+.case__step-n {
+  display: block;
+  color: var(--cobalt);
+  margin-bottom: calc(var(--gap) * 0.75);
+}
+/* One item is a statement, not a broken three-up: no index, no rule, set larger */
+.case__statement {
+  grid-column: 3 / span 7;
+  display: block;
+  font-size: var(--t-md);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  max-width: none;
+}
+
+/* Gallery */
+.case__gallery {
+  padding-top: var(--case-step);
+}
+.case__mod {
+  row-gap: var(--gap);
+}
+.case__mod + .case__mod {
+  margin-top: var(--case-step);
+}
+.case__mod--panel {
+  background: var(--cobalt);
+  color: var(--on-cobalt);
+  padding-block: var(--case-step);
+}
+.case__mod--panel + .case__mod {
+  margin-top: var(--case-step);
+}
+.case__fig {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gap) * 0.75);
+}
+.case__fig--wide {
+  grid-column: 3 / span 8;
+}
+.case__fig--half:first-child {
+  grid-column: 1 / span 6;
+}
+.case__fig--half:last-child {
+  grid-column: 7 / span 6;
+}
+.case__fig--major {
+  grid-column: 1 / span 7;
+}
+.case__fig--minor {
+  grid-column: 8 / span 5;
+}
+.case__frame {
+  aspect-ratio: 16 / 10;
+  background: var(--paper-2);
+}
+/* The 5-column frame matches the 7-column frame's height (its ratio comes from the template) */
+.case__fig--minor .case__frame {
+  height: calc((7 * var(--col) + 6 * var(--gap)) / var(--major-ratio));
+}
+.case__mod--panel .case__frame {
+  background: var(--cobalt-deep);
+}
+.case__frame .plx__in > img,
+.case__frame .plx__in > video {
+  object-position: 50% 0%;
+}
+/* Media far from the frame's ratio is shown whole on a well rather than cropped mid-word */
+.case__frame--contain,
+.case__mod--panel .case__frame--contain {
+  background: var(--paper-2);
+}
+.case__frame--contain .plx__in > img,
+.case__frame--contain .plx__in > video {
+  object-fit: contain;
+  object-position: 50% 50%;
+  padding: 6%;
+}
+.case__cap {
+  color: var(--mute);
+  max-width: 52ch;
+  text-transform: none;
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+.case__mod--panel .case__cap {
+  color: var(--on-cobalt);
+  opacity: 0.72;
+}
+
+/* Decision. Butts straight onto a cobalt band so the two bands never leave a paper sliver between them. */
+.case__gallery:has(> .case__mod--panel:last-child) + .case__decision {
+  margin-top: 0;
+}
+.case__decision {
+  margin-top: var(--case-step);
+  background: var(--paper-2);
+  padding-block: var(--case-step);
+}
+.case__decision-in {
+  row-gap: calc(var(--case-step) * 0.5);
+}
+.case__decision-label {
+  grid-column: 1 / span 2;
+  color: var(--mute);
+  padding-top: 0.9em;
+}
+.case__decision-title {
+  grid-column: 3 / span 8;
+  font-size: var(--t-lg);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+.case__dcols {
+  grid-column: 3 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+.case__dcol {
+  grid-column: span 3;
+  border-top: 1px solid var(--ink);
+  padding-top: calc(var(--gap) * 0.75);
+  padding-right: var(--gap);
+}
+.case__dcol dt {
+  margin-bottom: calc(var(--gap) * 0.75);
+}
+.case__dcol:last-child dt {
+  color: var(--cobalt);
+}
+.case__dcol dd {
+  font-size: var(--t-sm);
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+/* Result */
+.case__result {
+  padding-top: var(--case-step);
+}
+.case__results {
+  grid-column: 3 / -1;
+}
+.case__results li {
+  display: grid;
+  grid-template-columns: calc(var(--col) + var(--gap)) minmax(0, 1fr);
+  align-items: baseline;
+  border-top: 1px solid var(--line);
+  padding-block: calc(var(--gap) * 1.1);
+}
+.case__results li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.case__rnum {
+  font-size: var(--t-lg);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--cobalt);
+}
+.case__results p {
+  font-size: var(--t-md);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+}
+
+/* Next case: the whole block is one link; its cover FLIPs into the curtain */
+.case__next {
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+  padding-block: var(--case-step);
+  margin-top: calc(var(--case-step) * 0.5);
+  align-items: end;
+  border-top: 1px solid var(--line);
+}
+.case__next-label {
+  grid-column: 1 / span 3;
+  align-self: start;
+  color: var(--mute);
+}
+.case__next-media {
+  grid-column: 4 / span 6;
+  display: block;
+  aspect-ratio: 16 / 9;
+  background: var(--paper-2);
+}
+.case__next-media .plx__in {
+  display: block;
+}
+.case__next-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-m) var(--ease-out);
+}
+.case__next-text {
+  grid-column: 10 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gap) * 0.5);
+}
+.case__next-title {
+  font-size: var(--t-md);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.case__next-sub {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: var(--t-sm);
+  line-height: 1.2;
+  color: var(--ink-2);
+}
+@media (hover: hover) and (pointer: fine) {
+  .case__next:hover .case__next-media img {
+    transform: scale(1.04);
+  }
+}
+
+/* Tablet */
+@media (max-width: 1023px) {
+  .case__fact--year {
+    grid-column: 1 / span 3;
+  }
+  .case__fact--org {
+    grid-column: 4 / span 3;
+  }
+  .case__fact--role {
+    grid-column: 7 / span 3;
+  }
+  .case__fact--kind {
+    grid-column: 10 / span 3;
+  }
+  .case__fact--status {
+    grid-column: 1 / -1;
+    margin-top: var(--gap);
+  }
+  .case__lede {
+    grid-column: 3 / -1;
+  }
+  .case__fig--wide {
+    grid-column: 2 / span 10;
+  }
+  .case__dcols {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--gap) * 1.5);
+  }
+  .case__dcol dd {
+    max-width: 60ch;
+  }
+}
+
+/* Phone: 4 columns */
+@media (max-width: 767px) {
+  .case__title {
+    font-size: clamp(40px, 11.5vw, 64px);
+  }
+  .case__headline {
+    grid-column: 1 / span 3;
+  }
+  .case__index {
+    grid-column: 4 / -1;
+  }
+  .case__fact--year,
+  .case__fact--role {
+    grid-column: 1 / span 2;
+  }
+  .case__fact--org,
+  .case__fact--kind {
+    grid-column: 3 / span 2;
+  }
+  .case__fact--status {
+    margin-top: 0;
+  }
+  .case__block-label,
+  .case__decision-label {
+    grid-column: 1 / -1;
+    padding-top: 0;
+    margin-bottom: var(--gap);
+  }
+  .case__lede,
+  .case__block-text,
+  .case__block-text > *,
+  .case__statement,
+  .case__decision-title,
+  .case__dcols,
+  .case__results {
+    grid-column: 1 / -1;
+  }
+  .case__block-text {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .case__fig--wide,
+  .case__fig--half:first-child,
+  .case__fig--half:last-child,
+  .case__fig--major,
+  .case__fig--minor {
+    grid-column: 1 / -1;
+  }
+  .case__fig--minor .case__frame {
+    height: auto;
+    aspect-ratio: var(--major-ratio);
+  }
+  .case__results li {
+    grid-template-columns: calc(var(--col) * 0.75) minmax(0, 1fr);
+  }
+  .case__next-label {
+    grid-column: 1 / -1;
+    margin-bottom: var(--gap);
+  }
+  .case__next-media {
+    grid-column: 1 / -1;
+  }
+  .case__next-text {
+    grid-column: 1 / -1;
+    margin-top: var(--gap);
+  }
+}

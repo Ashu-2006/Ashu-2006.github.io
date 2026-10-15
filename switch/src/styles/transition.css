@@ -1,0 +1,134 @@
+/*
+ * Page curtain, title card and the shared scramble title (.ts), also used by the loader.
+ */
+
+/* Display title: Instrument Sans 600 caps, with per-character Instrument Serif italic swaps */
+.ts {
+  font-family: var(--f-sans);
+  font-weight: 600;
+  font-size: max(36px, 5.7vw);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  text-align: center;
+  font-kerning: none;
+}
+.ts__line {
+  overflow-clip-margin: 0.35em;
+}
+.ts__word {
+  display: inline-block;
+  white-space: nowrap;
+}
+.ts__char {
+  display: inline-block;
+  text-align: center;
+}
+.ts__char--serif {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+  font-size: 1.03em;
+}
+
+/* The domed sheet. Its box is 200% wide and 80px taller than the screen; a 50% / 280px radius
+   bows both edges about 38px across the viewport, so the corners always overlap the screen edge. */
+.curtain__bg {
+  position: absolute;
+  top: -40px;
+  bottom: -40px;
+  left: -50%;
+  right: -50%;
+  border-radius: 50% / 280px;
+  background: var(--cobalt);
+}
+
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-curtain);
+  pointer-events: none;
+  visibility: hidden;
+  color: var(--on-cobalt);
+}
+.curtain.is-active {
+  visibility: visible;
+}
+.curtain.is-blocking {
+  pointer-events: auto;
+}
+html[data-mode="os"] .curtain {
+  z-index: calc(var(--z-os-window) + 10);
+}
+
+.curtain__sheet {
+  position: absolute;
+  inset: 0;
+  transform: translateY(calc(100% + 40px));
+  will-change: transform;
+}
+
+.curtain__card {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 5vw;
+}
+.curtain__title {
+  width: 100%;
+}
+
+.curtain__slot-mask {
+  display: none;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+.curtain__card.has-thumb .curtain__slot-mask {
+  display: block;
+}
+.curtain__slot {
+  width: max(120px, 16.667vw);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+.curtain__slot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.curtain__count {
+  position: absolute;
+  left: 50%;
+  bottom: var(--gutter);
+  transform: translateX(-50%);
+  font-variant-numeric: tabular-nums;
+}
+
+.curtain-dim {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-curtain) - 1);
+  background: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.curtain-flip {
+  position: fixed;
+  z-index: var(--z-flip);
+  overflow: hidden;
+  pointer-events: none;
+}
+html[data-mode="os"] .curtain-flip {
+  z-index: calc(var(--z-os-window) + 12);
+}
+.curtain-flip > img {
+  position: absolute;
+  max-width: none;
+  object-fit: cover;
+}

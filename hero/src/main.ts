@@ -1,63 +1,25 @@
 import "./style.css";
-import { mountScrambles } from "./scramble";
-import { mountWork } from "./work";
+import "./pages.css";
+import { mountChrome } from "./chrome";
+import { mountHome } from "./home";
+import { mountGallery } from "./gallery";
+import { mountPond } from "./pond";
 
-const IMAGES = Array.from({ length: 8 }, (_, i) => `${import.meta.env.BASE_URL}images/photo-${i + 1}.jpg`);
-const SLOT_INTERVAL_MS = 1000;
-const SKIP_EVENTS = ["pointerdown", "keydown", "wheel", "touchstart", "resize"] as const;
-
-const hero = document.getElementById("hero")!;
-const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-function mountSlot(inner: HTMLElement) {
-  const start = Math.floor(Math.random() * IMAGES.length);
-  const imgs = IMAGES.map((src, i) => {
-    const img = new Image();
-    img.src = src;
-    img.alt = "";
-    img.decoding = "async";
-    if (i === start) {
-      img.dataset.on = "";
-      img.fetchPriority = "high";
-    }
-    inner.append(img);
-    return img;
-  });
-
-  let index = start;
-  let timer = 0;
-  const step = () => {
-    delete imgs[index].dataset.on;
-    index = (index + 1) % imgs.length;
-    imgs[index].dataset.on = "";
-  };
-  const run = () => {
-    window.clearInterval(timer);
-    if (!document.hidden) timer = window.setInterval(step, SLOT_INTERVAL_MS);
-  };
-  if (reduced || imgs.length < 2) return;
-  run();
-  document.addEventListener("visibilitychange", run);
+if (import.meta.env.DEV) {
+  import("./agentation").then((m) => m.mountAgentation());
 }
 
-function runIntro(onDone: () => void) {
-  const anims = hero.getAnimations({ subtree: true }).filter((a) => a instanceof CSSAnimation && a.animationName.startsWith("hero-"));
-  const skip = () => anims.forEach((a) => a.finish());
-  const detach = () => SKIP_EVENTS.forEach((e) => window.removeEventListener(e, skip));
+const page = document.body.dataset.page;
 
-  SKIP_EVENTS.forEach((e) => window.addEventListener(e, skip, { passive: true }));
-  if (window.scrollY > window.innerHeight / 2) skip();
+mountChrome();
 
-  Promise.all(anims.map((a) => a.finished))
-    .then(() => {
-      detach();
-      hero.dataset.state = "done";
-      onDone();
-    })
-    .catch(() => detach());
-}
+if (page === "home") mountHome();
 
-mountSlot(hero.querySelector<HTMLElement>("[data-slot-inner]")!);
-const scrambles = mountScrambles(hero);
-runIntro(() => scrambles.forEach((s) => s.markDirty()));
-mountWork(document.getElementById("work")!);
+const gallery = document.querySelector<HTMLElement>("[data-gallery]");
+if (gallery) mountGallery(gallery);
+const pond = document.querySelector<HTMLElement>("[data-pond]");
+if (pond) mountPond(pond);
+if (page === "work") import("./archive").then((m) => m.mountArchive());
+if (page === "playground") import("./playground").then((m) => m.mountPlayground());
+if (page === "notfound") import("./scramble").then((m) => m.mountScrambles(document.querySelector(".nf")!));
+if (document.querySelector("[data-peek-list]")) import("./peek").then((m) => m.mountPeek());

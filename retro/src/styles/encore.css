@@ -1,0 +1,207 @@
+/* The encore: poppy ground. Bone on poppy is 4.39:1, so every line of type here is set large (24px+, or 19px bold) */
+/* The last screen of the record: at least one viewport tall, with the base line resting on its bottom edge */
+.encore {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  padding-block: var(--section-y) clamp(28px, 3.2vw, 52px);
+}
+
+.encore__inner {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.encore :focus-visible {
+  outline-color: var(--bone);
+}
+
+.encore__avail {
+  text-wrap: balance;
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-axes);
+  font-optical-sizing: auto;
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--fs-3);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- the address: fitted to the column by script, by container units before it runs ---------- */
+.encore__mail {
+  container-type: inline-size;
+  align-self: stretch;
+  margin-top: clamp(18px, 2vw, 34px);
+}
+
+.encore__email {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-axes);
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-size: calc(100cqi / 14.2);
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  overflow-wrap: normal;
+  word-break: normal;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.05em;
+  text-underline-offset: 0.11em;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 0.35s var(--ease-out);
+}
+.encore__email:hover {
+  text-decoration-color: currentColor;
+}
+
+.encore__email-line {
+  white-space: nowrap;
+}
+
+/* Split letters exist only during the entrance; inline boxes ignore transforms */
+.encore__char {
+  display: inline-block;
+}
+
+@container (max-width: 599px) {
+  .encore__email {
+    font-size: calc(100cqi / 11);
+  }
+}
+
+/* ---------- copy ---------- */
+.encore__copy {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  min-height: 60px;
+  margin-top: clamp(26px, 2.8vw, 46px);
+  padding: 0 32px;
+  border-radius: 999px;
+  background: var(--bone);
+  color: var(--chocolate);
+  font-size: 20px;
+  font-weight: 700;
+  font-stretch: 112%;
+  line-height: 1;
+  transition:
+    background-color 0.25s var(--ease-out),
+    transform 0.25s var(--ease-out);
+}
+.encore__copy:hover {
+  background: var(--harvest);
+}
+.encore__copy:active {
+  transform: scale(0.97);
+}
+
+/* Every label sits in one grid cell, so "Copied" rolls in without the pill changing width */
+.encore__copy-roll {
+  display: grid;
+  justify-items: center;
+  overflow: clip;
+  padding-block: 0.2em;
+}
+.encore__copy-roll > * {
+  grid-area: 1 / 1;
+}
+.encore__copy-size {
+  visibility: hidden;
+}
+
+/* ---------- socials ---------- */
+.encore__socials {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-self: stretch;
+  gap: 22px var(--grid-gap);
+  margin-block: clamp(80px, 8.5vw, 150px) clamp(72px, 7vw, 120px);
+}
+
+@media (min-width: 900px) {
+  .encore__socials {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.encore__social {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  padding-block: 10px;
+}
+
+.encore__net {
+  position: relative;
+  width: fit-content;
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-axes);
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-size: var(--fs-3);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.encore__net::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.1em;
+  height: max(2px, 0.07em);
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--ease-out);
+}
+.encore__social:hover .encore__net::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.encore__handle {
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- base ---------- */
+.encore__base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-self: stretch;
+  gap: 6px 32px;
+  margin-top: auto;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.encore__base time {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .encore__net::after {
+    transform: none;
+    opacity: 0;
+    transition: opacity 0.15s linear;
+  }
+  .encore__social:hover .encore__net::after {
+    transform: none;
+    opacity: 1;
+  }
+  .encore__copy:active {
+    transform: none;
+  }
+}

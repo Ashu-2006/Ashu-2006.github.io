@@ -1,0 +1,497 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--chocolate);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bone);
+  color: var(--chocolate);
+  font-family: var(--font-text);
+  font-size: var(--fs-body);
+  font-stretch: 100%;
+  line-height: 1.55;
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+img,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ol,
+ul,
+dl,
+dd,
+figure,
+blockquote {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--harvest);
+  color: var(--chocolate);
+}
+
+:focus-visible {
+  outline: 3px solid var(--harvest);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+[data-theme="harvest"] :focus-visible {
+  outline-color: var(--poppy);
+}
+/* Harvest falls under 3:1 on the avocado and poppy grounds, so the ring turns bone there */
+[data-theme="avocado"] :focus-visible,
+[data-theme="poppy"] :focus-visible {
+  outline-color: var(--bone);
+}
+
+/* Clip, not hidden: no scroll container, so sticky still works, and a stray wide line can never widen the mobile layout viewport */
+main {
+  position: relative;
+  z-index: var(--z-content);
+  outline: none;
+  overflow-x: clip;
+}
+
+/* Every section paints its own ground; the 3D stage sits between grounds and type */
+[data-theme] {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-axes);
+  font-optical-sizing: auto;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.86;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-axes);
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-size: var(--fs-1);
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+}
+
+.lede {
+  font-size: var(--fs-lead);
+  line-height: 1.4;
+  max-width: 34ch;
+  color: var(--muted);
+}
+
+.page-x {
+  padding-inline: var(--gutter);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 12px 18px;
+  background: var(--harvest);
+  color: var(--chocolate);
+  font-weight: 600;
+  transform: translateY(-160%);
+  transition: transform 0.3s var(--ease-out);
+}
+.skip:focus-visible {
+  transform: none;
+}
+
+/* ---------- 3D stage ---------- */
+.stage {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: var(--z-stage);
+  pointer-events: none;
+}
+
+/* ---------- header ---------- */
+.head {
+  --head-fg: var(--chocolate);
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: var(--z-head);
+  height: var(--head-h);
+  padding-inline: var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 3vw, 48px);
+  color: var(--head-fg);
+  transition: color 0.45s var(--ease-out), transform 0.6s var(--ease-out);
+}
+.head[data-hidden] {
+  transform: translateY(-100%);
+}
+.head__mark {
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-axes);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-right: auto;
+}
+.head__nav {
+  display: none;
+  gap: clamp(20px, 2.6vw, 40px);
+  font-size: 15px;
+  font-weight: 500;
+}
+.head__nav a {
+  position: relative;
+  padding-block: 6px;
+}
+.head__nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--ease-out);
+}
+.head__nav a:hover::after,
+.head__nav a[aria-current="true"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.head__sound {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+.eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 16px;
+}
+.eq i {
+  width: 3px;
+  height: 6px;
+  background: currentColor;
+  border-radius: 1px;
+  opacity: 0.75;
+  transition: height 0.25s var(--ease-out), opacity 0.25s var(--ease-out);
+}
+/* At rest the bars hold an uneven level-meter silhouette, so the switch never reads as a "more" menu */
+.eq i:nth-child(2) {
+  height: 12px;
+}
+.eq i:nth-child(3) {
+  height: 8px;
+}
+.eq i:nth-child(4) {
+  height: 14px;
+}
+.head__sound:hover .eq i,
+.head__sound[aria-checked="true"] .eq i {
+  opacity: 1;
+}
+.head__sound[aria-checked="true"] .eq i {
+  animation: eq 0.9s var(--ease-in-out) infinite alternate;
+}
+.head__sound[aria-checked="true"] .eq i:nth-child(2) {
+  animation-duration: 0.62s;
+  animation-delay: -0.3s;
+}
+.head__sound[aria-checked="true"] .eq i:nth-child(3) {
+  animation-duration: 0.78s;
+  animation-delay: -0.5s;
+}
+.head__sound[aria-checked="true"] .eq i:nth-child(4) {
+  animation-duration: 0.55s;
+  animation-delay: -0.1s;
+}
+@keyframes eq {
+  from {
+    height: 3px;
+  }
+  to {
+    height: 16px;
+  }
+}
+.head__menu {
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 0;
+}
+
+@media (min-width: 900px) {
+  .head__nav {
+    display: flex;
+  }
+  .head__menu {
+    display: none;
+  }
+}
+
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-menu);
+  background: var(--chocolate);
+  color: var(--bone);
+  padding: calc(var(--head-h) + 40px) var(--gutter) 40px;
+  display: flex;
+  align-items: flex-end;
+}
+.menu[hidden] {
+  display: none;
+}
+.menu nav {
+  display: grid;
+  gap: 4px;
+}
+.menu a {
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-axes);
+  font-weight: 800;
+  font-size: clamp(56px, 16vw, 120px);
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+.menu-open .head {
+  --head-fg: var(--bone) !important;
+}
+
+/* ---------- route wipe: the three stripes ---------- */
+.wipe {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-wipe);
+  pointer-events: none;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+.wipe i {
+  display: block;
+  transform: translateX(-101%);
+}
+.wipe i:nth-child(1) {
+  background: var(--poppy);
+}
+.wipe i:nth-child(2) {
+  background: var(--rust);
+}
+.wipe i:nth-child(3) {
+  background: var(--harvest);
+}
+
+/* ---------- film grain ---------- */
+.grain {
+  position: fixed;
+  inset: -20%;
+  z-index: var(--z-grain);
+  pointer-events: none;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  background-size: 256px 256px;
+  animation: grain 0.8s steps(6) infinite;
+  will-change: transform;
+}
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  17% { transform: translate(-6%, 4%); }
+  33% { transform: translate(5%, -7%); }
+  50% { transform: translate(-3%, 9%); }
+  67% { transform: translate(8%, 2%); }
+  83% { transform: translate(-9%, -4%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ---------- cursor (fine pointers only) ---------- */
+.cursor {
+  display: none;
+}
+@media (pointer: fine) {
+  .cursor {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--z-cursor);
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    animation: none;
+  }
+  .head__sound[aria-checked="true"] .eq i {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- cursor visuals ---------- */
+.cursor__dot,
+.cursor__disc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.cursor__dot {
+  width: 10px;
+  height: 10px;
+  background: var(--chocolate);
+  box-shadow: 0 0 0 1.5px var(--bone);
+  opacity: 0;
+  transition: opacity 0.3s, width 0.4s var(--ease-out), height 0.4s var(--ease-out), background 0.3s;
+}
+.cursor.is-active .cursor__dot {
+  opacity: 1;
+}
+.cursor[data-state="link"] .cursor__dot {
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  box-shadow: inset 0 0 0 2px currentColor, 0 0 0 1px rgba(241, 226, 192, 0.6);
+  color: var(--chocolate);
+}
+.cursor__disc {
+  width: 84px;
+  height: 84px;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.45s var(--ease-out);
+}
+.cursor[data-state="play"] .cursor__disc,
+.cursor[data-state="open"] .cursor__disc,
+.cursor[data-state="drag"] .cursor__disc {
+  transform: translate(-50%, -50%) scale(1);
+}
+.cursor[data-state="play"] .cursor__dot,
+.cursor[data-state="open"] .cursor__dot,
+.cursor[data-state="drag"] .cursor__dot,
+.cursor[data-state="hide"] .cursor__dot {
+  opacity: 0;
+}
+/* play: a little record, spinning */
+.cursor[data-state="play"] .cursor__disc {
+  background:
+    radial-gradient(circle, var(--bone) 0 2px, var(--poppy) 3px 15px, transparent 16px),
+    repeating-radial-gradient(circle, #1b100b 0 2px, #2e1f17 3px 4px),
+    #1b100b;
+  box-shadow: 0 6px 18px rgba(42, 26, 18, 0.35);
+  animation: cursor-spin 1.8s linear infinite;
+}
+.cursor[data-state="play"] .cursor__disc::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 20deg, transparent 0 40deg, rgba(241, 226, 192, 0.22) 55deg, transparent 70deg 220deg, rgba(241, 226, 192, 0.16) 235deg, transparent 250deg);
+}
+/* open: a harvest disc with an arrow */
+.cursor[data-state="open"] .cursor__disc {
+  background: var(--harvest) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232A1A12' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E") center / 28px no-repeat;
+}
+/* drag: a ring with two curved arrows, for the record */
+.cursor[data-state="drag"] .cursor__disc {
+  background: var(--bone) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232A1A12' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 12a8 8 0 0 1-13.7 5.6M4 12a8 8 0 0 1 13.7-5.6'/%3E%3Cpath d='M17.7 2.5v4h-4M6.3 21.5v-4h4'/%3E%3C/svg%3E") center / 30px no-repeat;
+  box-shadow: 0 0 0 2px var(--chocolate);
+}
+.cursor.is-down .cursor__disc {
+  transform: translate(-50%, -50%) scale(0.86);
+}
+@keyframes cursor-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+.has-cursor,
+.has-cursor a,
+.has-cursor button,
+.has-cursor [role="slider"] {
+  cursor: none;
+}

@@ -1,0 +1,533 @@
+/* ---------- About: liner notes ---------- */
+.notes {
+  --cols: repeat(12, minmax(0, 1fr));
+  --block-gap: clamp(120px, 13vw, 232px);
+  position: relative;
+  padding-block: var(--section-y);
+  overflow-x: clip;
+}
+
+/* Harvest, the base ring, disappears on bone */
+.notes :focus-visible {
+  outline-color: var(--poppy);
+}
+
+.notes__title {
+  max-width: 12.5ch;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+/* ---------- intro: prints and the bio ---------- */
+.notes__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: clamp(72px, 12vw, 120px);
+  margin-top: clamp(56px, 7vw, 128px);
+}
+
+@media (min-width: 900px) {
+  .notes__intro {
+    grid-template-columns: var(--cols);
+    column-gap: var(--grid-gap);
+    align-items: start;
+  }
+  .prints {
+    grid-column: 1 / span 6;
+  }
+  .notes__copy {
+    grid-column: 8 / span 5;
+    padding-top: clamp(24px, 6vw, 112px);
+  }
+}
+
+/* ---------- prints ---------- */
+.prints {
+  --paper: clamp(8px, 0.9vw, 14px);
+  --d: clamp(120px, 11vw, 176px);
+  position: relative;
+  aspect-ratio: 5 / 5.6;
+  isolation: isolate;
+}
+
+.print {
+  position: absolute;
+  z-index: 1;
+  padding: var(--paper);
+  background: var(--bone);
+  border-radius: 3px;
+  box-shadow:
+    0 0 0 1px rgba(42, 26, 18, 0.06),
+    0 1px 1px rgba(42, 26, 18, 0.1),
+    0 4px 8px -2px rgba(42, 26, 18, 0.14),
+    0 18px 34px -12px rgba(42, 26, 18, 0.34);
+  transform: rotate(var(--tilt, 0deg));
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+/* The deeper shadow of a print held off the table; only its opacity ever changes */
+.print::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  box-shadow:
+    0 10px 18px -6px rgba(42, 26, 18, 0.2),
+    0 40px 70px -18px rgba(42, 26, 18, 0.46);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-out);
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .print:hover::after {
+    opacity: 0.4;
+  }
+}
+.print.is-lifted::after {
+  opacity: 1;
+}
+.print.is-lifted {
+  cursor: grabbing;
+}
+.print img {
+  width: 100%;
+  height: auto;
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.print--0 {
+  --tilt: 4deg;
+  left: 31%;
+  top: 0;
+  width: 62%;
+}
+.print--1 {
+  --tilt: -3deg;
+  left: 37%;
+  top: 55%;
+  width: 60%;
+}
+.print--2 {
+  --tilt: -6deg;
+  left: 0;
+  top: 41%;
+  width: 42%;
+}
+.print--3 {
+  --tilt: 3deg;
+  left: 8%;
+  top: 3%;
+  width: 46%;
+}
+
+/* ---------- fact stickers, stuck half off a corner of their print ---------- */
+.sticker {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--d) * 0.045);
+  width: var(--d);
+  height: var(--d);
+  padding: calc(var(--d) * 0.14);
+  border-radius: 50%;
+  background: var(--harvest);
+  color: var(--chocolate);
+  text-align: center;
+  box-shadow:
+    0 1px 1px rgba(42, 26, 18, 0.22),
+    0 6px 12px -6px rgba(42, 26, 18, 0.4);
+  rotate: var(--spin, 8deg);
+}
+/* A printed ring just inside the die-cut edge */
+.sticker::before {
+  content: "";
+  position: absolute;
+  inset: calc(var(--d) * 0.045);
+  border: 1.5px solid rgba(42, 26, 18, 0.55);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.sticker__value {
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-axes);
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-size: calc(var(--d) * 0.26);
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+}
+.sticker--wide .sticker__value {
+  font-size: calc(var(--d) * 0.185);
+}
+.sticker__label {
+  max-width: calc(var(--d) * 0.68);
+  font-family: var(--font-text);
+  font-stretch: 75%;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+/* The poppy sticker keeps small text on bone: poppy is only the band and the large value */
+.sticker--poppy {
+  background: var(--bone);
+  border: calc(var(--d) * 0.085) solid var(--poppy);
+  padding: calc(var(--d) * 0.07);
+}
+.sticker--poppy::before {
+  inset: calc(var(--d) * 0.02);
+  border-color: rgba(191, 52, 38, 0.6);
+}
+.sticker--poppy .sticker__value {
+  color: var(--poppy);
+}
+
+.print--3 .sticker {
+  --spin: 9deg;
+  right: calc(var(--d) * -0.44);
+  bottom: calc(var(--d) * -0.22);
+}
+.print--2 .sticker {
+  --spin: -10deg;
+  right: calc(var(--d) * -0.46);
+  bottom: calc(var(--d) * -0.24);
+}
+.print--1 .sticker {
+  --spin: 7deg;
+  right: calc(var(--d) * -0.26);
+  top: calc(var(--d) * -0.4);
+}
+
+@media (max-width: 899px) {
+  .prints {
+    --d: clamp(118px, 31vw, 150px);
+    aspect-ratio: 5 / 6.6;
+    margin-inline: calc(var(--gutter) * -0.25);
+  }
+  .sticker {
+    padding: calc(var(--d) * 0.12);
+  }
+  .sticker__value {
+    font-size: calc(var(--d) * 0.24);
+  }
+  .sticker__label {
+    max-width: calc(var(--d) * 0.74);
+    font-size: 12px;
+    line-height: 1.1;
+  }
+  .print--0 {
+    left: 30%;
+    width: 68%;
+  }
+  .print--1 {
+    left: 24%;
+    top: 63%;
+    width: 72%;
+  }
+  .print--2 {
+    left: 2%;
+    top: 37%;
+    width: 50%;
+  }
+  .print--3 {
+    left: 3%;
+    top: 5%;
+    width: 52%;
+  }
+  .print--3 .sticker {
+    right: calc(var(--d) * -0.5);
+    bottom: calc(var(--d) * 0.08);
+  }
+  .print--2 .sticker {
+    --spin: -12deg;
+    right: auto;
+    left: 26%;
+    bottom: calc(var(--d) * -0.56);
+  }
+  .print--1 .sticker {
+    right: calc(var(--d) * -0.08);
+    top: calc(var(--d) * -0.5);
+  }
+}
+
+/* ---------- bio ---------- */
+.notes__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15em;
+  max-width: 60ch;
+}
+.notes__copy p {
+  font-size: var(--fs-body);
+  line-height: 1.62;
+  max-width: 58ch;
+}
+.notes__copy .notes__lead {
+  font-size: var(--fs-lead);
+  line-height: 1.36;
+  font-weight: 500;
+  letter-spacing: -0.006em;
+  margin-bottom: 0.35em;
+  text-wrap: pretty;
+}
+
+/* ---------- rules ---------- */
+.rules {
+  margin-top: var(--block-gap);
+}
+.rule {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 20px;
+  padding-block: clamp(56px, 7vw, 120px);
+  border-top: 1px solid var(--line);
+}
+.rule__title {
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-axes);
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-size: var(--fs-2);
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  max-width: 11ch;
+  text-wrap: balance;
+}
+.rule__body {
+  font-size: var(--fs-lead);
+  line-height: 1.4;
+  max-width: 36ch;
+  text-wrap: pretty;
+}
+.rule__keep {
+  white-space: nowrap;
+}
+
+@media (min-width: 900px) {
+  .rule {
+    grid-template-columns: var(--cols);
+    column-gap: var(--grid-gap);
+    align-items: start;
+  }
+  .rule__title {
+    grid-column: 1 / span 7;
+  }
+  .rule:nth-child(2) .rule__title {
+    grid-column: 2 / span 7;
+  }
+  .rule:nth-child(3) .rule__title {
+    grid-column: 3 / span 6;
+  }
+  .rule__body {
+    grid-column: 9 / span 4;
+    padding-top: 0.5em;
+  }
+}
+
+/* ---------- tour dates ---------- */
+.tour {
+  margin-top: var(--block-gap);
+}
+.tour__title {
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-axes);
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-size: var(--fs-2);
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  margin-bottom: clamp(40px, 5vw, 88px);
+}
+.date {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 14px;
+  padding-block: clamp(32px, 3.4vw, 56px);
+  border-top: 1px solid var(--line);
+}
+.date:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.date__when {
+  font-family: var(--font-text);
+  font-stretch: 62%;
+  font-weight: 800;
+  font-size: var(--fs-3);
+  line-height: 1;
+  color: var(--poppy);
+}
+.date__org {
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-axes);
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-size: var(--fs-2);
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.date__title {
+  font-size: var(--fs-lead);
+  font-weight: 600;
+  line-height: 1.25;
+}
+.date__note {
+  margin-top: 8px;
+  color: var(--muted);
+  max-width: 40ch;
+}
+.date__work {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+  margin-top: 18px;
+}
+.date__work a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--poppy);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+  transition: text-decoration-color 0.2s var(--ease-out);
+}
+@media (hover: hover) {
+  .date__work a:hover {
+    text-decoration-color: var(--chocolate);
+  }
+}
+
+@media (min-width: 900px) {
+  .date {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 6fr) minmax(0, 4fr);
+    column-gap: var(--grid-gap);
+    align-items: baseline;
+  }
+  .date__work {
+    margin-top: 14px;
+  }
+  .date__work a {
+    min-height: 32px;
+  }
+}
+
+/* ---------- line-up: the festival bill ---------- */
+.bill {
+  margin-top: var(--block-gap);
+}
+.bill__poster {
+  border-block: 8px solid var(--chocolate);
+  padding-block: clamp(56px, 7vw, 120px);
+  text-align: center;
+}
+.bill__title {
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-axes);
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-size: var(--fs-2);
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+}
+.bill__stage {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2vw, 32px);
+  margin-top: clamp(48px, 6vw, 104px);
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-axes);
+  font-optical-sizing: auto;
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--fs-lead);
+  line-height: 1;
+}
+.bill__stage::before,
+.bill__stage::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.bill__acts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  column-gap: 0.55em;
+  margin-top: clamp(20px, 2.6vw, 44px);
+  font-size: var(--fs-3);
+}
+/* A full-width break between the second line and the small print */
+.bill__acts::after {
+  content: "";
+  order: 2;
+  flex-basis: 100%;
+  height: 0;
+}
+.bill__act--head {
+  order: 0;
+  flex-basis: 100%;
+  font-family: var(--font-display);
+  font-variation-settings: var(--display-axes);
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-size: var(--fs-1);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+  margin-bottom: 0.22em;
+}
+.bill__act--second {
+  order: 1;
+  flex-basis: 100%;
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: var(--fs-3);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+.bill__act--third {
+  order: 3;
+  margin-top: 0.7em;
+  font-stretch: 70%;
+  font-weight: 600;
+  font-size: var(--fs-lead);
+  line-height: 1.2;
+}
+.bill__act--second + .bill__act--second {
+  color: var(--poppy);
+}
+.bill__act--third:nth-child(odd) {
+  color: var(--walnut);
+}
+
+.bill__acts--build {
+  color: var(--walnut);
+}
+.bill__acts--build .bill__act--head {
+  font-size: var(--fs-2);
+  font-style: italic;
+}
+.bill__acts--build .bill__act--second + .bill__act--second,
+.bill__acts--build .bill__act--third:nth-child(odd) {
+  color: var(--avocado);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .print::after,
+  .date__work a {
+    transition: none;
+  }
+}
