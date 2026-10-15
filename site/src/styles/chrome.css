@@ -1,0 +1,224 @@
+/*
+ * Header. The bar is a single fixed layer with mix-blend-mode: difference and paper-white text, so it
+ * reads as ink on paper and inverts over imagery. The 12-column grid matches the page grid.
+ */
+.chrome__skip {
+  position: fixed;
+  left: var(--gutter);
+  top: 0;
+  z-index: calc(var(--z-chrome) + 5);
+  padding: 8px 12px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--r-xs);
+  transform: translateY(-120%);
+}
+.chrome__skip:focus-visible {
+  transform: translateY(var(--gutter));
+}
+
+.chrome__bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: calc(var(--z-chrome) + 1);
+  color: var(--paper);
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+.chrome__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--gap);
+  align-items: center;
+  padding-top: var(--gutter);
+  padding-bottom: 12px;
+}
+.chrome__row > * {
+  pointer-events: auto;
+}
+
+/* Over page media: paper text on a soft ink scrim instead of the difference blend */
+.chrome__bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  /* About 58% ink at the text line: paper nav text holds 4.5:1 even over a white capture */
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--ink) 70%, transparent) 0,
+    color-mix(in srgb, var(--ink) 58%, transparent) 60px,
+    transparent 150px
+  );
+  opacity: 0;
+  transition: opacity var(--dur-s) var(--ease-out);
+  pointer-events: none;
+}
+html[data-chrome-tone="media"]:not([data-menu="open"]) .chrome__bar {
+  mix-blend-mode: normal;
+  color: var(--on-cobalt);
+}
+html[data-chrome-tone="media"]:not([data-menu="open"]) .chrome__bar::before {
+  opacity: 1;
+}
+html[data-chrome-tone="media"]:not([data-menu="open"]) .chrome__city {
+  opacity: 0.8;
+}
+
+.chrome__mark {
+  grid-column: 1 / 4;
+  justify-self: start;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.chrome__nav {
+  grid-column: 5 / 9;
+}
+.chrome__list {
+  display: flex;
+  font-size: var(--t-sm);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.chrome__list li {
+  display: flex;
+}
+.chrome__comma {
+  margin-right: 0.3em;
+}
+.chrome__link {
+  position: relative;
+  display: inline-block;
+}
+.chrome__txt {
+  display: inline-block;
+  white-space: nowrap;
+}
+.chrome__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-s) var(--ease-out);
+}
+.chrome__link.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.chrome__time {
+  grid-column: 9 / 11;
+  justify-self: start;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.chrome__city {
+  opacity: 0.6;
+}
+
+.chrome__end {
+  grid-column: 11 / 13;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  min-height: 28px;
+}
+.chrome__switch {
+  display: flex;
+  align-items: center;
+  min-width: 64px;
+  min-height: 28px;
+  justify-content: flex-end;
+}
+.chrome__menu-btn {
+  display: none;
+  padding-block: 6px;
+}
+
+/* Mobile: wordmark left, menu and switch right */
+@media (max-width: 1023px) {
+  .chrome__city {
+    display: none;
+  }
+  .chrome__nav {
+    grid-column: 4 / 9;
+  }
+}
+@media (max-width: 767px) {
+  .chrome__nav,
+  .chrome__time {
+    display: none;
+  }
+  .chrome__mark {
+    grid-column: 1 / 3;
+  }
+  .chrome__end {
+    grid-column: 3 / 5;
+  }
+  .chrome__menu-btn {
+    display: block;
+  }
+}
+
+/* Full-screen cobalt menu, below the bar so the wordmark, close button and switch stay on top */
+html[data-menu="open"] .chrome__bar {
+  mix-blend-mode: normal;
+  color: var(--on-cobalt);
+}
+.chrome__menu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-chrome);
+  background: var(--cobalt);
+  color: var(--on-cobalt);
+  padding-top: calc(var(--gutter) + 96px);
+  padding-bottom: var(--gutter);
+  flex-direction: column;
+  justify-content: space-between;
+}
+.chrome__menu:not([hidden]) {
+  display: flex;
+}
+.chrome__mlink {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-block: 4px;
+  font-size: min(var(--t-xl), 11vw);
+  font-weight: 600;
+  line-height: var(--lh-display);
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+}
+.chrome__mnum {
+  display: block;
+  margin-top: 0.4em;
+  min-width: 2.2em;
+  opacity: 0.7;
+}
+.chrome__mlink.is-active > .mask:not(.chrome__mnum) > .mask__in {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.chrome__mfoot {
+  display: flex;
+  justify-content: space-between;
+}

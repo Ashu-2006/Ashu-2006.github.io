@@ -9,3 +9,11 @@ HIRING-SIGNALS.md
 PROJECT-CONTENT-DRAFTS.md
 REBUILD-PLAN.md
 SITE-STRUCTURE.md
+
+# Screenshots from research and verification runs stay local (about 180 MB); the .md write-ups are committed
+.research/**/*.png
+.research/**/*.jpg
+
+# Working docs and research notes stay local
+.research/
+site/BRIEF.md

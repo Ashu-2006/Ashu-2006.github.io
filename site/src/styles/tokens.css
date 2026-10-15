@@ -1,0 +1,91 @@
+/*
+ * Switch: design tokens. Two modes share one ink and one accent.
+ * Modern is a warm paper editorial site. OS (ASH/OS 98) is the same content on a cobalt desktop.
+ * Use these variables only. A raw hex or a new duration in a page stylesheet is a bug.
+ */
+:root {
+  /* Color: modern */
+  --paper: #f3f1eb;
+  --paper-2: #e9e6dd;
+  --ink: #0f0f0e;
+  --ink-2: #3a3936;
+  /* 0.62 keeps 11px mono labels at about 5.2:1 on paper (WCAG AA). --faint is for rules and decoration, never text. */
+  --mute: rgba(15, 15, 14, 0.62);
+  --faint: rgba(15, 15, 14, 0.28);
+  --line: rgba(15, 15, 14, 0.14);
+  --cobalt: #2c33f5;
+  --cobalt-deep: #161bb0;
+  --on-cobalt: #f3f1eb;
+
+  /* Color: ASH/OS 98 */
+  --os-desk: #2c33f5;
+  --os-desk-dither: #232ad6;
+  --os-face: #cfccc3;
+  --os-face-hi: #f3f1eb;
+  --os-face-lo: #8d8a82;
+  --os-face-dk: #0f0f0e;
+  --os-title: linear-gradient(90deg, #0f0f0e 0%, #161bb0 55%, #2c33f5 100%);
+  --os-title-idle: linear-gradient(90deg, #6f6c66 0%, #a19e96 100%);
+  --os-select: #161bb0;
+  --os-paper: #fffef9;
+  /* The one orange in the system: the shutdown screen only */
+  --os-safe: #f2a33a;
+
+  /* Type */
+  --f-sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --f-serif: "Instrument Serif", "Times New Roman", serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --f-pixel: "Tiny5", var(--f-mono);
+
+  /* Fluid scale. xs is mono uppercase labels; xl and xxl are display. */
+  --t-xs: max(11px, 0.764vw);
+  --t-sm: max(14px, 1.042vw);
+  --t-md: max(18px, 1.597vw);
+  --t-lg: max(28px, 3.125vw);
+  --t-xl: max(52px, 8.333vw);
+  --t-xxl: max(64px, 15.278vw);
+
+  --lh-tight: 0.86;
+  --lh-display: 0.95;
+  --lh-body: 1.4;
+  --track-display: -0.035em;
+  --track-label: 0.06em;
+
+  /* Grid: 12 columns, gutter is the page edge */
+  --cols: 12;
+  --gutter: max(20px, 2.083vw);
+  --gap: max(12px, 1.042vw);
+  --col: calc((100vw - 2 * var(--gutter) - 11 * var(--gap)) / 12);
+  --section-y: clamp(96px, 11.111vw, 200px);
+
+  /* Shape */
+  --r-xs: 3px;
+  --r-s: 8px;
+  --r-pill: 999px;
+
+  /* Motion. Mirrors core/motion.ts. */
+  --ease-out: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-io: cubic-bezier(0.83, 0, 0.17, 1);
+  --ease-settle: cubic-bezier(0.5, 1, 0.89, 1);
+  --ease-back: cubic-bezier(0.68, -0.48, 0.28, 1.48);
+  --ease-crisp: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-xs: 0.35s;
+  --dur-s: 0.5s;
+  --dur-m: 0.9s;
+  --dur-l: 1.2s;
+
+  /* Layers */
+  --z-page: 1;
+  --z-chrome: 50;
+  --z-curtain: 60;
+  --z-flip: 62;
+  --z-os-window: 100;
+  --z-cursor: 1000;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --cols: 4;
+    --col: calc((100vw - 2 * var(--gutter) - 3 * var(--gap)) / 4);
+  }
+}
