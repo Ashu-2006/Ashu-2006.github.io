@@ -1,0 +1,134 @@
+/* Compact footer band (Agent B), on every page except Contact */
+.foot {
+  position: relative;
+  display: grid;
+  gap: calc(var(--gap) * 3);
+  padding-top: calc(var(--gutter) * 2);
+  padding-bottom: var(--gutter);
+  border-top: 1px solid var(--line);
+}
+.foot__main,
+.foot__bottom {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--gap);
+  align-items: baseline;
+}
+.foot__talk {
+  grid-column: 1 / 8;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32em;
+  font-size: var(--t-lg);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.foot__talk em {
+  font-size: 1.08em;
+  padding-right: 0.05em;
+}
+.foot__mark {
+  flex: none;
+  width: 0.62em;
+  height: 0.62em;
+  overflow: visible;
+  fill: var(--cobalt);
+}
+.foot__arrow {
+  flex: none;
+  width: 0.7em;
+  margin-left: 0.1em;
+  transition: transform var(--dur-s) var(--ease-out);
+}
+.foot__talk:hover .foot__arrow,
+.foot__talk:focus-visible .foot__arrow {
+  transform: translateX(0.18em);
+}
+.foot__email {
+  grid-column: 8 / 13;
+  justify-self: end;
+}
+.foot__email:hover,
+.foot__social:hover,
+.foot__totop:hover {
+  color: var(--cobalt);
+}
+.foot__socials {
+  grid-column: 1 / 6;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em 1.6em;
+}
+.foot__social,
+.foot__email,
+.foot__totop {
+  transition: color var(--dur-xs) var(--ease-out);
+}
+/* Hit area at least 24x24 (WCAG 2.2 target size) without moving the type: padding offset by negative margin */
+.foot__social,
+.foot__totop {
+  display: inline-block;
+  min-width: 24px;
+  padding: 6px 8px;
+  margin: -6px -8px;
+  text-align: center;
+}
+.foot__where {
+  grid-column: 6 / 9;
+}
+.foot__clock {
+  margin-left: 0.6em;
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
+.foot__copyright {
+  grid-column: 9 / 11;
+  color: var(--mute);
+}
+.foot__totop {
+  grid-column: 11 / 13;
+  justify-self: end;
+}
+
+@media (max-width: 1023px) {
+  .foot__talk {
+    grid-column: 1 / -1;
+  }
+  .foot__email {
+    grid-column: 1 / -1;
+    justify-self: start;
+    margin-top: 1.2em;
+  }
+  .foot__socials {
+    grid-column: 1 / -1;
+  }
+  .foot__where,
+  .foot__copyright,
+  .foot__totop {
+    margin-top: 1.2em;
+  }
+  .foot__where {
+    grid-column: 1 / 6;
+  }
+  .foot__copyright {
+    grid-column: 6 / 10;
+  }
+  .foot__totop {
+    grid-column: 10 / 13;
+  }
+}
+@media (max-width: 767px) {
+  .foot__where,
+  .foot__copyright {
+    grid-column: 1 / -1;
+  }
+  .foot__copyright {
+    margin-top: 0.4em;
+  }
+  .foot__totop {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+}

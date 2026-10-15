@@ -1,0 +1,397 @@
+/*
+ * Night Drive (game agent). The tube fills the window body; the flow screens are ASH/OS 98 dialogs in
+ * Tiny5 over it, and touch devices get a pad under it. The 70s colours (--nd-*) are set on .nd from the
+ * game palette in game/art.ts; everything else is a token.
+ */
+.nd {
+  --nd-bevel-out: inset -1px -1px var(--os-face-dk), inset 1px 1px var(--os-face), inset -2px -2px var(--os-face-lo), inset 2px 2px var(--os-face-hi);
+  --nd-bevel-btn: inset -1px -1px var(--os-face-dk), inset 1px 1px var(--os-face-hi), inset -2px -2px var(--os-face-lo), inset 2px 2px var(--os-face);
+  --nd-bevel-in: inset -1px -1px var(--os-face-hi), inset 1px 1px var(--os-face-dk), inset -2px -2px var(--os-face), inset 2px 2px var(--os-face-lo);
+  --nd-bevel-field: inset -1px -1px var(--os-face-hi), inset 1px 1px var(--os-face-lo), inset -2px -2px var(--os-face), inset 2px 2px var(--os-face-dk);
+  container-type: inline-size;
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--os-face-dk);
+  color: var(--os-face-dk);
+  font-family: var(--f-pixel);
+  font-size: 16px;
+  line-height: 1.25;
+  -webkit-font-smoothing: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.nd:focus {
+  outline: none;
+}
+.nd:focus-visible {
+  outline: 1px dotted var(--os-face-hi);
+  outline-offset: -4px;
+}
+
+.nd__screen {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+.nd__crt {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.nd__layer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  overflow: auto;
+  pointer-events: none;
+}
+
+/* ---------- dialogs ---------- */
+
+.nd-dlg {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 380px);
+  max-height: 100%;
+  padding: 3px;
+  background: var(--os-face);
+  box-shadow: var(--nd-bevel-out);
+  pointer-events: auto;
+}
+.nd-dlg[hidden] {
+  display: none;
+}
+.nd-dlg--small {
+  width: min(100%, 300px);
+}
+.nd-dlg--board {
+  width: min(100%, 440px);
+}
+.nd-dlg__bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  height: 22px;
+  padding: 0 6px;
+  background: var(--os-title);
+  color: var(--os-face-hi);
+  font-size: 13px;
+  letter-spacing: var(--track-label);
+}
+.nd-dlg__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  padding: 14px 14px 12px;
+  overflow: auto;
+}
+
+.nd-logo {
+  margin: 0;
+  padding: 18px 12px 22px;
+  background: var(--nd-night);
+  box-shadow: var(--nd-bevel-in);
+  color: var(--nd-bone);
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+}
+.nd-logo span {
+  text-shadow:
+    2px 2px 0 var(--nd-sun),
+    4px 4px 0 var(--nd-rust),
+    6px 6px 0 var(--nd-poppy);
+}
+.nd-lede,
+.nd-keys,
+.nd-hint,
+.nd-rank,
+.nd-note,
+.nd-scope {
+  margin: 0;
+}
+.nd-lede {
+  color: var(--ink-2);
+}
+.nd-keys {
+  color: var(--ink-2);
+  font-size: 13px;
+}
+.nd-big {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.nd-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.nd-label {
+  font-size: 13px;
+}
+.nd-field {
+  height: 30px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 0;
+  background: var(--os-paper);
+  box-shadow: var(--nd-bevel-field);
+  color: var(--os-face-dk);
+  font: inherit;
+  user-select: text;
+  -webkit-user-select: text;
+}
+.nd-field:focus {
+  outline: 1px dotted var(--os-face-dk);
+  outline-offset: -5px;
+}
+.nd-hint {
+  color: var(--ink-2);
+  font-size: 13px;
+}
+.nd-hint.is-error {
+  color: var(--cobalt-deep);
+}
+.nd-hint.is-error::before {
+  content: "! ";
+}
+
+.nd-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+.nd-btn {
+  min-width: 88px;
+  height: 30px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 0;
+  background: var(--os-face);
+  box-shadow: var(--nd-bevel-btn);
+  color: var(--os-face-dk);
+  font: inherit;
+  font-size: 16px;
+  cursor: inherit;
+}
+.nd-btn--default {
+  box-shadow: inset 0 0 0 1px var(--os-face-dk), inset -2px -2px var(--os-face-dk), inset 2px 2px var(--os-face-hi), inset -3px -3px var(--os-face-lo), inset 3px 3px var(--os-face);
+}
+.nd-btn:active {
+  box-shadow: var(--nd-bevel-in);
+  padding: 1px 11px 0 13px;
+}
+.nd-btn:focus-visible {
+  outline: 1px dotted var(--os-face-dk);
+  outline-offset: -5px;
+}
+
+.nd-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--os-face-lo);
+  box-shadow: 0 -1px 0 var(--os-face-hi) inset;
+}
+.nd-check {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 13px;
+}
+.nd-check input {
+  appearance: none;
+  display: grid;
+  place-content: center;
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  background: var(--os-paper);
+  box-shadow: var(--nd-bevel-field);
+}
+.nd-check input:checked::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: var(--os-face-dk);
+  clip-path: polygon(0 45%, 30% 75%, 100% 0, 100% 30%, 30% 100%, 0 75%);
+}
+.nd-check input:focus-visible {
+  outline: 1px dotted var(--os-face-dk);
+  outline-offset: 2px;
+}
+
+.nd-stats {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 8px 10px;
+  background: var(--os-paper);
+  box-shadow: var(--nd-bevel-field);
+}
+.nd-stats div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.nd-stats dt {
+  color: var(--ink-2);
+}
+.nd-stats dd {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nd-stats div:first-child dd {
+  color: var(--cobalt-deep);
+  font-size: 24px;
+  line-height: 1;
+}
+.nd-rank {
+  min-height: 1.25em;
+}
+.nd-note {
+  padding: 6px 8px;
+  background: var(--os-paper);
+  box-shadow: var(--nd-bevel-field);
+  font-size: 13px;
+}
+.nd-note[hidden] {
+  display: none;
+}
+.nd-scope {
+  font-size: 13px;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+/* ---------- leaderboard list view ---------- */
+
+.nd-list {
+  max-height: 268px;
+  overflow: auto;
+  background: var(--os-paper);
+  box-shadow: var(--nd-bevel-field);
+  padding: 2px;
+}
+.nd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.nd-table th {
+  position: sticky;
+  top: 0;
+  height: 22px;
+  padding: 0 6px;
+  background: var(--os-face);
+  box-shadow: var(--nd-bevel-btn);
+  font-weight: 400;
+  text-align: left;
+}
+.nd-table td {
+  height: 22px;
+  padding: 0 6px;
+  white-space: nowrap;
+}
+.nd-table .nd-c-rank {
+  width: 2.5em;
+  text-align: right;
+}
+.nd-table .nd-c-score {
+  text-align: right;
+}
+.nd-table td.nd-c-date {
+  color: var(--ink-2);
+}
+.nd-table tr.is-me td {
+  background: var(--os-select);
+  color: var(--os-face-hi);
+}
+.nd-table td.nd-empty {
+  height: 64px;
+  color: var(--ink-2);
+  text-align: center;
+  white-space: normal;
+}
+
+/* ---------- touch pad ---------- */
+
+.nd__pad {
+  display: grid;
+  flex: none;
+  grid-template-columns: 1fr 1fr 56px 1.4fr;
+  gap: 8px;
+  height: 108px;
+  padding: 8px;
+  background: var(--os-face);
+  box-shadow: var(--nd-bevel-out);
+  touch-action: none;
+}
+.nd__pad[hidden] {
+  display: none;
+}
+.nd-pad {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 0;
+  background: var(--os-face);
+  box-shadow: var(--nd-bevel-btn);
+  color: var(--os-face-dk);
+  font: inherit;
+  font-size: 13px;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.nd-pad.is-down {
+  box-shadow: var(--nd-bevel-in);
+  background: var(--os-face-lo);
+}
+.nd-pad--gas {
+  background: var(--cobalt-deep);
+  color: var(--on-cobalt);
+}
+.nd-pad--gas.is-down {
+  background: var(--cobalt);
+}
+.nd:not([data-state="playing"]) .nd-pad {
+  opacity: 0.5;
+}
+
+@container (max-width: 440px) {
+  .nd-table .nd-c-date {
+    display: none;
+  }
+  .nd-logo {
+    font-size: 32px;
+  }
+  .nd-dlg__body {
+    padding: 12px 10px 10px;
+  }
+}
