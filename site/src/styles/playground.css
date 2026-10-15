@@ -1,0 +1,511 @@
+/*
+ * Playground (Agent E). The bybang home: a fixed full-viewport scroller holding an endless mosaic on a
+ * 16-column grid (6 on phones), a fixed wordmark in the middle that inverts over the media, and a
+ * small filter bar. Tile geometry is in grid units u = column + gap, set as variables by the template.
+ */
+.pl {
+  --edge: 32px;
+  --g: 32px;
+  --cols-n: 16;
+  --pcol: calc((100vw - 2 * var(--edge) - (var(--cols-n) - 1) * var(--g)) / var(--cols-n));
+  --u: calc(var(--pcol) + var(--g));
+}
+@media (min-width: 1600px) {
+  .pl {
+    --edge: 2.222vw;
+    --g: 2.222vw;
+  }
+}
+@media (max-width: 979px) {
+  .pl {
+    --edge: 20px;
+    --g: 18px;
+  }
+}
+@media (max-width: 767px) {
+  .pl {
+    --edge: 20px;
+    --g: 12px;
+    --cols-n: 6;
+  }
+}
+
+/* The scroller: its own Lenis instance loops it, the window never scrolls on this page */
+.pl__wrap {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  scrollbar-width: none;
+  background: var(--paper);
+}
+.pl__wrap::-webkit-scrollbar {
+  display: none;
+}
+.pl__wrap:focus-visible {
+  outline: none;
+}
+.pl__content {
+  --H: var(--Hd);
+  position: relative;
+  overflow: hidden;
+  min-height: 100%;
+}
+.pl__cycle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--k) * var(--H) * var(--u));
+  height: calc(var(--H) * var(--u));
+}
+
+/* Tiles */
+.pl__tile {
+  --s: var(--sd);
+  --c: var(--cd);
+  --t: var(--td);
+  --h: var(--hd);
+  position: absolute;
+  left: calc(var(--edge) + var(--s) * var(--u));
+  top: calc(var(--t) * var(--u) + var(--edge));
+  width: calc(var(--c) * var(--u) - var(--g));
+  height: calc(var(--h) * var(--u) - var(--g));
+}
+.pl__tile[hidden] {
+  display: none;
+}
+.pl__btn {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+}
+.pl__btn:focus-visible {
+  outline-offset: 4px;
+}
+.pl__media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--paper-2);
+}
+.pl__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: scale var(--dur-m) var(--ease-out);
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .pl__btn:hover .pl__img,
+  .pl__btn:focus-visible .pl__img {
+    scale: 1.04;
+  }
+}
+.pl__cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 0.7em);
+  display: flex;
+  gap: 0.8em;
+  overflow: hidden;
+  color: var(--ink-2);
+  font-size: calc(var(--t-xs) * 0.9);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.pl__cap span {
+  color: var(--mute);
+}
+
+/* Before the drop, tiles wait out of sight. Reduced motion skips it. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .pl:not(.is-dropped) .pl__tile {
+    visibility: hidden;
+  }
+}
+
+/* The wordmark: fixed in the middle, inverted over whatever passes under it */
+.pl__mark {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  display: grid;
+  justify-items: center;
+  gap: 0.9em;
+  color: var(--paper);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  text-align: center;
+  z-index: 2;
+}
+.pl__title {
+  font-size: var(--t-xl);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-display);
+  white-space: nowrap;
+}
+.pl__title em {
+  font-size: 1.06em;
+  padding-right: 0.06em;
+}
+.pl__about {
+  display: grid;
+  justify-items: end;
+  gap: 6px;
+  text-align: right;
+}
+.pl__lede {
+  max-width: 24ch;
+  padding: 0.35em 0.6em;
+  border-radius: var(--r-xs);
+  background: var(--paper);
+  color: var(--ink-2);
+}
+
+/* Filter bar */
+.pl__bar {
+  position: fixed;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: var(--gutter);
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: var(--gap);
+  pointer-events: none;
+}
+.pl__bar > * {
+  pointer-events: auto;
+}
+.pl__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.pl__pill {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5em;
+  padding: 0.5em 0.85em 0.46em;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  background: var(--paper);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color var(--dur-xs) var(--ease-out),
+    border-color var(--dur-xs) var(--ease-out);
+}
+.pl__pill::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  background: var(--ink);
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path var(--dur-s) var(--ease-out);
+}
+.pl__pill-n {
+  font-family: var(--f-mono);
+  font-size: calc(var(--t-xs) * 0.9);
+  color: var(--mute);
+}
+.pl__pill[aria-pressed="true"] {
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.pl__pill[aria-pressed="true"]::before {
+  clip-path: inset(0 0 0 0);
+}
+.pl__pill[aria-pressed="true"] .pl__pill-n {
+  color: var(--paper);
+  opacity: 0.6;
+}
+@media (hover: hover) {
+  .pl__pill:hover {
+    border-color: var(--ink);
+  }
+}
+.pl__hint {
+  padding: 0.5em 0.7em 0.45em;
+  border-radius: var(--r-xs);
+  background: var(--paper);
+  color: var(--mute);
+  white-space: nowrap;
+}
+.pl__hint span {
+  color: var(--ink);
+}
+
+@media (max-width: 767px) {
+  .pl__tile {
+    --s: var(--sp);
+    --c: var(--cp);
+    --t: var(--tp);
+    --h: var(--hp);
+  }
+  .pl__content {
+    --H: var(--Hp);
+  }
+  .pl__about {
+    display: none;
+  }
+  .pl__pills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+  }
+  .pl__pills::-webkit-scrollbar {
+    display: none;
+  }
+  .pl__pill {
+    flex: none;
+  }
+}
+
+/* Modal: near full page, media fitted on the left, the story on the right */
+.pl-m {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-chrome) + 4);
+  pointer-events: auto;
+}
+.pl-m[hidden] {
+  display: none;
+}
+.pl-m__dim {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  opacity: 0.4;
+}
+.pl-m__panel {
+  position: absolute;
+  inset: 2vw;
+  display: grid;
+  grid-template-columns: minmax(0, 65fr) minmax(0, 35fr);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: var(--r-s);
+  overflow: hidden;
+}
+.pl-m__stage {
+  position: relative;
+  min-height: 0;
+  padding: var(--gap);
+  border-right: 1px solid var(--line);
+}
+.pl-m__media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.pl-m__media > img,
+.pl-m__media > video {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+}
+.pl-m__ctrl {
+  position: absolute;
+  left: calc(var(--gap) * 2);
+  bottom: calc(var(--gap) * 2);
+  display: flex;
+  gap: 4px;
+}
+.pl-m__ctrl[hidden] {
+  display: none;
+}
+.pl-m__ctl {
+  padding: 0.55em 0.85em 0.5em;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  color: var(--paper);
+}
+.pl-m__info {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: calc(var(--gap) * 1.4) calc(var(--gap) * 1.6);
+}
+.pl-m__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pl-m__pos {
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
+.pl-m__pos b {
+  color: var(--ink);
+  font-weight: 500;
+}
+.pl-m__btn {
+  padding: 0.55em 0.95em 0.5em;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  transition: border-color var(--dur-xs) var(--ease-out);
+}
+@media (hover: hover) {
+  .pl-m__btn:hover {
+    border-color: var(--ink);
+  }
+}
+.pl-m__btn--close {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+.pl-m__body {
+  margin-top: auto;
+  padding-top: calc(var(--gap) * 3);
+}
+.pl-m__meta {
+  display: flex;
+  gap: 1.4em;
+  color: var(--mute);
+}
+.pl-m__title {
+  margin-top: 0.4em;
+  font-size: var(--t-lg);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.pl-m__note {
+  margin-top: 0.7em;
+  color: var(--ink-2);
+}
+.pl-m__dl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+  column-gap: var(--gap);
+  row-gap: calc(var(--gap) * 1.2);
+  margin-top: calc(var(--gap) * 2);
+  padding-top: calc(var(--gap) * 1.2);
+  border-top: 1px solid var(--line);
+}
+.pl-m__dl dt {
+  color: var(--mute);
+  padding-top: 0.3em;
+}
+.pl-m__why {
+  font-size: var(--t-md);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+.pl-m__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pl-m__tool {
+  padding: 0.3em 0.6em 0.25em;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+}
+.pl-m__nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: calc(var(--gap) * 2);
+  padding-top: calc(var(--gap) * 1.2);
+  border-top: 1px solid var(--line);
+}
+.pl-m .mask {
+  display: block;
+}
+.pl-m__flip {
+  position: fixed;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+.pl-m__flip img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+
+@media (max-width: 1023px) {
+  .pl-m__panel {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .pl-m__panel {
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 0;
+    border-radius: 0;
+  }
+  .pl-m__stage {
+    flex: none;
+    height: 56dvh;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    order: 2;
+  }
+  .pl-m__info {
+    display: contents;
+  }
+  .pl-m__top {
+    order: 1;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    padding: var(--gutter);
+    padding-bottom: calc(var(--gap) * 0.8);
+    background: var(--paper);
+  }
+  .pl-m__body {
+    order: 3;
+    margin-top: 0;
+    padding: calc(var(--gap) * 1.6) var(--gutter) 0;
+  }
+  .pl-m__nav {
+    order: 4;
+    margin: calc(var(--gap) * 2) var(--gutter) var(--gutter);
+  }
+  .pl-m__dl {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.5em;
+  }
+}
+
+/* WebGL layer: draws the tiles on screen; a tile hands over its DOM media only once its texture is up */
+.pl__gl {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+.pl__tile[data-gl] .pl__media {
+  background: none;
+}
+.pl__tile[data-gl] .pl__media > * {
+  visibility: hidden;
+}

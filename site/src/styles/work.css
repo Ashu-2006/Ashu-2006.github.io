@@ -1,0 +1,379 @@
+/*
+ * Work index (Agent E). Rows on the 12-column grid: index, name and evidence, then a 4-column lane
+ * the cover frame rides in, then org, year and kinds. Touch and narrow screens swap the frame for a
+ * thumbnail inside each row.
+ */
+.wk {
+  --wk-name: calc(var(--t-lg) * 0.9);
+  --wk-lane: calc(4 * var(--col) + 3 * var(--gap));
+  --wk-lane-x: calc(6 * (var(--col) + var(--gap)));
+  padding-top: calc(var(--gutter) * 3.4);
+  padding-bottom: calc(var(--gutter) * 3);
+}
+
+/* Head */
+.wk__head,
+.wk__bar {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--gap);
+}
+.wk__head {
+  align-items: end;
+}
+.wk__tw {
+  grid-column: 1 / 7;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6em;
+}
+.wk__title {
+  font-size: var(--t-xl);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-display);
+}
+.wk__title em {
+  font-size: 1.06em;
+  padding-right: 0.06em;
+}
+.wk__count {
+  padding-top: 0.5em;
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
+.wk__lede {
+  grid-column: 7 / 10;
+  max-width: 30ch;
+  color: var(--ink-2);
+}
+
+/* Filter bar: the label sits in the index column, the pills start where the names start */
+.wk__bar {
+  align-items: center;
+  margin-top: calc(var(--gap) * 4);
+  padding-bottom: calc(var(--gap) * 1.6);
+}
+.wk__bar-l {
+  grid-column: 1 / 2;
+  color: var(--mute);
+}
+.wk__pills {
+  grid-column: 2 / 11;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.wk__pill {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.55em;
+  padding: 0.5em 0.95em 0.48em;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color var(--dur-xs) var(--ease-out),
+    border-color var(--dur-xs) var(--ease-out);
+}
+/* The pressed fill wipes up from the bottom edge, a mask rather than a fade */
+.wk__pill::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  background: var(--ink);
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path var(--dur-s) var(--ease-out);
+}
+.wk__pill-n {
+  color: var(--mute);
+  font-size: calc(var(--t-xs) * 0.9);
+  transition: color var(--dur-xs) var(--ease-out);
+}
+.wk__pill[aria-pressed="true"] {
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.wk__pill[aria-pressed="true"]::before {
+  clip-path: inset(0 0 0 0);
+}
+.wk__pill[aria-pressed="true"] .wk__pill-n {
+  color: var(--paper);
+  opacity: 0.6;
+}
+@media (hover: hover) {
+  .wk__pill:hover {
+    border-color: var(--ink);
+  }
+}
+.wk__showing {
+  grid-column: 11 / 13;
+  justify-self: end;
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
+.wk__showing span {
+  color: var(--ink);
+}
+
+/* List */
+.wk__body {
+  position: relative;
+}
+.wk__list {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--gap);
+  border-top: 1px solid var(--line);
+}
+.wk__row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+.wk__row[hidden] {
+  display: none;
+}
+.wk__link {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: center;
+}
+.wk__link:focus-visible {
+  outline: none;
+}
+.wk__link:focus-visible .wk__name-t {
+  text-decoration: underline;
+  text-decoration-color: var(--cobalt);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.12em;
+}
+
+/* Each cell is a mask; its inner rises on entry and on every filter change */
+.wk__cell {
+  grid-row: 1;
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  padding-block: calc(var(--gap) * 0.95) calc(var(--gap) * 0.9);
+  transition: opacity var(--dur-xs) var(--ease-out);
+}
+.wk__in {
+  display: block;
+}
+.wk__num {
+  grid-column: 1 / 2;
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
+.wk__name {
+  grid-column: 2 / 7;
+}
+.wk__name .wk__in {
+  display: flex;
+  align-items: center;
+  gap: 0.9em;
+  min-width: 0;
+}
+.wk__name-t {
+  font-size: var(--wk-name);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.wk__tag {
+  flex: none;
+  padding: 0.3em 0.55em 0.25em;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  color: var(--ink-2);
+  font-size: calc(var(--t-xs) * 0.9);
+}
+.wk__meta {
+  grid-column: 11 / 13;
+}
+.wk__meta .wk__in {
+  display: grid;
+  gap: 0.35em;
+}
+.wk__meta-l {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+}
+.wk__kinds {
+  color: var(--mute);
+}
+.wk__year {
+  font-variant-numeric: tabular-nums;
+}
+.wk__rule {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  height: 1px;
+  background: var(--line);
+  transform-origin: 0 50%;
+}
+
+/* Cover frame: every row owns one, stacked in the lane. Only the active one is unclipped. */
+.wk__cover {
+  position: absolute;
+  top: 0;
+  left: var(--wk-lane-x);
+  z-index: 1;
+  display: block;
+  width: min(var(--wk-lane), calc(var(--wk-list-h, 100vh) * var(--wk-ar)));
+  aspect-ratio: var(--wk-ar);
+  overflow: hidden;
+  background: var(--paper-2);
+  clip-path: inset(100% 0% 0% 0%);
+  transform: translate3d(0, var(--wk-y, 0px), 0);
+  pointer-events: none;
+}
+.wk__cover-in {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.wk__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.wk__cover {
+  --wk-ar: 0.8;
+}
+.wk__schem {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  padding: 0.3em 0.55em 0.25em;
+  border-radius: var(--r-xs);
+  background: var(--paper);
+  font-size: calc(var(--t-xs) * 0.9);
+}
+
+/* Entry and filter pre-state (the view clears it once idle). Reduced motion never hides anything. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .wk__in {
+    transform: translateY(130%);
+  }
+  .js .wk__rule {
+    transform: scaleX(0);
+  }
+}
+
+/* Hover and focus: rows sit at .3 around the active one (desktop with a fine pointer only) */
+@media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
+  .wk__list:has(.is-hot) .wk__row:not(.is-hot) .wk__cell {
+    opacity: 0.3;
+  }
+}
+
+/* Touch, tablets and phones: no follower, the cover becomes a thumbnail inside its row */
+@media (max-width: 1023px), (hover: none), (pointer: coarse) {
+  .wk {
+    --wk-thumb: calc(var(--t-lg) * 1.9);
+  }
+  .wk__lede {
+    grid-column: 7 / 13;
+  }
+  .wk__pills {
+    grid-column: 2 / 13;
+  }
+  .wk__showing {
+    display: none;
+  }
+  .wk__link {
+    grid-template-columns: var(--wk-thumb) minmax(0, 1fr) minmax(0, 15em);
+    column-gap: var(--gap);
+    padding-block: calc(var(--gap) * 0.8);
+  }
+  .wk__cell {
+    padding-block: 0;
+  }
+  .wk__num {
+    display: none;
+  }
+  .wk__name {
+    grid-column: 2 / 3;
+  }
+  .wk__meta {
+    grid-column: 3 / 4;
+  }
+  .wk__rule {
+    margin-top: calc(var(--gap) * 0.8);
+    margin-bottom: calc(var(--gap) * -0.8);
+  }
+  .wk__cover {
+    position: relative;
+    left: auto;
+    grid-column: 1 / 2;
+    grid-row: 1;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    transform: none;
+    clip-path: none;
+    pointer-events: none;
+  }
+  .wk__schem {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .wk {
+    --wk-name: var(--t-md);
+    --wk-thumb: 64px;
+  }
+  .wk__tw,
+  .wk__lede {
+    grid-column: 1 / -1;
+  }
+  .wk__lede {
+    margin-top: 1em;
+  }
+  .wk__bar {
+    margin-top: calc(var(--gap) * 2.4);
+  }
+  .wk__bar-l {
+    grid-column: 1 / -1;
+    margin-bottom: 0.8em;
+  }
+  .wk__pills {
+    grid-column: 1 / -1;
+  }
+  .wk__link {
+    grid-template-columns: var(--wk-thumb) minmax(0, 1fr);
+    row-gap: 0.45em;
+    align-items: start;
+  }
+  .wk__cover {
+    grid-row: 1 / 3;
+  }
+  .wk__name .wk__in {
+    flex-wrap: wrap;
+    row-gap: 0.4em;
+  }
+  .wk__name-t {
+    white-space: normal;
+  }
+  .wk__meta {
+    grid-column: 2 / 3;
+    grid-row: 2;
+  }
+  .wk__rule {
+    grid-row: 3;
+  }
+}

@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: hero
+        working-directory: site
     steps:
       - uses: actions/checkout@v4
 
@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: hero/package-lock.json
+          cache-dependency-path: site/package-lock.json
 
       - id: pages
         uses: actions/configure-pages@v5
@@ -40,7 +40,7 @@ jobs:
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: hero/dist
+          path: site/dist
 
   deploy:
     needs: build
