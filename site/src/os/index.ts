@@ -1,5 +1,4 @@
 import "../styles/os.css";
-import "../styles/game.css";
 import { bus } from "../core/bus";
 import { gsap } from "../core/motion";
 import { navigate } from "../core/router";
@@ -33,6 +32,12 @@ async function enterOS() {
   write("switch:welcomed", "1");
   openWindow(workWindow());
   openWindow(welcomeWindow());
+}
+
+/** Flips to 1998 (if not there already) with NightDrive.exe open, for the "Play in 1998" buttons on the 2026 site */
+export async function playInOS() {
+  await toOS();
+  if (currentMode() === "os") openWindow(gameWindow());
 }
 
 function specFor(id: string): WinSpec | null {
