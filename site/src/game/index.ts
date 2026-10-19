@@ -1,9 +1,10 @@
+import "../styles/game.css";
 import { bus } from "../core/bus";
 import { reducedMotion } from "../core/motion";
 import { setSound, soundOn } from "../os/sound";
 import { PAL } from "./art";
 import { createGameAudio } from "./audio";
-import { LOOK, STILL, createCrt } from "./crt";
+import { CLEAN, LOOK, STILL, createCrt } from "./crt";
 import { NightDrive, type GameState, type Input } from "./engine";
 import { RemoteLeaderboard, cleanName, createLeaderboard, saveName, savedName, validName } from "./leaderboard";
 import { fillRows, gameMarkup, messageRow, pad6 } from "./ui";
@@ -15,6 +16,8 @@ import { fillRows, gameMarkup, messageRow, pad6 } from "./ui";
 export type GameOptions = {
   /** Called when the player closes the game from inside (e.g. an Exit button) */
   onExit?: () => void;
+  /** "crt" (default) runs the picture through the tube; "clean" shows flat, square pixels */
+  look?: "crt" | "clean";
 };
 
 type Panel = "title" | "paused" | "over" | "board" | null;
@@ -370,7 +373,7 @@ export function mountGame(container: HTMLElement, opts: GameOptions = {}): () =>
   let time = 0;
   let inView = true;
   let poll = 0;
-  const look = rm ? STILL : LOOK;
+  const look = opts.look === "clean" ? CLEAN : rm ? STILL : LOOK;
 
   const shown = () => inView && !document.hidden && root.isConnected && (typeof root.checkVisibility !== "function" || root.checkVisibility({ visibilityProperty: true }));
 

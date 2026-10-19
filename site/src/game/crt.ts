@@ -10,6 +10,8 @@ export type Look = { curve: number; scan: number; mask: number; aberr: number; v
 export const LOOK: Look = { curve: 0.045, scan: 0.24, mask: 0.12, aberr: 0.45, vig: 0.3, bloom: 0.18, noise: 0.026, band: 0.03, bright: 1.08 };
 /** Reduced motion keeps the glass and drops everything that moves on its own */
 export const STILL: Look = { ...LOOK, noise: 0, band: 0 };
+/** No tube at all: flat glass and square pixels, for the game played on the 2026 site */
+export const CLEAN: Look = { curve: 0, scan: 0, mask: 0, aberr: 0, vig: 0, bloom: 0, noise: 0, band: 0, bright: 1 };
 
 /** Per frame: `flash` brightens the tube for a crash */
 export type Fx = { time: number; flash: number };

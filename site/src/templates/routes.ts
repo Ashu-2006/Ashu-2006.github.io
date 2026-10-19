@@ -50,7 +50,19 @@ function notFound(base: string) {
 <section class="nf" data-section="notfound" aria-labelledby="nf-title">
   <p class="label">Error 404</p>
   <h1 class="nf__title" id="nf-title"><span class="mask"><span class="mask__in" data-reveal="rise">This page <em>never shipped.</em></span></span></h1>
-  <a class="nf__home" href="${base}" data-cursor-tone="cobalt">Back to the index</a>
+  <div class="nf__drive">
+    <p class="nf__lede" data-reveal="up">Take Night Drive for a spin instead. Three lives, and every score lands on one worldwide board.</p>
+    <div class="nf__modes" role="group" aria-label="Play Night Drive" data-reveal="up" data-delay="0.08">
+      <button class="nf__mode" type="button" data-play-now aria-controls="nf-stage" aria-expanded="false" data-cursor="link">
+        <span class="label nf__mode-k">Now</span><span class="nf__mode-t">Play it here</span>
+      </button>
+      <button class="nf__mode" type="button" data-play-os data-cursor="link">
+        <span class="label nf__mode-k">1998</span><span class="nf__mode-t">Play it on the 1998 desktop</span>
+      </button>
+    </div>
+    <a class="nf__home" href="${base}" data-cursor-tone="cobalt">Back to the index</a>
+  </div>
+  <div class="nf__stage" id="nf-stage" data-nf-stage hidden></div>
 </section>`;
 }
 
