@@ -1,94 +1,90 @@
-import { DUR, d, gsap, ScrollTrigger } from "../core/motion";
+import { bus } from "../core/bus";
 import { lenis, scrollToTarget } from "../core/scroll";
 import { mountReveals } from "../lib/reveal";
 
 /**
- * 404: the line rises in, the footer still works, and Night Drive can be played two ways. "Now" opens it
- * on this page with flat pixels; "1998" ([data-play-os], wired in os/boot.ts) flips to the desktop with
- * NightDrive.exe open.
+ * 404: the line rises in, one way out, and Night Drive driving its attract loop underneath as a preview
+ * that Play turns into the real game. "Or play it in 1998" ([data-play-os], wired in os/boot.ts) flips to the desktop with
+ * NightDrive.exe open, so the preview steps aside while the site is in 1998.
  */
 export function mount(root: HTMLElement) {
   const cleanups = [mountReveals(root)];
-  const now = root.querySelector<HTMLButtonElement>("[data-play-now]");
-  const os = root.querySelector<HTMLButtonElement>("[data-play-os]");
+  const home = root.querySelector<HTMLAnchorElement>("[data-nf-home]");
   const stage = root.querySelector<HTMLElement>("[data-nf-stage]");
-  if (now && os && stage) cleanups.push(mountDrive(now, os, stage));
+  if (home) cleanups.push(mountBack(home));
+  if (stage) cleanups.push(mountPreview(stage));
   return () => cleanups.forEach((fn) => fn());
 }
 
-function mountDrive(btn: HTMLButtonElement, os: HTMLButtonElement, stage: HTMLElement) {
-  let stop: (() => void) | null = null;
-  /* Bumped on every open and close, so a slow chunk load cannot mount into a stage that was closed meanwhile */
-  let token = 0;
-  let tween: gsap.core.Tween | null = null;
-  const label = btn.querySelector<HTMLElement>(".nf__mode-t");
-  const idleText = label?.textContent ?? "";
-  const setOpen = (on: boolean) => {
-    btn.setAttribute("aria-expanded", String(on));
-    if (label) label.textContent = on ? "Stop playing" : idleText;
+/**
+ * Arriving from another page of this site, the way out is back to that page. Arriving from outside (an
+ * old link in a resume, a typed URL) there is nothing of ours to go back to, so it stays a link home.
+ * The router pushes a state object on every client navigation; a fresh load from outside has none.
+ */
+function mountBack(home: HTMLAnchorElement) {
+  const sameOrigin = document.referrer.startsWith(`${location.origin}/`);
+  if (history.length < 2 || (history.state === null && !sameOrigin)) return () => {};
+  home.textContent = "Go back";
+  /* Modified clicks keep the link's own meaning (home, in a new tab); stopping here keeps the router out */
+  const onClick = (e: MouseEvent) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    e.stopPropagation();
+    history.back();
   };
+  home.addEventListener("click", onClick);
+  return () => home.removeEventListener("click", onClick);
+}
 
-  const prefetch = () => void import("../game");
+function mountPreview(stage: HTMLElement) {
+  let stop: (() => void) | null = null;
+  /* Bumped on every start and stop, so a slow chunk load cannot mount into a preview that was stopped meanwhile */
+  let token = 0;
 
-  const open = () => {
+  const start = () => {
+    if (stop) return;
     const t = ++token;
-    setOpen(true);
-    stage.hidden = false;
-    stage.textContent = "";
-    ScrollTrigger.refresh();
-    tween?.kill();
-    tween = gsap.fromTo(
-      stage,
-      { clipPath: "inset(0% 0% 100% 0%)" },
-      { clipPath: "inset(0% 0% 0% 0%)", duration: d(DUR.m), ease: "expoOut", onComplete: () => void gsap.set(stage, { clearProps: "clipPath" }) },
-    );
-    /* Centre the stage in the viewport so the whole road is on screen. Lenis still holds the old page height. */
-    lenis?.resize();
-    scrollToTarget(stage, { offset: -Math.max(0, (window.innerHeight - stage.offsetHeight) / 2) });
     import("../game").then(
       ({ mountGame }) => {
         if (t !== token) return;
-        stop = mountGame(stage, { look: "clean", onExit: () => close() });
-        stage.querySelector<HTMLElement>(".nd")?.focus({ preventScroll: true });
+        stage.textContent = "";
+        stop = mountGame(stage, { look: "clean", preview: true });
       },
       () => {
         if (t !== token) return;
-        stage.innerHTML = `<p class="nf__fail">Night Drive could not load. Check your connection and try again.</p>`;
-        if (label) label.textContent = "Try again";
+        stage.innerHTML = `<p class="nf__fail">Night Drive could not load. Reload the page to try again.</p>`;
       },
     );
   };
 
-  const close = (refocus = true) => {
+  const end = () => {
     token++;
-    tween?.kill();
     stop?.();
     stop = null;
-    stage.hidden = true;
-    stage.textContent = "";
-    gsap.set(stage, { clearProps: "clipPath" });
-    setOpen(false);
-    ScrollTrigger.refresh();
-    if (refocus) btn.focus({ preventScroll: true });
   };
 
-  /* Playing runs the game; pressing again closes it. After a failed load, pressing again retries. */
-  const onNow = () => (stop ? close() : open());
-  /* Two copies of the game would fight over the sound, so the 1998 flip ends this one first */
-  const onOS = () => stop && close(false);
+  /* After the page has painted and settled, so the game never competes with the first frame */
+  let live = true;
+  const kick = () => live && start();
+  if ("requestIdleCallback" in window) requestIdleCallback(kick, { timeout: 1500 });
+  else setTimeout(kick, 300);
+  /* Two copies of the game would fight over the sound and the GPU */
+  const off = bus.on("mode:change", ({ mode }) => (mode === "os" ? end() : start()));
 
-  btn.addEventListener("click", onNow);
-  btn.addEventListener("pointerenter", prefetch, { once: true });
-  btn.addEventListener("focus", prefetch, { once: true });
-  os.addEventListener("click", onOS);
+  /* Play can grow the stage (phones), so centre it once it has its playing size. Lenis still holds the old page height. */
+  const onWake = (e: MouseEvent) => {
+    if (!(e.target as Element).closest("[data-act=wake]")) return;
+    requestAnimationFrame(() => {
+      lenis?.resize();
+      scrollToTarget(stage, { offset: -Math.max(0, (window.innerHeight - stage.offsetHeight) / 2) });
+    });
+  };
+  stage.addEventListener("click", onWake);
 
   return () => {
-    btn.removeEventListener("click", onNow);
-    btn.removeEventListener("pointerenter", prefetch);
-    btn.removeEventListener("focus", prefetch);
-    os.removeEventListener("click", onOS);
-    token++;
-    tween?.kill();
-    stop?.();
+    live = false;
+    stage.removeEventListener("click", onWake);
+    off();
+    end();
   };
 }

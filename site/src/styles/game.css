@@ -110,6 +110,33 @@
   text-align: center;
   text-transform: uppercase;
 }
+/* Preview: the logo straight on the road, the way an arcade cabinet waits for a coin */
+.nd-wake {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  /* up in the sky, clear of the tree line, the road and the car */
+  align-self: start;
+  margin-top: 6%;
+  pointer-events: auto;
+}
+/* nothing to steer until Play */
+.nd[data-view="wake"] .nd__pad {
+  display: none;
+}
+.nd-wake[hidden] {
+  display: none;
+}
+.nd-wake .nd-logo {
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+.nd-wake .nd-btn {
+  min-width: 120px;
+  min-height: 44px;
+}
 .nd-logo span {
   text-shadow:
     2px 2px 0 var(--nd-sun),
