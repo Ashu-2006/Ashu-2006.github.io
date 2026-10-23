@@ -30,7 +30,7 @@ export const chrome = (base: string) => `
           `<li><a class="chrome__link" href="${n.href(base)}" data-nav="${n.id}"><span class="chrome__txt" data-text="${n.label}">${n.label}</span></a>${i < NAV.length - 1 ? '<span class="chrome__comma" aria-hidden="true">,</span>' : ""}</li>`,
       ).join("")}</ul>
     </nav>
-    <p class="chrome__time label"><span class="chrome__city">Jabalpur</span> <time data-clock>00:00 am</time></p>
+    <p class="chrome__time label"><span class="chrome__city">${SITE.city}</span> <time data-clock>00:00 am</time></p>
     <div class="chrome__end">
       <button class="chrome__menu-btn label" type="button" aria-expanded="false" aria-controls="chrome-menu" data-menu-btn><span class="mask"><span class="mask__in" data-menu-label>Menu</span></span></button>
       <div class="chrome__switch">${switchControl()}</div>

@@ -1,11 +1,26 @@
 import { mountReveals } from "../lib/reveal";
-import { mountClock } from "../sections/clock";
+import { mountApproach } from "../sections/approach";
+import { mountClosing } from "../sections/closer";
 import { mountHero } from "../sections/hero";
-import { mountWorks } from "../sections/works";
+import { mountScrambleHover } from "../sections/kit";
+import { mountShowcase } from "../sections/showcase";
+import { mountSkills } from "../sections/skills";
+import { mountTicker } from "../sections/ticker";
+import { mountVoices } from "../sections/voices";
 
-/** Home: hero entrance and letter push, the pinned works stack, the All work row, the footer */
+/** Home (HOME-REBUILD.md): hero, work, skills, the scroll-linked middle, the pinned show case, voices, contact, the strip, the footer */
 export function mount(root: HTMLElement) {
-  const hero = root.querySelector<HTMLElement>(".hero");
-  const cleanups = [mountHero(root), mountWorks(root), mountReveals(root), hero ? mountClock(hero) : () => {}];
+  const contact = root.querySelector<HTMLElement>(".iq");
+  const cleanups = [
+    mountHero(root),
+    mountShowcase(root),
+    mountReveals(root),
+    mountApproach(root),
+    mountSkills(root),
+    mountVoices(root),
+    mountTicker(root),
+    contact ? mountClosing(contact) : () => {},
+    ...Array.from(root.querySelectorAll<HTMLElement>(".hw, .sk, .cr, .wr, .tk"), (el) => mountScrambleHover(el)),
+  ];
   return () => cleanups.forEach((fn) => fn());
 }

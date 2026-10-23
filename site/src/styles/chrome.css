@@ -59,14 +59,16 @@
   transition: opacity var(--dur-s) var(--ease-out);
   pointer-events: none;
 }
-html[data-chrome-tone="media"]:not([data-menu="open"]) .chrome__bar {
+html[data-chrome-tone="media"]:not([data-menu="open"]) .chrome__bar,
+html[data-chrome-tone="ink"]:not([data-menu="open"]) .chrome__bar {
   mix-blend-mode: normal;
   color: var(--on-cobalt);
 }
 html[data-chrome-tone="media"]:not([data-menu="open"]) .chrome__bar::before {
   opacity: 1;
 }
-html[data-chrome-tone="media"]:not([data-menu="open"]) .chrome__city {
+html[data-chrome-tone="media"]:not([data-menu="open"]) .chrome__city,
+html[data-chrome-tone="ink"]:not([data-menu="open"]) .chrome__city {
   opacity: 0.8;
 }
 
