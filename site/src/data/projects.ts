@@ -543,10 +543,10 @@ export const PROJECTS: Project[] = [
   {
     slug: "dash",
     name: "DASH",
-    headline: "A product page that answers the buyer's questions in order",
+    headline: "A product page that does the maths before the buyer has to",
     summary:
-      "A working product-page prototype for Dash of Glow that makes ingredients, pack value and purchase terms clear to a first-time visitor.",
-    org: "Assignment",
+      "DASH sells 60ml wellness shots to people who meet the brand in an Instagram ad. I redesigned how they shop: a page that answers each doubt in order, shows what results really cost, and takes a stranger from ad to checkout.",
+    org: "DASH Wellness",
     year: "2026",
     role: ["Product design", "Frontend"],
     kinds: ["web", "product"],
@@ -564,7 +564,7 @@ export const PROJECTS: Project[] = [
       cost: "The brand story moves down the page, which a brand team has to agree to.",
     },
     result: ["A working prototype and an assignment deliverable. Not evidence of a conversion lift."],
-    shots: [{ file: "dash/cover", alt: "Schematic of a product page with buy box and pack selector" }],
+    shots: [{ file: "dash/cover", alt: "DASH home page: take a shot, it's time to dash, beside the Glow box and bottles on coral" }],
   },
   {
     slug: "udte-bhawre",

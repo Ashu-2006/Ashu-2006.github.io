@@ -1,0 +1,101 @@
+/*
+ * TL;DR mode. html[data-tldr="on"] strikes the skippable runs and darkens what is kept. The strike is a 1px
+ * background line that draws left to right across every line fragment of the run, staggered by --skim-i, so
+ * the cut reads like a pen moving down the copy. Off, both runs are ordinary text.
+ */
+[data-skim="dim"] {
+  background: linear-gradient(currentColor, currentColor) no-repeat 0 58% / 0% 1px;
+  transition:
+    background-size var(--dur-m) var(--ease-out) calc(var(--skim-i, 0) * 40ms),
+    opacity var(--dur-s) var(--ease-out) calc(var(--skim-i, 0) * 40ms);
+}
+html[data-tldr="on"] [data-skim="dim"] {
+  background-size: 100% 1px;
+  opacity: 0.3;
+}
+[data-skim="keep"] {
+  transition: color var(--dur-xs) var(--ease-out);
+}
+html[data-tldr="on"] [data-skim="keep"] {
+  color: var(--ink);
+}
+
+/* The toggle: outlined at rest, cobalt when on, with a close mark */
+.tldr {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0.95em 1.25em 0.9em;
+  border: 1px solid var(--ink);
+  border-radius: var(--r-xs);
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  line-height: 1;
+  background: var(--paper);
+  color: var(--ink);
+  transition:
+    background-color var(--dur-xs) var(--ease-out),
+    border-color var(--dur-xs) var(--ease-out),
+    color var(--dur-xs) var(--ease-out);
+}
+.tldr__x {
+  display: none;
+  font-size: 1.2em;
+}
+.tldr[aria-pressed="true"] {
+  background: var(--cobalt);
+  border-color: var(--cobalt);
+  color: var(--on-cobalt);
+}
+.tldr[aria-pressed="true"] .tldr__x {
+  display: inline;
+}
+@media (hover: hover) and (pointer: fine) {
+  .tldr:hover {
+    background: var(--cobalt);
+    border-color: var(--cobalt);
+    color: var(--on-cobalt);
+  }
+}
+
+/* Floating twin: bottom right while the story is on screen and the inline toggle is not */
+.tldr--float {
+  position: fixed;
+  z-index: var(--z-chrome);
+  right: max(20px, 2.4vw);
+  bottom: max(20px, 2.4vw);
+  border-color: var(--line);
+  box-shadow: 0 6px 24px color-mix(in srgb, var(--ink) 16%, transparent);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition:
+    opacity var(--dur-xs) var(--ease-out),
+    transform var(--dur-s) var(--ease-out),
+    visibility 0s linear var(--dur-xs),
+    background-color var(--dur-xs) var(--ease-out),
+    color var(--dur-xs) var(--ease-out);
+}
+.tldr--float.is-on {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity var(--dur-xs) var(--ease-out),
+    transform var(--dur-s) var(--ease-out),
+    visibility 0s,
+    background-color var(--dur-xs) var(--ease-out),
+    color var(--dur-xs) var(--ease-out);
+}
+@media (max-width: 767px) {
+  .tldr--float {
+    right: 50%;
+    transform: translate(50%, 12px);
+  }
+  .tldr--float.is-on {
+    transform: translate(50%, 0);
+  }
+}

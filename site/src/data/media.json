@@ -27,10 +27,66 @@
   "w": 1625,
   "h": 1225
  },
+ "dash/clip-buy": {
+  "w": 1110,
+  "h": 1350,
+  "video": true
+ },
+ "dash/clip-hiw": {
+  "w": 1800,
+  "h": 882,
+  "video": true
+ },
+ "dash/clip-loader": {
+  "w": 1440,
+  "h": 1020,
+  "video": true
+ },
+ "dash/clip-sticky": {
+  "w": 780,
+  "h": 900,
+  "video": true
+ },
  "dash/cover": {
   "w": 2000,
-  "h": 1250,
-  "schematic": true
+  "h": 1250
+ },
+ "dash/iso-drawer": {
+  "w": 896,
+  "h": 1800
+ },
+ "dash/iso-pcard-burn": {
+  "w": 640,
+  "h": 1112
+ },
+ "dash/iso-pcard-glow": {
+  "w": 640,
+  "h": 1112
+ },
+ "dash/iso-pcard-volume": {
+  "w": 640,
+  "h": 1109
+ },
+ "dash/iso-research": {
+  "w": 1500,
+  "h": 1080
+ },
+ "dash/m-checkout": {
+  "w": 780,
+  "h": 1688
+ },
+ "dash/m-pdp": {
+  "w": 780,
+  "h": 1688
+ },
+ "dash/mobile": {
+  "w": 780,
+  "h": 1688,
+  "video": true
+ },
+ "dash/pdp-full": {
+  "w": 1440,
+  "h": 10506
  },
  "distil/01": {
   "w": 2000,
