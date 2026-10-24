@@ -797,9 +797,136 @@
   "w": 1536,
   "h": 952
  },
+ "shopstr/b-circular-economy": {
+  "w": 1536,
+  "h": 864
+ },
+ "shopstr/b-design-system-iterations": {
+  "w": 1536,
+  "h": 970
+ },
+ "shopstr/b-figjam-buyer-journey": {
+  "w": 1536,
+  "h": 829
+ },
+ "shopstr/b-handoff-plan": {
+  "w": 1536,
+  "h": 658
+ },
+ "shopstr/b-loading-empty-states": {
+  "w": 1536,
+  "h": 1237
+ },
  "shopstr/cover": {
   "w": 1536,
   "h": 1024
+ },
+ "shopstr/s-404": {
+  "w": 1800,
+  "h": 1125
+ },
+ "shopstr/s-buybox": {
+  "w": 1064,
+  "h": 1668
+ },
+ "shopstr/s-cats": {
+  "w": 1800,
+  "h": 311
+ },
+ "shopstr/s-checkout-1": {
+  "w": 1200,
+  "h": 1500
+ },
+ "shopstr/s-checkout-2": {
+  "w": 1200,
+  "h": 1500
+ },
+ "shopstr/s-checkout-3": {
+  "w": 1200,
+  "h": 1500
+ },
+ "shopstr/s-checkout-4": {
+  "w": 1200,
+  "h": 1500
+ },
+ "shopstr/s-checkout-5": {
+  "w": 1200,
+  "h": 1500
+ },
+ "shopstr/s-clip-boot": {
+  "w": 1280,
+  "h": 840,
+  "video": true
+ },
+ "shopstr/s-clip-cart": {
+  "w": 1312,
+  "h": 960,
+  "video": true
+ },
+ "shopstr/s-clip-mscroll": {
+  "w": 780,
+  "h": 1688,
+  "video": true
+ },
+ "shopstr/s-community": {
+  "w": 1600,
+  "h": 1333
+ },
+ "shopstr/s-editors": {
+  "w": 1600,
+  "h": 499
+ },
+ "shopstr/s-m-checkout": {
+  "w": 780,
+  "h": 1688
+ },
+ "shopstr/s-m-listing": {
+  "w": 780,
+  "h": 1688
+ },
+ "shopstr/s-m-market": {
+  "w": 780,
+  "h": 1688
+ },
+ "shopstr/s-m-wallet": {
+  "w": 780,
+  "h": 1688
+ },
+ "shopstr/s-market": {
+  "w": 2000,
+  "h": 1250
+ },
+ "shopstr/s-orders": {
+  "w": 1536,
+  "h": 1000
+ },
+ "shopstr/s-prod-0": {
+  "w": 600,
+  "h": 600
+ },
+ "shopstr/s-prod-1": {
+  "w": 600,
+  "h": 600
+ },
+ "shopstr/s-prod-2": {
+  "w": 600,
+  "h": 600
+ },
+ "shopstr/s-prod-3": {
+  "w": 600,
+  "h": 600
+ },
+ "shopstr/s-reviews": {
+  "w": 1064,
+  "h": 784
+ },
+ "shopstr/s-sell": {
+  "w": 1800,
+  "h": 1125
+ },
+ "shopstr/s-wallet": {
+  "w": 1800,
+  "h": 1125
  },
  "smile-share/01": {
   "w": 2000,

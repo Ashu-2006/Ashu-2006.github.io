@@ -72,6 +72,27 @@
   --pp-swing: cubic-bezier(0.32, 0.72, 0, 1);
   --pp-move: cubic-bezier(0.77, 0, 0.175, 1);
 
+  /* Case: Shopstr redesign ("Sticker Brutalism"). True-neutral greys, one purple, six playful accents. */
+  --sh-paper: #ececec;
+  --sh-paper-2: #e1e1e1;
+  --sh-paper-3: #d6d6d6;
+  --sh-pure: #ffffff;
+  --sh-ink: #121212;
+  --sh-muted: #6b6b6b;
+  --sh-purple: #5a51e5;
+  --sh-purple-soft: #e7e5fb;
+  --sh-orange: #ff8336;
+  --sh-yellow: #ffc313;
+  --sh-red: #ff4040;
+  --sh-green: #25c26e;
+  --sh-blue: #00aeff;
+  --sh-pink: #ff3dac;
+  --sh-yellow-soft: #fff1cc;
+  --sh-green-soft: #d3f5e3;
+  --sh-pink-soft: #ffdcef;
+  --sh-blue-soft: #cdeeff;
+  --sh-jumpy: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
   /* ArmorIQ platform: mirrors the product's tokens.css (light theme) and motion/transitions.ts */
   --aq-bg: #fbfbfb;
   --aq-surface: #ffffff;

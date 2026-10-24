@@ -1,0 +1,1030 @@
+/*
+ * Shopstr: ports of the redesign's own pieces (the sticker library and its pop, the buy row, the letter swap, the
+ * sats-first quote, checkout, weighted reviews, role-gated orders, the shipping enum, the five states). Colours come
+ * from the --sh-* tokens, which mirror the redesign's tokens: true-neutral greys, no shadows, six accents and a purple.
+ * Type uses the site's faces because the redesign's Circular Std is a commercial font.
+ */
+
+.fr--sh {
+  background: var(--sh-paper);
+  color: var(--sh-ink);
+}
+[data-story="shopstr"] .fr__stage > img {
+  width: 100%;
+  height: auto;
+}
+
+/* Shared controls: a segmented group of pills, pressed means ink */
+.px__ccy,
+.od__role,
+.sp__types,
+.st5__tabs,
+.rv__thumb [role="group"],
+.rv__dim [role="group"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.px__ccy button,
+.od__role button,
+.sp__types button,
+.st5__tabs button,
+.rv__thumb button,
+.rv__dim button,
+.ck__nav button,
+.od__reset {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--sh-paper-3);
+  border-radius: var(--r-pill);
+  background: var(--sh-pure);
+  color: var(--sh-ink);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color var(--pp-fast) var(--pp-smooth),
+    border-color var(--pp-fast) var(--pp-smooth),
+    color var(--pp-fast) var(--pp-smooth);
+}
+.px__ccy [aria-pressed="true"],
+.od__role [aria-pressed="true"],
+.sp__types [aria-pressed="true"],
+.st5__tabs [aria-pressed="true"] {
+  background: var(--sh-ink);
+  border-color: var(--sh-ink);
+  color: var(--sh-pure);
+}
+@media (hover: hover) and (pointer: fine) {
+  .px__ccy button:hover,
+  .od__role button:hover,
+  .sp__types button:hover,
+  .st5__tabs button:hover,
+  .rv__thumb button:hover,
+  .rv__dim button:hover,
+  .ck__nav button:hover,
+  .od__reset:hover {
+    border-color: var(--sh-ink);
+  }
+}
+.fr--sh button:focus-visible {
+  outline: 2px solid var(--sh-purple);
+  outline-offset: 2px;
+}
+
+/* Sticker library: hover pops and counter-rotates on the redesign's jumpy curve, a tap plays the reward pop */
+.stk-board {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: clamp(6px, 1vw, 16px);
+}
+.stk {
+  aspect-ratio: 1;
+  padding: 10%;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.stk img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 300ms var(--sh-jumpy);
+}
+@media (hover: hover) and (pointer: fine) {
+  .stk:hover img {
+    transform: scale(1.12) rotate(-12deg);
+  }
+}
+.stk.is-pop img {
+  animation: sh-pop 520ms var(--sh-jumpy);
+}
+@keyframes sh-pop {
+  0% {
+    transform: scale(1) rotate(0);
+  }
+  45% {
+    transform: scale(1.35) rotate(14deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+/* The buy row: price from the wallet, the purple CTA, cart and chat as round stickers */
+.ctl {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 22px;
+  background: var(--sh-ink);
+  color: var(--sh-pure);
+}
+.ctl__price {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-inline: 6px 4px;
+}
+.ctl__price .label {
+  font-size: 9px;
+  color: color-mix(in srgb, var(--sh-pure) 62%, transparent);
+}
+.ctl__price b {
+  font-family: var(--f-mono);
+  font-size: 16px;
+  font-weight: 500;
+}
+.ctl__buy {
+  flex: 1 1 auto;
+  min-height: 48px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--sh-purple);
+  color: var(--sh-pure);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ctl__stk {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: var(--sh-ink);
+  cursor: pointer;
+  transition: transform 300ms var(--sh-jumpy);
+}
+.ctl__stk svg {
+  width: 20px;
+  height: 20px;
+}
+.ctl__stk--cart {
+  background: var(--sh-yellow);
+}
+.ctl__stk--chat {
+  background: var(--sh-green);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ctl__stk:hover {
+    transform: scale(1.08) rotate(-8deg);
+  }
+}
+.ctl__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding-inline: 5px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-pill);
+  background: var(--sh-red);
+  color: var(--sh-pure);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  line-height: 1;
+  transform: scale(0);
+}
+.ctl.has-items .ctl__badge {
+  transform: scale(1);
+}
+.ctl__badge.is-pop {
+  animation: sh-badge 420ms var(--sh-jumpy);
+}
+@keyframes sh-badge {
+  0% {
+    transform: scale(0.4);
+  }
+  60% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.ctl__spark {
+  position: absolute;
+  z-index: 2;
+  right: 52px;
+  bottom: 62%;
+  width: 54px;
+  height: 54px;
+  pointer-events: none;
+  opacity: 0;
+}
+.ctl__spark.is-pop {
+  animation: sh-spark 900ms var(--pp-smooth) both;
+}
+@keyframes sh-spark {
+  0% {
+    opacity: 0;
+    transform: translate(0, 20px) scale(0.2) rotate(-40deg);
+  }
+  30% {
+    opacity: 1;
+    transform: translate(10px, -14px) scale(1.15) rotate(20deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(14px, -22px) scale(1) rotate(8deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(18px, -34px) scale(0.8) rotate(0);
+  }
+}
+
+/* The letter swap: a sticker stands in for the O and spins on hover; sized to its frame, not the viewport */
+.fr--swap .fr__stage {
+  container-type: inline-size;
+}
+.swap-h {
+  font-size: clamp(28px, 14.5cqi, 84px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.swap {
+  display: inline-block;
+  width: 0.78em;
+  height: 0.78em;
+  margin-inline: 0.02em;
+  vertical-align: -0.04em;
+}
+.swap img {
+  width: 100%;
+  height: 100%;
+  transition: transform 600ms var(--sh-jumpy);
+}
+@media (hover: hover) and (pointer: fine) {
+  .swap-h:hover .swap img {
+    transform: rotate(200deg) scale(1.12);
+  }
+}
+
+/* Sats first: the stored value is big and fixed, the currency is a label under it */
+.px {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+.px__sats {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.px__sats b {
+  font-family: var(--f-mono);
+  font-size: clamp(44px, 4.4vw, 68px);
+  font-weight: 500;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.px__sats span {
+  font-family: var(--f-mono);
+  font-size: 15px;
+  color: var(--sh-muted);
+}
+.px__fiat {
+  min-height: 2.2em;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: var(--r-pill);
+  background: var(--sh-pure);
+  font-family: var(--f-mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  transition: background-color var(--pp-fast) var(--pp-smooth);
+}
+.px.is-locked .px__fiat {
+  background: var(--sh-green-soft);
+}
+.px__go {
+  min-height: 46px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--sh-purple);
+  color: var(--sh-pure);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.px.is-locked .px__go {
+  background: var(--sh-ink);
+}
+.px__note {
+  min-height: 2.8em;
+  max-width: 36ch;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--sh-muted);
+}
+
+/* Checkout: five steps, each its own URL in the product; pills jump, Back and Next walk */
+.fr--ck .fr__stage {
+  align-items: stretch;
+}
+.ck {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.ck__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.ck__pill {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px 0 5px;
+  border: 1px solid var(--sh-paper-3);
+  border-radius: var(--r-pill);
+  background: var(--sh-pure);
+  color: var(--sh-ink);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color var(--pp-fast) var(--pp-smooth),
+    border-color var(--pp-fast) var(--pp-smooth),
+    color var(--pp-fast) var(--pp-smooth);
+}
+.ck__pill b {
+  font-weight: inherit;
+}
+.ck__pill span {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--sh-paper);
+  font-family: var(--f-mono);
+  font-size: 11px;
+}
+.ck__pill[aria-pressed="true"] {
+  background: var(--sh-purple);
+  border-color: var(--sh-purple);
+  color: var(--sh-pure);
+}
+.ck__pill[aria-pressed="true"] span {
+  background: var(--sh-pure);
+  color: var(--sh-purple);
+}
+.ck__stage {
+  display: grid;
+  justify-items: center;
+}
+.ck__shot {
+  grid-area: 1 / 1;
+  width: 100%;
+  max-width: 520px;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--pp-fast) var(--pp-smooth),
+    visibility 0s linear var(--pp-fast);
+}
+.ck__shot.is-on {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--pp-fast) var(--pp-smooth);
+}
+.ck__shot img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+.ck__nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.ck__nav [data-ck-next] {
+  background: var(--sh-ink);
+  border-color: var(--sh-ink);
+  color: var(--sh-pure);
+}
+
+/* Crops: each window sits on the part the caption names */
+/* Cut in the gap under the buy bar, so the edge is clean and needs no fade */
+.crop--buybox {
+  aspect-ratio: 1064 / 1226;
+  max-width: 440px;
+  margin-inline: auto;
+  border-radius: 12px;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.crop--buybox > img {
+  width: 100%;
+  height: auto;
+}
+.crop--community {
+  aspect-ratio: 1600 / 1000;
+}
+.crop--community > img {
+  width: 100%;
+  height: auto;
+}
+.crop--wallet,
+.crop--sell {
+  aspect-ratio: 4 / 3;
+}
+.crop--wallet > img {
+  width: 196%;
+  height: auto;
+  margin: -6% 0 0 -53%;
+}
+.crop--sell {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.crop--sell > img {
+  width: 120%;
+  height: auto;
+  margin-left: -14.5%;
+}
+
+/* The journey board zooms out from its title and first stages */
+.fr--fj .zoom > img {
+  width: 100%;
+  height: auto;
+  transform-origin: 22% 30%;
+}
+
+/* A phone cut to its lower part shows the bottom of the screen, where the buy bar sits */
+[data-story="shopstr"] .ph--bottom .ph__screen > img {
+  object-position: bottom center;
+}
+
+/* The audit's friction call: two lanes, a sticker each */
+.fx {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(10px, 1.2vw, 18px);
+}
+.fx__lane {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(20px, 2.4vw, 36px);
+  border-radius: 22px;
+}
+.fx__lane--go {
+  background: var(--sh-green-soft);
+}
+.fx__lane--keep {
+  background: var(--sh-yellow-soft);
+}
+.fx__stk {
+  position: absolute;
+  top: clamp(16px, 2vw, 28px);
+  right: clamp(16px, 2vw, 28px);
+  width: clamp(44px, 5vw, 72px);
+  height: auto;
+}
+.fx__words {
+  font-size: clamp(30px, 3.4vw, 54px);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.fx__why {
+  max-width: 34ch;
+  font-size: 15px;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--sh-ink) 72%, transparent);
+}
+
+/* Weighted reviews: the thumb carries half the score, the rated dimensions share the other half */
+.rv {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.rv__thumb,
+.rv__dim {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  flex-wrap: wrap;
+}
+.rv__thumb > span {
+  font-size: 15px;
+  font-weight: 600;
+}
+.rv__dims {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--sh-paper-3);
+}
+.rv__dim .label {
+  color: var(--sh-muted);
+}
+.rv__dim button {
+  min-height: 32px;
+  padding: 0 11px;
+  font-size: 12px;
+}
+.rv [data-thumb="yes"][aria-pressed="true"],
+.rv [data-v="yes"][aria-pressed="true"] {
+  background: var(--sh-green);
+  border-color: var(--sh-green);
+}
+.rv [data-thumb="no"][aria-pressed="true"],
+.rv [data-v="no"][aria-pressed="true"] {
+  background: var(--sh-red);
+  border-color: var(--sh-red);
+  color: var(--sh-pure);
+}
+.rv [data-v="skip"][aria-pressed="true"] {
+  background: var(--sh-paper-3);
+  border-color: var(--sh-paper-3);
+}
+.rv__out {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--sh-paper-3);
+}
+.rv__out b {
+  font-family: var(--f-mono);
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.rv__stars {
+  --fill: 100%;
+  width: 120px;
+  height: 22px;
+  background: linear-gradient(90deg, var(--sh-yellow) var(--fill), var(--sh-paper-3) 0);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 22'%3E%3Cpath d='M12 1l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.1l-6.4 3.5L7 13.5l-5.3-5 7.2-.9z'/%3E%3C/svg%3E") 0 0 / 24px 22px repeat-x;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 22'%3E%3Cpath d='M12 1l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.1l-6.4 3.5L7 13.5l-5.3-5 7.2-.9z'/%3E%3C/svg%3E") 0 0 / 24px 22px repeat-x;
+}
+.rv__out .label {
+  flex-basis: 100%;
+  color: var(--sh-muted);
+}
+
+/* Orders: four forward states and one exit; the role decides which button exists */
+.od {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.od__track {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  list-style: none;
+}
+.od__track li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--sh-muted);
+}
+.od__track li::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 16px;
+  right: 0;
+  height: 2px;
+  background: var(--sh-paper-3);
+}
+.od__track li:nth-child(4)::before,
+.od__track .od__cancel::before {
+  display: none;
+}
+.od__track li.is-done::before {
+  background: var(--sh-green);
+}
+.od__track i {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--sh-paper-3);
+  background: var(--sh-pure);
+  transition:
+    background-color var(--pp-fast) var(--pp-smooth),
+    border-color var(--pp-fast) var(--pp-smooth),
+    transform 300ms var(--sh-jumpy);
+}
+.od__track .is-done i {
+  border-color: var(--sh-green);
+  background: var(--sh-green);
+}
+.od__track .is-now {
+  color: var(--sh-ink);
+}
+.od__track .is-now i {
+  border-color: var(--sh-ink);
+  background: var(--sh-ink);
+  transform: scale(1.2);
+}
+.od__track .od__cancel {
+  padding-left: 18px;
+  margin-left: 6px;
+  border-left: 1px dashed var(--sh-paper-3);
+}
+.od__track .od__cancel.is-now i {
+  border-color: var(--sh-red);
+  background: var(--sh-red);
+}
+.od__track .od__cancel.is-now {
+  color: var(--sh-red);
+}
+.od__act {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.od__btn {
+  min-height: 46px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--sh-ink);
+  color: var(--sh-pure);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.od__btn[data-tone="red"] {
+  background: var(--sh-red);
+}
+.od__btn[hidden] {
+  display: none;
+}
+.od__note {
+  min-height: 2.8em;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--sh-muted);
+  max-width: 40ch;
+}
+
+/* Shipping: the listing's type decides what checkout can offer */
+.sp {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.sp__desc {
+  min-height: 1.4em;
+  font-size: 15px;
+  font-weight: 500;
+}
+.sp__opts {
+  min-height: 116px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+}
+.sp__opts li {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px 0 42px;
+  position: relative;
+  border: 1px solid var(--sh-paper-3);
+  border-radius: 14px;
+  background: var(--sh-pure);
+  font-size: 14px;
+}
+.sp__opts li::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--sh-paper-3);
+}
+.sp__opts li.is-on {
+  border-color: var(--sh-purple);
+}
+.sp__opts li.is-on::before {
+  border: 4px solid var(--sh-purple);
+}
+.sp__opts b {
+  font-weight: 600;
+}
+.sp__opts span {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: var(--sh-muted);
+}
+.sp__total {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--sh-paper-3);
+}
+.sp__total .label {
+  margin-right: auto;
+  color: var(--sh-muted);
+}
+.sp__total b {
+  font-family: var(--f-mono);
+  font-size: 28px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.sp__total > span:last-child {
+  font-family: var(--f-mono);
+  font-size: 13px;
+  color: var(--sh-muted);
+}
+
+/* Five states: every view shares one cell, so the frame keeps the populated height and nothing reflows */
+.st5 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.st5__stage {
+  display: grid;
+}
+.st5__view {
+  grid-area: 1 / 1;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity var(--pp-fast) var(--pp-smooth),
+    visibility 0s linear var(--pp-fast);
+}
+.st5[data-state="0"] .st5__view--loading,
+.st5[data-state="1"] .st5__view--empty,
+.st5[data-state="2"] .st5__view--noresults,
+.st5[data-state="3"] .st5__view--notfound,
+.st5[data-state="4"] .st5__view--populated {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity var(--pp-fast) var(--pp-smooth);
+}
+.st5__view--loading,
+.st5__view--populated {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(10px, 1.2vw, 18px);
+  align-items: start;
+}
+.pc {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px 14px;
+  border-radius: 18px;
+  background: var(--sh-pure);
+}
+.pc__img {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--sh-paper-2);
+}
+.pc__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pc__t {
+  margin-top: 12px;
+  height: 2.6em;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.pc__p {
+  margin-top: 8px;
+  height: 1.3em;
+  font-family: var(--f-mono);
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--sh-muted);
+}
+.pc__p b {
+  font-weight: 500;
+  color: var(--sh-ink);
+}
+.pc__s {
+  margin-top: 6px;
+  height: 1.3em;
+  line-height: 1.3;
+  color: var(--sh-muted);
+}
+.pc--skel .pc__img,
+.pc--skel .pc__t,
+.pc--skel .pc__p,
+.pc--skel .pc__s {
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--sh-paper-2) 30%, var(--sh-paper) 50%, var(--sh-paper-2) 70%) 0 0 / 300% 100%;
+}
+.pc--skel .pc__img {
+  border-radius: 12px;
+}
+.pc--skel .pc__t {
+  width: 86%;
+}
+.pc--skel .pc__p {
+  width: 46%;
+}
+.pc--skel .pc__s {
+  width: 32%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pc--skel .pc__img,
+  .pc--skel .pc__t,
+  .pc--skel .pc__p,
+  .pc--skel .pc__s {
+    animation: sh-sweep var(--pp-loop) linear infinite;
+  }
+}
+@keyframes sh-sweep {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+.st5__view--empty,
+.st5__view--noresults,
+.st5__view--notfound {
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: var(--sh-pure);
+}
+.st5__msg {
+  max-width: 34ch;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--sh-muted);
+}
+.st5__msg img {
+  width: 76px;
+  height: 76px;
+  margin-bottom: 6px;
+}
+.st5__h {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--sh-ink);
+}
+.st5__cta {
+  margin-top: 8px;
+  padding: 12px 20px;
+  border-radius: var(--r-pill);
+  background: var(--sh-purple);
+  color: var(--sh-pure);
+  font-size: 14px;
+  font-weight: 600;
+}
+.st5__chips {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+.st5__chips i {
+  padding: 8px 14px;
+  border-radius: var(--r-pill);
+  background: var(--sh-yellow-soft);
+  color: var(--sh-ink);
+  font-style: normal;
+  font-size: 13px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stk img,
+  .swap img,
+  .ctl__stk,
+  .od__track i {
+    transition: none;
+  }
+  .stk.is-pop img,
+  .ctl__badge.is-pop,
+  .ctl__spark.is-pop {
+    animation: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .stk-board {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+@media (max-width: 767px) {
+  .stk-board {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .fx {
+    grid-template-columns: 1fr;
+  }
+  .crop--sell {
+    aspect-ratio: 1;
+    -webkit-mask-image: linear-gradient(#000 80%, transparent);
+    mask-image: linear-gradient(#000 80%, transparent);
+  }
+  .crop--sell > img {
+    width: 180%;
+    margin-left: -26%;
+  }
+  .ctl {
+    gap: 8px;
+    padding: 10px;
+  }
+  .ctl__price {
+    display: none;
+  }
+  .ck__pill:not([aria-pressed="true"]) b {
+    display: none;
+  }
+  .ck__pill:not([aria-pressed="true"]) {
+    padding-right: 5px;
+  }
+  .od__track {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .od__track li {
+    flex-direction: row;
+    align-items: center;
+  }
+  .od__track li::before {
+    top: 16px;
+    left: 7px;
+    right: auto;
+    width: 2px;
+    height: 14px;
+  }
+  .od__track .od__cancel {
+    padding: 14px 0 0;
+    margin: 0;
+    border-left: 0;
+    border-top: 1px dashed var(--sh-paper-3);
+  }
+  .st5__view--loading,
+  .st5__view--populated {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
