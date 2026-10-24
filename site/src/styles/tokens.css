@@ -138,6 +138,30 @@
   --nk-wa: #e7f7e1;
   --nk-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Kannada", "Noto Sans Tamil", sans-serif;
 
+  /* ArmorTools console (dark by default): mirrors armoriq-tools src/styles/globals.css @theme */
+  --at-bg: #0d0e10;
+  --at-sidebar: #151619;
+  --at-surface: #1c1e22;
+  --at-border: #34373d;
+  --at-border-soft: rgba(255, 255, 255, 0.06);
+  --at-ink: #fbfbfb;
+  --at-ink-soft: #eaeaea;
+  --at-muted: #b5b1aa;
+  --at-hint: #7c7a75;
+  --at-accent: #ff7a3a;
+  --at-accent-ink: #ff955c;
+  --at-nav-active: #30231d;
+  --at-nav-ink: #ffb58c;
+  --at-ok: #3ba55c;
+  --at-ok-soft: rgba(59, 165, 92, 0.12);
+  --at-danger: #f0605a;
+  --at-danger-soft: rgba(240, 96, 90, 0.12);
+  --at-warn-ink: #ffc078;
+  --at-warn-bg: #2b2218;
+  --at-warn-border: #705031;
+  --at-info: #7aa2ff;
+  --at-chip: rgba(255, 255, 255, 0.06);
+
   /* Type */
   --f-sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --f-serif: "Instrument Serif", "Times New Roman", serif;

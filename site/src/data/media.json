@@ -78,10 +78,81 @@
   "w": 2000,
   "h": 1185
  },
+ "armortools/analytics": {
+  "w": 2000,
+  "h": 1452
+ },
+ "armortools/analytics-light": {
+  "w": 2000,
+  "h": 1452
+ },
+ "armortools/briefing": {
+  "w": 2000,
+  "h": 1433
+ },
+ "armortools/chat": {
+  "w": 1680,
+  "h": 1280
+ },
+ "armortools/clip-analytics": {
+  "w": 1600,
+  "h": 1160,
+  "video": true
+ },
+ "armortools/clip-chat": {
+  "w": 1120,
+  "h": 1200,
+  "video": true
+ },
+ "armortools/clip-lenses": {
+  "w": 1600,
+  "h": 1160,
+  "video": true
+ },
  "armortools/cover": {
   "w": 1544,
   "h": 1080,
   "video": true
+ },
+ "armortools/detail-ask": {
+  "w": 2000,
+  "h": 1452
+ },
+ "armortools/detail-chat": {
+  "w": 2000,
+  "h": 1226
+ },
+ "armortools/detail-timeline": {
+  "w": 2000,
+  "h": 1000
+ },
+ "armortools/detail-tree": {
+  "w": 2000,
+  "h": 1000
+ },
+ "armortools/home": {
+  "w": 2000,
+  "h": 1250
+ },
+ "armortools/home-light": {
+  "w": 2000,
+  "h": 1452
+ },
+ "armortools/intent": {
+  "w": 2000,
+  "h": 903
+ },
+ "armortools/list": {
+  "w": 2000,
+  "h": 1452
+ },
+ "armortools/mascot": {
+  "w": 1160,
+  "h": 1640
+ },
+ "armortools/policies": {
+  "w": 2000,
+  "h": 1226
  },
  "atherna/01": {
   "w": 2000,
