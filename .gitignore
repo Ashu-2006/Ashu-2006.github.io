@@ -17,3 +17,10 @@ SITE-STRUCTURE.md
 # Working docs and research notes stay local
 .research/
 site/BRIEF.md
+case-studies/
+HOME-REBUILD.md
+OLD-SITE-CONTENT.md
+IMAGE-SIZES.md
+
+# Case-study captures and capture tools stay local
+.shots/

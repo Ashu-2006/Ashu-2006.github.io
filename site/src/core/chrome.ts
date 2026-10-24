@@ -46,7 +46,8 @@ export function initChrome(el: HTMLElement) {
    * visible media in #main that crosses the bar's resting line across a quarter of the width counts.
    */
   const row = bar.querySelector<HTMLElement>(".chrome__row");
-  const MEDIA = "img, video, canvas, [data-chrome-tone='media']";
+  /* [data-chrome-tone="ink"] marks a solid black section: light type, but no scrim, since there is nothing busy to read over */
+  const MEDIA = "img, video, canvas, [data-chrome-tone]";
   /* The media box as painted: clipped by every ancestor that clips (overflow or clip-path), up to #main */
   const paintedRect = (n: HTMLElement, main: HTMLElement) => {
     const r = n.getBoundingClientRect();
@@ -71,18 +72,20 @@ export function initChrome(el: HTMLElement) {
     const y = row.offsetTop + row.offsetHeight / 2;
     const minW = window.innerWidth * 0.25;
     const main = document.getElementById("main");
-    let media = false;
+    let tone = "";
     for (const n of Array.from(main?.querySelectorAll<HTMLElement>(MEDIA) ?? [])) {
+      /* Media that owns its own tone (the show case window, clipped to a card until it fills) opts out here */
+      if (n.closest("[data-chrome-skip]")) continue;
       const raw = n.getBoundingClientRect();
       if (raw.top > y || raw.bottom < y || raw.width < minW) continue;
       const r = paintedRect(n, main!);
       if (r.top > y || r.bottom < y || r.width < minW) continue;
       const cs = getComputedStyle(n);
       if (cs.visibility === "hidden" || Number(cs.opacity) === 0 || !n.checkVisibility({ opacityProperty: true })) continue;
-      media = true;
+      tone = n.dataset.chromeTone === "ink" ? "ink" : "media";
       break;
     }
-    if (media) html.dataset.chromeTone = "media";
+    if (tone) html.dataset.chromeTone = tone;
     else delete html.dataset.chromeTone;
   };
   window.addEventListener("resize", setTone, { passive: true });

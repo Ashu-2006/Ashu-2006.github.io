@@ -19,7 +19,7 @@ export function initGrain() {
   el.style.backgroundImage = `url(${c.toDataURL("image/png")})`;
 }
 
-/** Every [data-clock] shows the time in Jabalpur */
+/** Every [data-clock] shows the time in SITE.timeZone */
 export function initClock() {
   const tick = () => {
     const now = localTime();

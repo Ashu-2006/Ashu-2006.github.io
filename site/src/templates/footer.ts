@@ -1,24 +1,26 @@
 import { SITE } from "../content";
 import { esc } from "../lib/html";
-import { MORPH_SHAPES, SHAPE_BOX } from "../sections/shapes";
 import { socialItems } from "./contact";
 
-/** The compact footer band on every page except Contact. Behaviour lives in sections/footer.ts. */
+/**
+ * The footer on every page except Contact, on the ink surface. The inquiries line, then "Let's talk" set edge to
+ * edge as the way into Contact (its letters swap face under the pointer, like the hero), then the small print. Behaviour in sections/footer.ts.
+ */
 export const footer = (base: string) => `
-<footer class="foot page-x" data-section="footer" aria-labelledby="foot-title">
+<footer class="foot tone-ink page-x" data-section="footer" data-chrome-tone="ink" aria-labelledby="foot-title">
   <h2 class="sr-only" id="foot-title">Contact</h2>
-  <div class="foot__main">
-    <a class="foot__talk" href="${base}contact/" data-foot-talk>
-      <svg class="foot__mark" viewBox="0 0 ${SHAPE_BOX} ${SHAPE_BOX}" aria-hidden="true"><path data-morph-shape d="${MORPH_SHAPES[0]}"/></svg>
-      <span class="foot__talk-t">Let's <em>talk</em></span>
-      <svg class="foot__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-    </a>
-    <a class="label foot__email" href="mailto:${SITE.email}" data-scramble-hover data-cursor-tone="cobalt"><span data-scramble-text>${esc(SITE.email)}</span></a>
+  <div class="foot__top">
+    <p class="label foot__k">Contact</p>
+    <p class="label foot__ask">For all inquiries, write to<br><a class="foot__mail" href="mailto:${SITE.email}" data-scramble-hover><span data-scramble-text>${esc(SITE.email)}</span></a></p>
   </div>
+  <a class="foot__mark" href="${base}contact/" data-sig aria-label="Let's talk, contact page">
+    <span class="foot__mark-in"><span data-swap data-radius="170">Let's</span><em><span data-swap data-radius="170">talk</span></em></span>
+  </a>
   <div class="foot__bottom">
+    <p class="label foot__name">${esc(SITE.name)}</p>
+    <p class="label foot__copy">&copy; ${new Date().getFullYear()}<br>All rights reserved</p>
+    <p class="label foot__where">${esc(SITE.location)}<br><time class="foot__clock" data-clock>&nbsp;</time></p>
     <ul class="foot__socials" aria-label="Elsewhere">${socialItems("foot__social")}</ul>
-    <p class="label foot__where">${esc(SITE.location)} <time class="foot__clock" data-clock>&nbsp;</time></p>
-    <p class="label foot__copyright">&copy; ${new Date().getFullYear()} ${esc(SITE.name)}</p>
-    <button class="label foot__totop" type="button" data-foot-top data-cursor-tone="cobalt">Back to top</button>
+    <button class="label foot__totop" type="button" data-foot-top>[ Back to top ]</button>
   </div>
 </footer>`;

@@ -18,9 +18,14 @@ export type GameOptions = {
   onExit?: () => void;
   /** "crt" (default) runs the picture through the tube; "clean" shows flat, square pixels */
   look?: "crt" | "clean";
+  /**
+   * Opens on the moving road with only the logo and Play, and leaves focus where it is, for a game that
+   * sits on a page as a preview. Play brings up the New game dialog.
+   */
+  preview?: boolean;
 };
 
-type Panel = "title" | "paused" | "over" | "board" | null;
+type Panel = "wake" | "title" | "paused" | "over" | "board" | null;
 
 const KEYS: Record<string, keyof Input> = {
   ArrowLeft: "left",
@@ -74,6 +79,7 @@ export function mountGame(container: HTMLElement, opts: GameOptions = {}): () =>
   const screen = $("[data-screen]");
   const out = $<HTMLCanvasElement>(".nd__crt");
   const panels = {
+    wake: $("[data-panel=wake]"),
     title: $("[data-panel=title]"),
     paused: $("[data-panel=paused]"),
     over: $("[data-panel=over]"),
@@ -121,7 +127,11 @@ export function mountGame(container: HTMLElement, opts: GameOptions = {}): () =>
   const syncSound = () => root.querySelectorAll<HTMLInputElement>("[data-sound]").forEach((c) => (c.checked = soundOn()));
 
   function show(next: Panel, focus?: HTMLElement | null) {
-    /* move focus first, so a hidden focused button never drops focus to the body (which would pause play) */
+    /*
+     * Reveal the next panel, move focus into it, and only then hide the rest: a hidden element cannot take
+     * focus, and a hidden focused button drops focus to the body (which would pause play)
+     */
+    if (next) panels[next].hidden = false;
     if (focus) focus.focus({ preventScroll: true });
     else if (next === null) root.focus({ preventScroll: true });
     (Object.keys(panels) as (keyof typeof panels)[]).forEach((k) => (panels[k].hidden = k !== next));
@@ -268,7 +278,8 @@ export function mountGame(container: HTMLElement, opts: GameOptions = {}): () =>
     }
     if (e.key === "Enter" && onRoot && !e.repeat) {
       e.preventDefault();
-      if (panel === "title") form.requestSubmit();
+      if (panel === "wake") showTitle();
+      else if (panel === "title") form.requestSubmit();
       else if (panel === "over" || panel === "board") playAgain();
     }
   });
@@ -298,7 +309,8 @@ export function mountGame(container: HTMLElement, opts: GameOptions = {}): () =>
   listen(root, "click", (e: MouseEvent) => {
     const act = (e.target as Element).closest<HTMLElement>("[data-act]")?.dataset.act;
     if (!act) return;
-    if (act === "board") void openBoard(panel);
+    if (act === "wake") showTitle();
+    else if (act === "board") void openBoard(panel);
     else if (act === "again") playAgain();
     else if (act === "rename") showTitle(true);
     else if (act === "resume") resume();
@@ -406,7 +418,10 @@ export function mountGame(container: HTMLElement, opts: GameOptions = {}): () =>
 
   function invalidate() {
     window.clearTimeout(poll);
-    if (!raf && shown()) raf = requestAnimationFrame(frame);
+    if (raf) return;
+    /* still hidden by a parent's visibility (a reveal mid-fade, say): keep looking until it shows */
+    if (shown()) raf = requestAnimationFrame(frame);
+    else if (inView && !document.hidden && root.isConnected) poll = window.setTimeout(invalidate, 500);
   }
 
   function syncCursor(s: GameState) {
@@ -436,7 +451,10 @@ export function mountGame(container: HTMLElement, opts: GameOptions = {}): () =>
   });
   ro.observe(screen);
 
-  showTitle();
+  if (opts.preview) {
+    engine.toTitle();
+    show("wake");
+  } else showTitle();
   syncCursor(engine.state);
   invalidate();
 

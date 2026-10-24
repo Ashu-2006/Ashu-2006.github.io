@@ -1,5 +1,15 @@
 import { KINDS, PROJECTS, type Project, type Shot } from "../content";
 import { esc, mediaInfo, mediaTag, mediaUrl, pad2 } from "../lib/html";
+/**
+ * Projects told as a visual story replace the summary, blocks, gallery, decision and result with their own sections.
+ * A story is any templates/stories/<slug>.ts that exports story(); kit.ts holds the shared parts and is skipped.
+ */
+type StoryModule = { story?: (base: string, p: Project) => string; ready?: boolean };
+const STORIES = Object.fromEntries(
+  Object.entries(import.meta.glob<StoryModule>("./stories/*.ts", { eager: true }))
+    .map(([path, mod]) => [path.slice("./stories/".length, -3), mod.ready === false ? undefined : mod.story] as const)
+    .filter((e): e is readonly [string, NonNullable<StoryModule["story"]>] => Boolean(e[1])),
+);
 
 /**
  * Gallery shots that repeat the cover at nearly the same framing. Measured once with a 16px luminance
@@ -21,6 +31,7 @@ const FRAMED_COVERS = new Set([
   "ivish-website",
   "kuzara-green",
   "distil",
+  "dash",
 ]);
 const INSET_COVERS = new Set(["shopstr"]);
 const heroClass = (slug: string) =>
@@ -183,6 +194,17 @@ function next(base: string, p: Project) {
   </a>`;
 }
 
+function standard(base: string, p: Project) {
+  return `<section class="case__summary page-x" aria-label="Summary">
+        <p class="label case__block-label" data-reveal="scramble">Overview</p>
+        <p class="case__lede" data-reveal="lines">${esc(p.summary)}</p>
+      </section>
+      ${blocks(p)}
+      ${gallery(base, p)}
+      ${decision(p)}
+      ${result(p)}`;
+}
+
 /**
  * The case page, the auge details structure condensed. A sticky hero (cover media, 120% oversized)
  * sits behind a 100dvh spacer; a paper sheet slides up over it. The title is a sticky
@@ -211,14 +233,7 @@ export function caseStudy(base: string, p: Project) {
     </div>
     <div class="case__sheet">
       ${info(p)}
-      <section class="case__summary page-x" aria-label="Summary">
-        <p class="label case__block-label" data-reveal="scramble">Overview</p>
-        <p class="case__lede" data-reveal="lines">${esc(p.summary)}</p>
-      </section>
-      ${blocks(p)}
-      ${gallery(base, p)}
-      ${decision(p)}
-      ${result(p)}
+      ${STORIES[p.slug]?.(base, p) ?? standard(base, p)}
     </div>
   </div>
   ${next(base, p)}

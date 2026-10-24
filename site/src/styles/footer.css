@@ -1,131 +1,129 @@
-/* Compact footer band (Agent B), on every page except Contact */
+/*
+ * Footer (templates/footer.ts), on every page except Contact, on the ink surface: the enquiries line, the wordmark
+ * fitted edge to edge (sections/closer.ts sets --mark-fs), then the small print.
+ */
 .foot {
-  position: relative;
   display: grid;
-  gap: calc(var(--gap) * 3);
-  padding-top: calc(var(--gutter) * 2);
-  padding-bottom: var(--gutter);
-  border-top: 1px solid var(--line);
+  /* A fixed track: an auto one would grow to the nowrap wordmark, and fitText would then size to that */
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--gap) * 1.6);
+  padding-block: var(--section-y) var(--gutter);
 }
-.foot__main,
+.foot__top,
 .foot__bottom {
   display: grid;
   grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
   column-gap: var(--gap);
-  align-items: baseline;
+  align-items: start;
 }
-.foot__talk {
-  grid-column: 1 / 8;
-  justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.32em;
-  font-size: var(--t-lg);
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.03em;
+.foot__k {
+  grid-column: 7 / 10;
 }
-.foot__talk em {
-  font-size: 1.08em;
-  padding-right: 0.05em;
+.foot__ask {
+  grid-column: 10 / 13;
+  color: var(--mute);
 }
-.foot__mark {
-  flex: none;
-  width: 0.62em;
-  height: 0.62em;
-  overflow: visible;
-  fill: var(--cobalt);
+.foot__mail,
+.foot__social,
+.foot__totop {
+  color: var(--ink);
+  transition: color var(--dur-xs) var(--ease-out);
 }
-.foot__arrow {
-  flex: none;
-  width: 0.7em;
-  margin-left: 0.1em;
-  transition: transform var(--dur-s) var(--ease-out);
-}
-.foot__talk:hover .foot__arrow,
-.foot__talk:focus-visible .foot__arrow {
-  transform: translateX(0.18em);
-}
-.foot__email {
-  grid-column: 8 / 13;
-  justify-self: end;
-}
-.foot__email:hover,
+.foot__mail:hover,
+.foot__mail:focus-visible,
 .foot__social:hover,
-.foot__totop:hover {
+.foot__social:focus-visible,
+.foot__totop:hover,
+.foot__totop:focus-visible {
   color: var(--cobalt);
 }
-.foot__socials {
-  grid-column: 1 / 6;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4em 1.6em;
+
+.foot__mark {
+  display: block;
+  font-size: var(--mark-fs, 17vw);
+  font-weight: 500;
+  line-height: 0.78;
+  letter-spacing: var(--track-display);
+  white-space: nowrap;
 }
-.foot__social,
-.foot__email,
-.foot__totop {
-  transition: color var(--dur-xs) var(--ease-out);
+.foot__mark-in {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.22em;
+  padding-block: 0.06em 0.02em;
+}
+.foot__mark-in em {
+  font-size: 1.06em;
+  padding-right: 0.04em;
+}
+
+.foot__name {
+  grid-column: 1 / 7;
+}
+.foot__copy {
+  grid-column: 7 / 9;
+  color: var(--mute);
+}
+.foot__where {
+  grid-column: 9 / 11;
+}
+.foot__clock {
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
+.foot__socials {
+  grid-column: 11 / 12;
+  display: grid;
+  justify-items: start;
+  gap: 0.15em;
+  padding: 0;
+  list-style: none;
 }
 /* Hit area at least 24x24 (WCAG 2.2 target size) without moving the type: padding offset by negative margin */
 .foot__social,
 .foot__totop {
   display: inline-block;
   min-width: 24px;
-  padding: 6px 8px;
-  margin: -6px -8px;
-  text-align: center;
-}
-.foot__where {
-  grid-column: 6 / 9;
-}
-.foot__clock {
-  margin-left: 0.6em;
-  color: var(--mute);
-  font-variant-numeric: tabular-nums;
-}
-.foot__copyright {
-  grid-column: 9 / 11;
-  color: var(--mute);
+  padding: 4px 6px;
+  margin: -4px -6px;
 }
 .foot__totop {
-  grid-column: 11 / 13;
+  grid-column: 12 / 13;
   justify-self: end;
+  white-space: nowrap;
 }
 
 @media (max-width: 1023px) {
-  .foot__talk {
-    grid-column: 1 / -1;
+  .foot__k,
+  .foot__ask {
+    grid-column: span 6;
   }
-  .foot__email {
-    grid-column: 1 / -1;
-    justify-self: start;
-    margin-top: 1.2em;
+  .foot__name {
+    grid-column: 1 / 5;
   }
-  .foot__socials {
-    grid-column: 1 / -1;
-  }
-  .foot__where,
-  .foot__copyright,
-  .foot__totop {
-    margin-top: 1.2em;
+  .foot__copy {
+    grid-column: 5 / 8;
   }
   .foot__where {
-    grid-column: 1 / 6;
-  }
-  .foot__copyright {
-    grid-column: 6 / 10;
-  }
-  .foot__totop {
-    grid-column: 10 / 13;
+    grid-column: 8 / 11;
   }
 }
 @media (max-width: 767px) {
-  .foot__where,
-  .foot__copyright {
+  .foot__k,
+  .foot__ask {
     grid-column: 1 / -1;
   }
-  .foot__copyright {
-    margin-top: 0.4em;
+  .foot__ask {
+    margin-top: 0.8em;
+  }
+  .foot__bottom {
+    row-gap: 1.4em;
+  }
+  .foot__name,
+  .foot__copy,
+  .foot__where,
+  .foot__socials {
+    grid-column: span 2;
   }
   .foot__totop {
     grid-column: 1 / -1;

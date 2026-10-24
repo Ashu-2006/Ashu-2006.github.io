@@ -1,0 +1,828 @@
+/*
+ * Case stories: projects told visually. Wide side margins, a serif claim per section with its TL;DR paragraph beside
+ * it, and every capture inside a padded frame. Frame anatomy: breadcrumb top left, tag top right, one short caption
+ * bottom left, media on the stage between them, allowed to bleed off one edge. Bento text lives inside frames or
+ * outside the whole bento, never under a tile.
+ * This file is the shared kit (templates/stories/kit.ts). A project's own component ports live in styles/stories/<slug>.css.
+ */
+.story {
+  --story-x: 15vw;
+  --story-y: clamp(120px, 12vw, 200px);
+  --gap-b: max(12px, 1.11vw);
+  --fr-p: clamp(20px, 2.6vw, 44px);
+  --fr-r: 20px;
+  --prose: max(16px, 1.18vw);
+  position: relative;
+}
+
+/* Demo controls keep the native pointer: the site cursor's difference blend would invert the colours being shown */
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor .story [data-cursor="hide"],
+  html.has-cursor .story [data-cursor="hide"] * {
+    cursor: pointer !important;
+  }
+}
+
+.story__x {
+  padding-inline: var(--story-x);
+}
+
+.story__sec {
+  padding-top: var(--story-y);
+}
+
+.story--dash > .story__sec:last-of-type {
+  padding-bottom: var(--story-y);
+}
+
+/* Prose: the TL;DR-able voice. Muted until TL;DR darkens what is kept. */
+.prose {
+  font-size: var(--prose);
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 34em;
+  text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------ section head */
+.sh {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap-b);
+  row-gap: 28px;
+  align-items: end;
+  margin-bottom: clamp(48px, 5vw, 88px);
+}
+
+.sh__main {
+  grid-column: 1 / span 7;
+}
+
+.sh__side {
+  grid-column: 9 / -1;
+  display: grid;
+  gap: 24px;
+}
+
+.sh__label {
+  display: flex;
+  gap: 1.4em;
+  color: var(--mute);
+  margin-bottom: 22px;
+}
+
+.sh__n {
+  color: var(--cobalt);
+}
+
+.sh__title {
+  font-family: var(--f-serif);
+  font-weight: 400;
+  font-size: max(36px, 4.3vw);
+  line-height: 1.02;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+.sh__aside {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sh__hint {
+  color: var(--mute);
+}
+
+/* ------------------------------------------------------------------ frames */
+.fr {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: var(--fr-p);
+  border-radius: var(--fr-r);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--paper-2);
+  color: var(--ink);
+}
+
+.fr--cream {
+  background: var(--dash-cream);
+}
+
+.fr--white {
+  background: var(--dash-white);
+}
+
+.fr--pale {
+  background: var(--dash-glow-pale);
+}
+
+.fr--soft {
+  background: var(--dash-glow-soft);
+}
+
+.fr--glow {
+  background: var(--dash-glow);
+  color: var(--dash-ink);
+}
+
+.fr--ink {
+  background: var(--dash-ink);
+  color: var(--dash-cream);
+}
+
+.fr__crumb {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 0.5em;
+  color: color-mix(in srgb, currentColor 55%, transparent);
+  margin-bottom: var(--fr-p);
+  padding-right: 6em;
+}
+
+.fr__crumb b {
+  font-weight: 500;
+  color: currentColor;
+}
+
+.fr__crumb span {
+  opacity: 0.6;
+}
+
+.fr__crumb b,
+.fr--ink .fr__crumb b {
+  color: inherit;
+}
+
+.fr__stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fr__foot {
+  margin-top: var(--fr-p);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.fr__cap {
+  position: relative;
+  z-index: 2;
+  font-size: max(13px, 0.9vw);
+  line-height: 1.4;
+  max-width: 34ch;
+  color: color-mix(in srgb, currentColor 78%, transparent);
+  text-wrap: pretty;
+}
+
+.fr__tag {
+  position: absolute;
+  z-index: 3;
+  top: var(--fr-p);
+  right: var(--fr-p);
+  padding: 0.55em 0.85em 0.5em;
+  border-radius: var(--r-pill);
+  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  line-height: 1;
+}
+
+/* An intro block inside the frame: question, answer */
+.fr__intro {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 8px;
+  max-width: 30ch;
+  margin-bottom: var(--fr-p);
+}
+
+.fr__q-n {
+  color: var(--cobalt);
+}
+
+.fr--ink .fr__q-n {
+  color: var(--dash-glow);
+}
+
+.fr__q {
+  font-family: var(--f-serif);
+  font-size: max(24px, 2.1vw);
+  line-height: 1.05;
+}
+
+.fr__a {
+  font-size: max(13px, 0.9vw);
+  line-height: 1.45;
+  color: color-mix(in srgb, currentColor 72%, transparent);
+}
+
+/* A browser window around a desktop capture */
+.win {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--dash-cream);
+  box-shadow: 0 30px 60px -36px color-mix(in srgb, var(--dash-ink) 55%, transparent);
+}
+
+.win__bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding-inline: 12px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+
+.win__bar i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--faint);
+}
+
+.win__bar span {
+  margin-inline: auto;
+  padding: 2px 12px;
+  border-radius: var(--r-pill);
+  background: var(--paper-2);
+  font-family: var(--f-mono);
+  font-size: 10px;
+  color: var(--mute);
+  transform: translateX(-20px);
+}
+
+.win img,
+.win video {
+  width: 100%;
+  height: auto;
+}
+
+/* Clips: a recording, rounded, on its own ground */
+.clip {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.clip > img,
+.clip > video {
+  width: 100%;
+  height: auto;
+}
+
+.clip--flat {
+  border-radius: 0;
+}
+
+/* Crops: a capture zoomed to one part, faded where it is cut */
+.crop {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(#000 70%, transparent);
+  mask-image: linear-gradient(#000 70%, transparent);
+}
+
+.crop > img {
+  max-width: none;
+}
+
+/* A phone body. --bottom shows the lower part of a screen, --top the upper part. */
+.ph {
+  width: 70%;
+  padding: 9px;
+  border-radius: 46px;
+  background: var(--ink);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--paper) 18%, transparent), 0 40px 70px -40px color-mix(in srgb, var(--ink) 70%, transparent);
+  align-self: flex-start;
+}
+
+.ph__screen {
+  position: relative;
+  border-radius: 37px;
+  overflow: hidden;
+  aspect-ratio: 390 / 844;
+  background: var(--dash-cream);
+}
+
+.ph__screen::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  left: 50%;
+  width: 30%;
+  height: 22px;
+  border-radius: 12px;
+  background: var(--ink);
+  transform: translateX(-50%);
+}
+
+.ph__screen > img,
+.ph__screen > video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.ph--bottom {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  padding-top: 0;
+  align-self: flex-start;
+}
+
+.ph--bottom .ph__screen {
+  aspect-ratio: 780 / 900;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.ph--bottom .ph__screen::before {
+  display: none;
+}
+
+.ph--top {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-bottom: 0;
+}
+
+.ph--top .ph__screen {
+  aspect-ratio: 390 / 560;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* ------------------------------------------------------------------- bento */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--gap-b);
+}
+
+.b-full {
+  grid-column: 1 / -1;
+}
+
+.b-half {
+  grid-column: span 6;
+}
+
+.b-wide,
+.b-8 {
+  grid-column: span 8;
+}
+
+.b-narrow,
+.b-4 {
+  grid-column: span 4;
+}
+
+.b-5 {
+  grid-column: span 5;
+}
+
+.b-7 {
+  grid-column: span 7;
+}
+
+/* 01 Overview */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap-b);
+  margin-bottom: clamp(48px, 5vw, 88px);
+}
+
+.stats__item {
+  border-top: 1px solid var(--ink);
+  padding-top: 18px;
+}
+
+.stats__item dt {
+  font-family: var(--f-serif);
+  font-size: max(36px, 3.6vw);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.stats__item dd {
+  margin-top: 12px;
+  font-size: max(13px, 0.9vw);
+  line-height: 1.45;
+  color: var(--ink-2);
+  max-width: 24ch;
+}
+
+.fr--hero .fr__stage {
+  padding-inline: 4%;
+}
+
+.fr--hero .win {
+  max-width: 1000px;
+}
+
+.zoom {
+  overflow: hidden;
+}
+
+.zoom > img {
+  transform-origin: 16% 78%;
+}
+
+.fr--clip .fr__stage {
+  align-items: flex-end;
+}
+
+.fr--spec .fr__stage {
+  align-items: stretch;
+}
+
+.spec {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.spec__title {
+  font-family: var(--f-serif);
+  font-size: max(30px, 2.8vw);
+  line-height: 1.02;
+}
+
+.spec dl {
+  display: grid;
+}
+
+.spec__vs {
+  display: flex;
+  gap: clamp(20px, 3vw, 48px);
+}
+
+.spec__vs p {
+  display: grid;
+  gap: 6px;
+}
+
+.spec__vs b {
+  font-family: var(--f-serif);
+  font-weight: 400;
+  font-size: max(44px, 4.6vw);
+  line-height: 0.9;
+}
+
+.spec__vs p:last-child b {
+  color: var(--cobalt);
+}
+
+.spec__vs .label {
+  color: var(--mute);
+}
+
+.spec dl > div {
+  display: grid;
+  grid-template-columns: 9em 1fr;
+  gap: 16px;
+  padding-block: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.spec dt {
+  color: var(--ink);
+  padding-top: 0.25em;
+}
+
+.spec dd {
+  font-size: max(14px, 1vw);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+/* 05 Structure: the page scrolls inside its window while the question it answers lights up */
+.story__ia {
+  padding-top: 0;
+  margin-top: var(--story-y);
+}
+
+.ia__pin {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap-b);
+  align-items: center;
+}
+
+.ia__copy {
+  grid-column: 1 / span 5;
+}
+
+.ia__copy .sh {
+  display: block;
+  margin-bottom: 36px;
+}
+
+.ia__copy .sh__side {
+  margin-top: 24px;
+}
+
+.ia__frame {
+  grid-column: 7 / -1;
+}
+
+.ia__list {
+  display: grid;
+}
+
+.ia__item {
+  display: grid;
+  grid-template-columns: 2.6em 1fr auto;
+  align-items: baseline;
+  gap: 0.5em;
+  padding-block: 0.65em;
+  border-top: 1px solid var(--line);
+  color: var(--mute);
+  transition: color var(--dur-xs) var(--ease-out);
+}
+
+.ia__item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.ia__q {
+  font-size: max(15px, 1.1vw);
+  line-height: 1.2;
+}
+
+.ia__item.is-on {
+  color: var(--ink);
+}
+
+.ia__item.is-on .ia__n {
+  color: var(--cobalt);
+}
+
+.ia__window {
+  position: relative;
+  height: min(64vh, 640px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--dash-cream);
+}
+
+.ia__page {
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 1024px) {
+  .story__ia {
+    height: 340vh;
+  }
+  .ia__pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+  .js .ia__window {
+    overflow: hidden;
+  }
+  .js .ia__page {
+    will-change: transform;
+  }
+}
+
+/* 08 Mobile: phone frames, each bleeding off one edge */
+.bento--mobile .m-a {
+  grid-column: span 6;
+  grid-row: span 2;
+  min-height: clamp(560px, 52vw, 820px);
+}
+
+.bento--mobile .m-b,
+.bento--mobile .m-c {
+  grid-column: span 6;
+  aspect-ratio: 1.35;
+}
+
+.m-a .fr__stage {
+  align-items: flex-start;
+}
+
+.m-a .ph {
+  width: 76%;
+  margin-inline: auto;
+  margin-bottom: calc(var(--fr-p) * -6);
+}
+
+.m-b .fr__stage,
+.m-c .fr__stage {
+  position: absolute;
+  inset: 0;
+  justify-content: flex-end;
+  padding-right: 9%;
+}
+
+.m-b .ph {
+  width: 56%;
+  align-self: flex-start;
+  transform: translateY(-16%);
+}
+
+.m-c .ph {
+  width: 46%;
+  align-self: flex-start;
+  margin-top: 16%;
+}
+
+.m-b .fr__foot,
+.m-c .fr__foot {
+  margin-top: auto;
+}
+
+.m-b .fr__cap,
+.m-c .fr__cap {
+  max-width: 18ch;
+}
+
+/* Outcome: big number and claim on the left, the evidence as bars on the right */
+.res {
+  border-top: 1px solid var(--line);
+}
+
+.res__row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap-b);
+  align-items: center;
+  padding-block: clamp(36px, 4vw, 64px);
+  border-bottom: 1px solid var(--line);
+}
+
+.res__main {
+  grid-column: 1 / span 6;
+}
+
+.res__n {
+  font-family: var(--f-serif);
+  font-size: max(64px, 7vw);
+  line-height: 0.9;
+  color: var(--cobalt);
+}
+
+.res__title {
+  margin-top: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: max(20px, 1.6vw);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.res__text {
+  margin-top: 14px;
+}
+
+.res__viz {
+  grid-column: 8 / -1;
+  display: grid;
+  gap: 12px;
+}
+
+.res__kind {
+  color: var(--mute);
+  margin-bottom: 4px;
+}
+
+.res__bar {
+  display: grid;
+  grid-template-columns: 9em 1fr 6em;
+  align-items: center;
+  gap: 12px;
+}
+
+.res__track {
+  height: 10px;
+  border-radius: var(--r-pill);
+  background: var(--paper-2);
+  overflow: hidden;
+}
+
+.res__fill {
+  display: block;
+  width: var(--w);
+  height: 100%;
+  border-radius: inherit;
+  background: var(--cobalt);
+  transform-origin: left center;
+}
+
+.res__val {
+  text-align: right;
+}
+
+.story__foot {
+  margin-top: 32px;
+  color: var(--mute);
+}
+
+/* Photographic mockup slot: media on the left, one line beside it */
+.mock {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap-b);
+  align-items: end;
+}
+
+.mock__media {
+  grid-column: 1 / span 8;
+  border-radius: var(--fr-r);
+  overflow: hidden;
+}
+
+.mock__media > img {
+  width: 100%;
+  height: auto;
+}
+
+.mock__text {
+  grid-column: 10 / -1;
+}
+
+/* Tablet */
+@media (max-width: 1023px) {
+  .story {
+    --story-x: 8vw;
+  }
+  .sh__main,
+  .sh__side {
+    grid-column: 1 / -1;
+  }
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 32px;
+  }
+  .bento > *,
+  .bento--mobile .m-a,
+  .bento--mobile .m-b,
+  .bento--mobile .m-c {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+  .ia__copy,
+  .ia__frame,
+  .res__main,
+  .res__viz,
+  .mock__media,
+  .mock__text {
+    grid-column: 1 / -1;
+  }
+  .ia__frame {
+    margin-top: 40px;
+  }
+  .res__viz,
+  .mock__text {
+    margin-top: 28px;
+  }
+}
+
+/* Phone */
+@media (max-width: 767px) {
+  .story {
+    --story-x: 24px;
+    --fr-p: 20px;
+  }
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .spec dl > div,
+  .res__bar {
+    grid-template-columns: 7em 1fr;
+  }
+  .res__val {
+    grid-column: 2;
+    text-align: left;
+  }
+  .bento--mobile .m-b,
+  .bento--mobile .m-c {
+    aspect-ratio: 0.95;
+  }
+  .m-b .ph,
+  .m-c .ph {
+    width: 54%;
+  }
+}

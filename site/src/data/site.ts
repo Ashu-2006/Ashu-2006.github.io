@@ -1,11 +1,18 @@
+import { PROJECTS } from "./projects";
+
 export const SITE = {
   name: "Ashutosh Rana",
   role: "Product designer",
   url: "https://ashutoshdesigns.me",
-  /* Placeholder until a public inbox is confirmed */
-  email: "hello@ashutoshdesigns.me",
-  location: "Jabalpur, India",
-  timeZone: "Asia/Kolkata",
+  /* The public inbox, as on the old site */
+  email: "ashutosh.designs0402@gmail.com",
+  /** Cal.com page with 15 and 30 minute intro calls */
+  booking: "https://cal.com/ashutosh-rana",
+  /* Based in California now; the About copy still says where he is from */
+  location: "California, USA",
+  /** The short place name beside every clock */
+  city: "California",
+  timeZone: "America/Los_Angeles",
   availability: "Taking on one freelance project for November",
   description:
     "Ashutosh Rana, product designer. Design and frontend at ArmorIQ, lead product design at Ivish AI. Interfaces built for real data.",
@@ -15,6 +22,7 @@ export const SOCIALS = [
   { label: "X", handle: "@AshutoshDes", href: "https://x.com/AshutoshDes" },
   { label: "LinkedIn", handle: "ashutosh-rana04", href: "https://www.linkedin.com/in/ashutosh-rana04" },
   { label: "Behance", handle: "ashutoshrana04", href: "https://www.behance.net/ashutoshrana04" },
+  { label: "Dribbble", handle: "Ash_Designs_", href: "https://dribbble.com/Ash_Designs_" },
   { label: "GitHub", handle: "Ashu-2006", href: "https://github.com/Ashu-2006" },
 ] as const;
 
@@ -114,4 +122,111 @@ export const FACTS = [
   { value: "2020", label: "Started learning design from YouTube, during lockdown" },
   { value: "2nd", label: "Place at Hackbyte 4.0, out of 120+ teams" },
   { value: "SoB '26", label: "Summer of Bitcoin, Designer track at Shopstr" },
+] as const;
+
+export type Quote = { text: string; name: string; role: string };
+
+/* Verbatim from the old site (ashutoshdesigns.me), typos fixed. Names and titles checked against LinkedIn, Oct 2026. */
+export const QUOTES: Quote[] = [
+  {
+    text: "As a founding designer, Ashutosh led the design across multiple products, including mobile apps and SaaS platforms. He built a scalable component system in Figma, which improved design consistency and made it easier for developers to implement features efficiently.",
+    name: "Ankith M",
+    role: "Co-founder, Ivish AI (VerbX)",
+  },
+  {
+    text: "Helped us define the flows and designed core screens for our AI communication tools. His focus on clarity made complex AI interactions feel simple for users.",
+    name: "Sahith Vutukuri",
+    role: "Founder and CEO, Ivish AI",
+  },
+  {
+    text: "Our website conversion rate improved significantly thanks to Ashutosh's expertise.",
+    name: "Sanjay Kumar",
+    role: "Co-founder, Kuzara Green",
+  },
+  {
+    text: "He went beyond visuals, restructuring our content and user flow made our offering much easier to understand. The site not only looked better but communicated our product more clearly.",
+    name: "Ujjwal",
+    role: "Co-founder, BeBest",
+  },
+];
+
+export type Skill = { name: string; sub: string; body: string; projects: string[] };
+
+/** Home, Skill(s): four rows, each backed by images. Entries are "slug:shot", picked so no shot repeats and the covers in Work are not shown again. */
+export const SKILLS: Skill[] = [
+  {
+    name: "Product design",
+    sub: "Flows, states, interface",
+    body: "From a rough brief to screens that hold up with real data. Flows first, then every state the happy path skips.",
+    projects: ["armoriq-platform:1", "shopstr:1", "verbx:1", "smile-share:1", "shopstr:4"],
+  },
+  {
+    name: "Design systems",
+    sub: "Tokens, components, rules",
+    body: "Tokens and primitives that work in Figma and in code, so the tenth page stays as consistent as the first.",
+    projects: ["armoriq-design-system:0", "social-content-tool:1", "verbx:3", "shopstr:2"],
+  },
+  {
+    name: "Frontend build",
+    sub: "React, TypeScript, motion",
+    body: "I build what I design, in React and TypeScript, so nothing gets lost between Figma and the repo.",
+    projects: ["dash:0", "udte-bhawre:0", "jobshapes:1", "verbx:5"],
+  },
+  {
+    name: "Brand and web",
+    sub: "Identity, landing pages",
+    body: "Identities and marketing sites for founders. Fast to load, one clear message.",
+    projects: ["kuzara-green:1", "impressions-of-japan:1", "atherna:1", "sri-krishna-sagar:1", "ivish-website:1"],
+  },
+];
+
+/** Home, The advantage. Each number traces to a fact elsewhere on the site (About, EXPERIENCE, the evidence on each project). */
+export const STATS = [
+  { value: 6, suffix: "", label: "Years of design, self-taught since 2020" },
+  { value: 3, suffix: "", label: "Product teams shipping my work in 2026" },
+  { value: PROJECTS.filter((p) => p.evidence === "Shipped" || p.evidence === "Delivered to client").length, suffix: "", label: "Projects shipped or delivered to clients" },
+] as const;
+
+/** Home, Questions: what a founder asks before the call, each tagged with one word */
+export const FAQ = [
+  {
+    q: "Do you code?",
+    tag: "Skills",
+    a: "Yes, in production. At ArmorIQ I design the product and build its frontend in React and TypeScript. I'm not replacing your engineers. I just don't want the design to lose quality between Figma and the repo.",
+  },
+  {
+    q: "How do you work with developers?",
+    tag: "Collaboration",
+    a: "I open the repo before I open Figma. The data shapes, the components that exist and the slow API decide more of the interface than a moodboard does. Most of the time I build the interface myself, so handoff is a pull request.",
+  },
+  {
+    q: "How do you use AI in your workflow?",
+    tag: "AI",
+    a: "Claude Code and Cursor for building, v0 for quick drafts. AI gets me a first version fast. I decide what stays, and I check every state by hand.",
+  },
+  {
+    q: "What does your process look like?",
+    tag: "Process",
+    a: "Read the product and the code. Map the flows and every state. Design inside the real system, then build it. Ship small, watch it get used, fix what breaks.",
+  },
+  {
+    q: "Do you work on multiple projects at once?",
+    tag: "Focus",
+    a: "One freelance project at a time, next to my roles at ArmorIQ and Ivish AI. That's why the availability line says one.",
+  },
+  {
+    q: "What kind of teams do you work best with?",
+    tag: "Fit",
+    a: "Early teams building with AI or data-heavy products, who want design and frontend from one person and like to ship every week.",
+  },
+  {
+    q: "Do you handle brand as well as product?",
+    tag: "Scope",
+    a: "Yes. Kuzara Green and Impressions of Japan were brand work, and I build the marketing sites too. Product is where most of my time goes now.",
+  },
+  {
+    q: "What results have you driven?",
+    tag: "Impact",
+    a: "A design system at ArmorIQ that works in Figma and in code. A Figma component system at VerbX that made features easier to build, in their co-founder's words. A website for Kuzara Green whose co-founder says conversion improved significantly.",
+  },
 ] as const;

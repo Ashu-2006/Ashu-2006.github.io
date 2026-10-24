@@ -3,6 +3,9 @@ import { lenis } from "../core/scroll";
 import { mountReveals } from "../lib/reveal";
 import type { Route } from "../templates/routes";
 
+/** One lazy chunk per story view: views/stories/<slug>.ts, each exporting mount(root) */
+const STORY_VIEWS = import.meta.glob<{ mount: (root: HTMLElement) => () => void }>(["./stories/*.ts", "!./stories/kit.ts"]);
+
 /** How far the page drives itself on arrival, as a share of the viewport. The title finishes shrinking here too. */
 const INTRO = 0.45;
 
@@ -72,6 +75,16 @@ export function mount(root: HTMLElement, _route?: Route) {
 
   let dead = false;
   let unlock: (() => void) | null = null;
+  let stopStory: (() => void) | null = null;
+
+  /* Story projects carry their own demos; their code loads only on their page, found by slug */
+  const story = page.querySelector<HTMLElement>("[data-story]");
+  const loadStory = story && STORY_VIEWS[`./stories/${story.dataset.story}.ts`];
+  if (story && loadStory) {
+    loadStory().then((m) => {
+      if (!dead) stopStory = m.mount(story);
+    });
+  }
   const anims: gsap.core.Animation[] = [];
   const triggers: ScrollTrigger[] = [];
 
@@ -228,6 +241,7 @@ export function mount(root: HTMLElement, _route?: Route) {
   return () => {
     dead = true;
     unlock?.();
+    stopStory?.();
     gsap.ticker.remove(followHeader);
     stopReveals();
     anims.forEach((a) => a.kill());

@@ -8,6 +8,10 @@ import "./styles/loader.css";
 import "./styles/home.css";
 import "./styles/footer.css";
 import "./styles/case.css";
+import "./styles/story.css";
+/* One stylesheet per case story, picked up by filename */
+import.meta.glob("./styles/stories/*.css", { eager: true });
+import "./styles/tldr.css";
 import "./styles/about.css";
 import "./styles/work.css";
 import "./styles/playground.css";
@@ -68,7 +72,10 @@ async function boot() {
     if (getPhase() !== "idle") setPhase("idle");
   }
 
-  if (import.meta.env.DEV) (window as unknown as { __app: object }).__app = { lenis };
+  if (import.meta.env.DEV) {
+    (window as unknown as { __app: object }).__app = { lenis };
+    void import("./dev/agentation").then((m) => m.mountAgentation());
+  }
 }
 
 boot();

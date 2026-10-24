@@ -25,6 +25,11 @@ export function gameMarkup(touch: boolean, canExit: boolean) {
 <div class="nd__screen" data-screen>
   <canvas class="nd__crt" aria-hidden="true"></canvas>
   <div class="nd__layer">
+    <div class="nd-wake" data-panel="wake" hidden>
+      <p class="nd-logo" aria-hidden="true"><span>Night Drive</span></p>
+      <button class="nd-btn nd-btn--default" type="button" data-act="wake" aria-label="Play Night Drive">Play</button>
+    </div>
+
     <section class="nd-dlg nd-dlg--title" data-panel="title" aria-labelledby="${id("t")}" hidden>
       ${bar(id("t"), "New game")}
       <div class="nd-dlg__body">

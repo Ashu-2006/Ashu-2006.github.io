@@ -247,7 +247,7 @@ export function buildDesktop(act: (a: DeskAction) => void): Desktop {
     const t = timeFmt.format(now);
     if (clock.textContent !== t) clock.textContent = t;
     clock.dateTime = now.toISOString();
-    clock.title = `${dateFmt.format(now)}, Jabalpur`;
+    clock.title = `${dateFmt.format(now)}, ${SITE.city}`;
   };
   const setClock = (on: boolean) => {
     clearInterval(clockTimer);

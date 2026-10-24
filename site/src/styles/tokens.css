@@ -1,12 +1,13 @@
 /*
  * Switch: design tokens. Two modes share one ink and one accent.
- * Modern is a warm paper editorial site. OS (ASH/OS 98) is the same content on a cobalt desktop.
+ * Modern is a white editorial site. OS (ASH/OS 98) is the same content on a cobalt desktop.
  * Use these variables only. A raw hex or a new duration in a page stylesheet is a bug.
  */
 :root {
   /* Color: modern */
-  --paper: #f3f1eb;
-  --paper-2: #e9e6dd;
+  --paper: #ffffff;
+  /* Neutral, not warm: the page is pure white now, so the placeholder grey must not read as cream */
+  --paper-2: #f1f1f1;
   --ink: #0f0f0e;
   --ink-2: #3a3936;
   /* 0.62 keeps 11px mono labels at about 5.2:1 on paper (WCAG AA). --faint is for rules and decoration, never text. */
@@ -15,7 +16,7 @@
   --line: rgba(15, 15, 14, 0.14);
   --cobalt: #2c33f5;
   --cobalt-deep: #161bb0;
-  --on-cobalt: #f3f1eb;
+  --on-cobalt: #ffffff;
 
   /* Color: ASH/OS 98 */
   --os-desk: #2c33f5;
@@ -31,6 +32,20 @@
   /* The one orange in the system: the shutdown screen only */
   --os-safe: #f2a33a;
 
+  /* Case: DASH. The client's own palette, used only inside its case story and its live component ports. */
+  --dash-ink: #231f1a;
+  --dash-cream: #fffdf6;
+  --dash-white: #ffffff;
+  --dash-glow: #ff836b;
+  --dash-glow-pale: #ffbfb2;
+  --dash-glow-soft: #ffe9e4;
+  --dash-volume: #94bd43;
+  --dash-volume-pale: #c4dba4;
+  --dash-volume-soft: #eaf2e0;
+  --dash-burn: #e59c06;
+  --dash-burn-pale: #efca99;
+  --dash-burn-soft: #f9ecdc;
+
   /* Type */
   --f-sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --f-serif: "Instrument Serif", "Times New Roman", serif;
@@ -44,6 +59,9 @@
   --t-lg: max(28px, 3.125vw);
   --t-xl: max(52px, 8.333vw);
   --t-xxl: max(64px, 15.278vw);
+  /* Section headings (70px at 1440) and their sub-headings (36px): calmer than display, so white space carries the page */
+  --t-h2: max(40px, 4.861vw);
+  --t-h3: max(26px, 2.5vw);
 
   --lh-tight: 0.86;
   --lh-display: 0.95;
@@ -57,6 +75,8 @@
   --gap: max(12px, 1.042vw);
   --col: calc((100vw - 2 * var(--gutter) - 11 * var(--gap)) / 12);
   --section-y: clamp(96px, 11.111vw, 200px);
+  /* Home rhythm: more air between sections than inner pages */
+  --section-y-lg: clamp(128px, 15.278vw, 280px);
 
   /* Shape */
   --r-xs: 3px;
@@ -88,4 +108,24 @@
     --cols: 4;
     --col: calc((100vw - 2 * var(--gutter) - 3 * var(--gap)) / 4);
   }
+}
+
+/*
+ * Inverse surface: the home closer and the footer. The same semantic names with flipped values, so a component
+ * written for paper works unchanged on ink. Cobalt lifts to #7a7fff here: the brand #2c33f5 is 2.2:1 on ink,
+ * #7a7fff is 5.7:1 (WCAG AA for small text), and ink type on it is 5.7:1 too.
+ */
+.tone-ink {
+  --paper: #0f0f0e;
+  --paper-2: #1c1c1a;
+  --ink: #ffffff;
+  --ink-2: #c8c8c8;
+  --mute: rgba(255, 255, 255, 0.62);
+  --faint: rgba(255, 255, 255, 0.28);
+  --line: rgba(255, 255, 255, 0.16);
+  --cobalt: #7a7fff;
+  --cobalt-deep: #5a60f0;
+  --on-cobalt: #0f0f0e;
+  background: var(--paper);
+  color: var(--ink);
 }

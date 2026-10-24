@@ -149,29 +149,3 @@ export function mountMorph(area: HTMLElement, trailClass: string): () => void {
     trails.forEach((t) => t.remove());
   };
 }
-
-/**
- * The small footer mark: the same diamond-to-circle morph, played forward while `link` is hovered or
- * focused and back on leave. No trails, no tracking: it stays light.
- */
-export function mountHoverMorph(link: HTMLElement): () => void {
-  const shape = link.querySelector<SVGPathElement>("[data-morph-shape]");
-  if (!shape || reducedMotion()) return () => {};
-  const tl = morphTimeline(shape);
-  const state = { p: 0 };
-  const go = (p: number) => gsap.to(state, { p, duration: DUR.m, ease: "expoOut", overwrite: true, onUpdate: () => void tl.progress(state.p) });
-  const on = () => go(1);
-  const off = () => go(0);
-  link.addEventListener("pointerenter", on);
-  link.addEventListener("pointerleave", off);
-  link.addEventListener("focus", on);
-  link.addEventListener("blur", off);
-  return () => {
-    gsap.killTweensOf(state);
-    tl.kill();
-    link.removeEventListener("pointerenter", on);
-    link.removeEventListener("pointerleave", off);
-    link.removeEventListener("focus", on);
-    link.removeEventListener("blur", off);
-  };
-}

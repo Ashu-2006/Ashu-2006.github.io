@@ -1,5 +1,5 @@
 import { bus } from "./bus";
-import { DUR, gsap, reducedMotion } from "./motion";
+import { DUR, ScrollTrigger, gsap, reducedMotion } from "./motion";
 import { startScroll, stopScroll } from "./scroll";
 import { buildScrambleTitle, counterText, pageShift } from "./transition";
 
@@ -58,6 +58,8 @@ export async function runLoader(): Promise<void> {
   root.setAttribute("aria-hidden", "true");
   overlay.append(root);
   html.dataset.loaded = "1";
+  /* Releasing the clip brings back a classic scrollbar without a resize event; re-measure so pins drop the 15px */
+  ScrollTrigger.refresh();
   stopScroll();
 
   if (seen) {
@@ -77,7 +79,7 @@ export async function runLoader(): Promise<void> {
   root.innerHTML = `
     <div class="loader__inner">
       <div class="loader__name ts"></div>
-      <p class="loader__sub label"><span class="mask"><span class="mask__in">Product designer, Jabalpur</span></span></p>
+      <p class="loader__sub label"><span class="mask"><span class="mask__in">Product designer, California</span></span></p>
     </div>
     <div class="loader__count label mask"><span class="mask__in">000</span></div>
     <div class="loader__sheet"><div class="curtain__bg"></div></div>`;

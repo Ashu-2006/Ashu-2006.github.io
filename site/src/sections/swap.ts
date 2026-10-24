@@ -37,7 +37,8 @@ export class Swap {
     sr.className = "sr-only";
     sr.textContent = text;
     this.live = document.createElement("span");
-    this.live.className = "sw";
+    /* "swap", not "sw": story.css owns .sw (its colour swatches) */
+    this.live.className = "swap";
     this.live.setAttribute("aria-hidden", "true");
     root.append(sr, this.live);
 
@@ -69,10 +70,15 @@ export class Swap {
     this.live.replaceChildren(...this.joined(this.words));
     if (this.rows) {
       const groups: HTMLSpanElement[][] = [];
-      let top = NaN;
+      /*
+       * A new line starts only past half a line height. At fractional display scales (125%, 250%) words on one
+       * line report tops a pixel apart, and an exact match put every word on its own row.
+       */
+      const tolerance = parseFloat(getComputedStyle(this.root).fontSize) * 0.5;
+      let top = -Infinity;
       for (const w of this.words) {
-        const y = Math.round(w.offsetTop);
-        if (y !== top) {
+        const y = w.getBoundingClientRect().top;
+        if (y - top > tolerance) {
           top = y;
           groups.push([]);
         }
@@ -123,9 +129,11 @@ export class Swap {
   private hit(i: number) {
     const c = this.chars[i];
     window.clearTimeout(c.timer);
-    if (!c.face) c.el.style.width = `${c.el.getBoundingClientRect().width}px`;
+    const width = c.face ? 0 : c.el.getBoundingClientRect().width;
     c.face = this.pickFace(i);
     c.el.dataset.face = c.face;
+    /* Lock the width in em of the swapped face, not px, so a refit of the lockup (fitText) still scales it */
+    if (width) c.el.style.width = `${width / parseFloat(getComputedStyle(c.el).fontSize)}em`;
     c.busy = true;
     c.timer = window.setTimeout(() => this.revert(c), HOLD_MS);
   }
