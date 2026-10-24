@@ -586,6 +586,24 @@ export const PROJECTS: Project[] = [
     shots: [{ file: "papersseum/cover", alt: "Papersseum home: the wordmark beside a live arena where five pixel bots fight for territory" }],
   },
   {
+    slug: "navu-kavacha",
+    name: "Navu Kavacha",
+    headline: "A shared record for every bin of restaurant waste, owned by the people who move it",
+    summary:
+      "Navu Kavacha turns the hand-off of restaurant wet waste in Bengaluru into a record both sides sign. I reframed the brief from scheduling to trust, designed the collector and restaurant apps around two-touch handovers, and built a presenter that plays twelve flows.",
+    org: "IIITDM Jabalpur",
+    year: "2026",
+    role: ["Product strategy", "Product design", "Frontend"],
+    kinds: ["product", "concept"],
+    tier: "case",
+    evidence: "Live prototype",
+    work: [
+      "I replaced a rating-and-tiers concept with a handover record: two touches on the collector's phone become a receipt for the kitchen and a work passbook the collector owns.",
+    ],
+    result: ["Twelve flows and 57 steps playable in the presenter, in Kannada, Tamil and English."],
+    shots: [{ file: "navu-kavacha/cover", alt: "Three phones in the Navu Kavacha presenter: the collector's done screen, the restaurant's receipt and a WhatsApp message" }],
+  },
+  {
     slug: "udte-bhawre",
     name: "Udte Bhawre",
     headline: "AI companions that live beside the work",

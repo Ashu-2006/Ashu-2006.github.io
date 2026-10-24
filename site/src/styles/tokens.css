@@ -112,6 +112,32 @@
   --aq-base: 200ms;
   --aq-slow: 320ms;
 
+  /* Navu Kavacha: mirrors the app's tailwind.config.js. Restaurant green, collector orange, bins match their streams. */
+  --nk-canvas: #faf9f7;
+  --nk-surface: #ffffff;
+  --nk-sunk: #f5f2ec;
+  --nk-line: #dad4c8;
+  --nk-line-soft: #eee9df;
+  --nk-ink: #000000;
+  --nk-muted: #55534e;
+  --nk-r: #067f4b;
+  --nk-r-ink: #02492a;
+  --nk-r-tint: #e6f6ee;
+  --nk-c: #c2410c;
+  --nk-c-hover: #ad3a0b;
+  --nk-c-ink: #7c2d12;
+  --nk-c-tint: #ffedd5;
+  --nk-wet: #15803d;
+  --nk-wet-tint: #dcfce7;
+  --nk-dry: #1d4ed8;
+  --nk-dry-tint: #dbeafe;
+  --nk-sanitary: #b91c1c;
+  --nk-sanitary-tint: #fee2e2;
+  --nk-warn: #b45309;
+  --nk-warn-tint: #fef3c7;
+  --nk-wa: #e7f7e1;
+  --nk-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Kannada", "Noto Sans Tamil", sans-serif;
+
   /* Type */
   --f-sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --f-serif: "Instrument Serif", "Times New Roman", serif;

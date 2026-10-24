@@ -288,6 +288,117 @@
   "w": 1800,
   "h": 1200
  },
+ "navu-kavacha/c-check": {
+  "w": 780,
+  "h": 1736
+ },
+ "navu-kavacha/c-done": {
+  "w": 780,
+  "h": 1731
+ },
+ "navu-kavacha/c-extract": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/c-home": {
+  "w": 780,
+  "h": 1736
+ },
+ "navu-kavacha/c-language": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/c-passbook": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/c-pay": {
+  "w": 780,
+  "h": 1737
+ },
+ "navu-kavacha/c-route": {
+  "w": 780,
+  "h": 1736
+ },
+ "navu-kavacha/c-scan": {
+  "w": 780,
+  "h": 1736
+ },
+ "navu-kavacha/c-team": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/c-wait": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/clip-handover": {
+  "w": 1400,
+  "h": 1046,
+  "video": true
+ },
+ "navu-kavacha/clip-mixed": {
+  "w": 1240,
+  "h": 1182,
+  "video": true
+ },
+ "navu-kavacha/clip-wait": {
+  "w": 760,
+  "h": 1062,
+  "video": true
+ },
+ "navu-kavacha/cover": {
+  "w": 1400,
+  "h": 1046
+ },
+ "navu-kavacha/i-verify": {
+  "w": 780,
+  "h": 1736
+ },
+ "navu-kavacha/r-flag": {
+  "w": 780,
+  "h": 1731
+ },
+ "navu-kavacha/r-kit": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/r-month": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/r-question": {
+  "w": 780,
+  "h": 1736
+ },
+ "navu-kavacha/r-receipt": {
+  "w": 780,
+  "h": 1731
+ },
+ "navu-kavacha/r-resolved": {
+  "w": 780,
+  "h": 1731
+ },
+ "navu-kavacha/r-streams": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/r-thanks": {
+  "w": 780,
+  "h": 1736
+ },
+ "navu-kavacha/v0-dignity": {
+  "w": 780,
+  "h": 1688
+ },
+ "navu-kavacha/v0-home": {
+  "w": 780,
+  "h": 1688
+ },
+ "navu-kavacha/w-whatsapp": {
+  "w": 780,
+  "h": 1731
+ },
  "papersseum/clip-forge": {
   "w": 1400,
   "h": 898,
