@@ -1,12 +1,107 @@
 {
+ "armoriq-design-system/clip-badge": {
+  "w": 1400,
+  "h": 756,
+  "video": true
+ },
+ "armoriq-design-system/clip-playground": {
+  "w": 1400,
+  "h": 784,
+  "video": true
+ },
+ "armoriq-design-system/clip-systems": {
+  "w": 1400,
+  "h": 876,
+  "video": true
+ },
  "armoriq-design-system/cover": {
   "w": 1506,
   "h": 1776,
   "video": true
  },
+ "armoriq-design-system/launcher": {
+  "w": 2000,
+  "h": 1250
+ },
+ "armoriq-design-system/p-button": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/p-color": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/p-intro": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/p-skill": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/p-states": {
+  "w": 2000,
+  "h": 962
+ },
+ "armoriq-design-system/t-button": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/t-color": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/t-components": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/t-intro": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/t-policies": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/t-run-detail": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/t-type": {
+  "w": 2000,
+  "h": 1546
+ },
  "armoriq-platform/01": {
   "w": 1752,
   "h": 1010,
+  "video": true
+ },
+ "armoriq-platform/agent-peek": {
+  "w": 1080,
+  "h": 856
+ },
+ "armoriq-platform/certificates": {
+  "w": 2000,
+  "h": 1214
+ },
+ "armoriq-platform/clip-graph": {
+  "w": 1440,
+  "h": 844,
+  "video": true
+ },
+ "armoriq-platform/clip-kill": {
+  "w": 1400,
+  "h": 742,
+  "video": true
+ },
+ "armoriq-platform/clip-persona": {
+  "w": 1440,
+  "h": 900,
+  "video": true
+ },
+ "armoriq-platform/clip-wizard": {
+  "w": 1080,
+  "h": 640,
   "video": true
  },
  "armoriq-platform/cover": {
@@ -14,10 +109,117 @@
   "h": 1118,
   "video": true
  },
+ "armoriq-platform/graph-empty": {
+  "w": 1560,
+  "h": 940
+ },
+ "armoriq-platform/graph-full": {
+  "w": 2000,
+  "h": 1172
+ },
+ "armoriq-platform/graph-sparse": {
+  "w": 1560,
+  "h": 940
+ },
+ "armoriq-platform/kill-intent": {
+  "w": 960,
+  "h": 676
+ },
+ "armoriq-platform/kill-open": {
+  "w": 1960,
+  "h": 720
+ },
+ "armoriq-platform/mcp-peek": {
+  "w": 1460,
+  "h": 1480
+ },
+ "armoriq-platform/overview": {
+  "w": 2000,
+  "h": 1250
+ },
+ "armoriq-platform/v1-builder": {
+  "w": 2000,
+  "h": 1080
+ },
+ "armoriq-platform/wizard": {
+  "w": 2000,
+  "h": 1185
+ },
+ "armortools/analytics": {
+  "w": 2000,
+  "h": 1452
+ },
+ "armortools/analytics-light": {
+  "w": 2000,
+  "h": 1452
+ },
+ "armortools/briefing": {
+  "w": 2000,
+  "h": 1433
+ },
+ "armortools/chat": {
+  "w": 1680,
+  "h": 1280
+ },
+ "armortools/clip-analytics": {
+  "w": 1600,
+  "h": 1160,
+  "video": true
+ },
+ "armortools/clip-chat": {
+  "w": 1120,
+  "h": 1200,
+  "video": true
+ },
+ "armortools/clip-lenses": {
+  "w": 1600,
+  "h": 1160,
+  "video": true
+ },
  "armortools/cover": {
   "w": 1544,
   "h": 1080,
   "video": true
+ },
+ "armortools/detail-ask": {
+  "w": 2000,
+  "h": 1452
+ },
+ "armortools/detail-chat": {
+  "w": 2000,
+  "h": 1226
+ },
+ "armortools/detail-timeline": {
+  "w": 2000,
+  "h": 1000
+ },
+ "armortools/detail-tree": {
+  "w": 2000,
+  "h": 1000
+ },
+ "armortools/home": {
+  "w": 2000,
+  "h": 1250
+ },
+ "armortools/home-light": {
+  "w": 2000,
+  "h": 1452
+ },
+ "armortools/intent": {
+  "w": 2000,
+  "h": 903
+ },
+ "armortools/list": {
+  "w": 2000,
+  "h": 1452
+ },
+ "armortools/mascot": {
+  "w": 1160,
+  "h": 1640
+ },
+ "armortools/policies": {
+  "w": 2000,
+  "h": 1226
  },
  "atherna/01": {
   "w": 2000,
@@ -224,6 +426,248 @@
   "w": 1800,
   "h": 1200
  },
+ "navu-kavacha/c-check": {
+  "w": 780,
+  "h": 1736
+ },
+ "navu-kavacha/c-done": {
+  "w": 780,
+  "h": 1731
+ },
+ "navu-kavacha/c-extract": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/c-home": {
+  "w": 780,
+  "h": 1736
+ },
+ "navu-kavacha/c-language": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/c-passbook": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/c-pay": {
+  "w": 780,
+  "h": 1737
+ },
+ "navu-kavacha/c-route": {
+  "w": 780,
+  "h": 1736
+ },
+ "navu-kavacha/c-scan": {
+  "w": 780,
+  "h": 1736
+ },
+ "navu-kavacha/c-team": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/c-wait": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/clip-handover": {
+  "w": 1400,
+  "h": 1046,
+  "video": true
+ },
+ "navu-kavacha/clip-mixed": {
+  "w": 1240,
+  "h": 1182,
+  "video": true
+ },
+ "navu-kavacha/clip-wait": {
+  "w": 760,
+  "h": 1062,
+  "video": true
+ },
+ "navu-kavacha/cover": {
+  "w": 1400,
+  "h": 1046
+ },
+ "navu-kavacha/i-verify": {
+  "w": 780,
+  "h": 1736
+ },
+ "navu-kavacha/r-flag": {
+  "w": 780,
+  "h": 1731
+ },
+ "navu-kavacha/r-kit": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/r-month": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/r-question": {
+  "w": 780,
+  "h": 1736
+ },
+ "navu-kavacha/r-receipt": {
+  "w": 780,
+  "h": 1731
+ },
+ "navu-kavacha/r-resolved": {
+  "w": 780,
+  "h": 1731
+ },
+ "navu-kavacha/r-streams": {
+  "w": 780,
+  "h": 1730
+ },
+ "navu-kavacha/r-thanks": {
+  "w": 780,
+  "h": 1736
+ },
+ "navu-kavacha/v0-dignity": {
+  "w": 780,
+  "h": 1688
+ },
+ "navu-kavacha/v0-home": {
+  "w": 780,
+  "h": 1688
+ },
+ "navu-kavacha/w-whatsapp": {
+  "w": 780,
+  "h": 1731
+ },
+ "papersseum/clip-forge": {
+  "w": 1400,
+  "h": 898,
+  "video": true
+ },
+ "papersseum/clip-intro": {
+  "w": 1440,
+  "h": 780,
+  "video": true
+ },
+ "papersseum/clip-match": {
+  "w": 600,
+  "h": 600,
+  "video": true
+ },
+ "papersseum/cover": {
+  "w": 2000,
+  "h": 1250
+ },
+ "papersseum/cta": {
+  "w": 1800,
+  "h": 694
+ },
+ "papersseum/elo": {
+  "w": 1800,
+  "h": 435
+ },
+ "papersseum/fj-arch": {
+  "w": 2400,
+  "h": 1332
+ },
+ "papersseum/fj-board": {
+  "w": 1711,
+  "h": 9000
+ },
+ "papersseum/fj-matrix": {
+  "w": 2400,
+  "h": 972
+ },
+ "papersseum/fj-sitemap": {
+  "w": 2400,
+  "h": 1960
+ },
+ "papersseum/fj-states": {
+  "w": 2400,
+  "h": 2069
+ },
+ "papersseum/fj-upload": {
+  "w": 2400,
+  "h": 1250
+ },
+ "papersseum/forge-page": {
+  "w": 1800,
+  "h": 1155
+ },
+ "papersseum/lbtable": {
+  "w": 1248,
+  "h": 1120
+ },
+ "papersseum/lbtable-dark": {
+  "w": 1248,
+  "h": 1120
+ },
+ "papersseum/m-bot": {
+  "w": 780,
+  "h": 1688
+ },
+ "papersseum/m-home": {
+  "w": 780,
+  "h": 1688
+ },
+ "papersseum/m-leaderboard": {
+  "w": 780,
+  "h": 1688
+ },
+ "papersseum/matchrows": {
+  "w": 1800,
+  "h": 861
+ },
+ "papersseum/matchrows-dark": {
+  "w": 1800,
+  "h": 861
+ },
+ "papersseum/me-check": {
+  "w": 1800,
+  "h": 569
+ },
+ "papersseum/podium": {
+  "w": 1800,
+  "h": 771
+ },
+ "papersseum/podium-dark": {
+  "w": 1800,
+  "h": 771
+ },
+ "papersseum/profile": {
+  "w": 1800,
+  "h": 484
+ },
+ "papersseum/result": {
+  "w": 1800,
+  "h": 580
+ },
+ "papersseum/roster": {
+  "w": 1800,
+  "h": 252
+ },
+ "papersseum/rules": {
+  "w": 1800,
+  "h": 1354
+ },
+ "papersseum/rules-dark": {
+  "w": 1800,
+  "h": 1354
+ },
+ "papersseum/versions": {
+  "w": 1800,
+  "h": 857
+ },
+ "papersseum/welcome": {
+  "w": 1800,
+  "h": 1015
+ },
+ "papersseum/wipe-a": {
+  "w": 1440,
+  "h": 900
+ },
+ "papersseum/wipe-b": {
+  "w": 1440,
+  "h": 900
+ },
  "play/agent": {
   "w": 2000,
   "h": 1038,
@@ -353,9 +797,136 @@
   "w": 1536,
   "h": 952
  },
+ "shopstr/b-circular-economy": {
+  "w": 1536,
+  "h": 864
+ },
+ "shopstr/b-design-system-iterations": {
+  "w": 1536,
+  "h": 970
+ },
+ "shopstr/b-figjam-buyer-journey": {
+  "w": 1536,
+  "h": 829
+ },
+ "shopstr/b-handoff-plan": {
+  "w": 1536,
+  "h": 658
+ },
+ "shopstr/b-loading-empty-states": {
+  "w": 1536,
+  "h": 1237
+ },
  "shopstr/cover": {
   "w": 1536,
   "h": 1024
+ },
+ "shopstr/s-404": {
+  "w": 1800,
+  "h": 1125
+ },
+ "shopstr/s-buybox": {
+  "w": 1064,
+  "h": 1668
+ },
+ "shopstr/s-cats": {
+  "w": 1800,
+  "h": 311
+ },
+ "shopstr/s-checkout-1": {
+  "w": 1200,
+  "h": 1500
+ },
+ "shopstr/s-checkout-2": {
+  "w": 1200,
+  "h": 1500
+ },
+ "shopstr/s-checkout-3": {
+  "w": 1200,
+  "h": 1500
+ },
+ "shopstr/s-checkout-4": {
+  "w": 1200,
+  "h": 1500
+ },
+ "shopstr/s-checkout-5": {
+  "w": 1200,
+  "h": 1500
+ },
+ "shopstr/s-clip-boot": {
+  "w": 1280,
+  "h": 840,
+  "video": true
+ },
+ "shopstr/s-clip-cart": {
+  "w": 1312,
+  "h": 960,
+  "video": true
+ },
+ "shopstr/s-clip-mscroll": {
+  "w": 780,
+  "h": 1688,
+  "video": true
+ },
+ "shopstr/s-community": {
+  "w": 1600,
+  "h": 1333
+ },
+ "shopstr/s-editors": {
+  "w": 1600,
+  "h": 499
+ },
+ "shopstr/s-m-checkout": {
+  "w": 780,
+  "h": 1688
+ },
+ "shopstr/s-m-listing": {
+  "w": 780,
+  "h": 1688
+ },
+ "shopstr/s-m-market": {
+  "w": 780,
+  "h": 1688
+ },
+ "shopstr/s-m-wallet": {
+  "w": 780,
+  "h": 1688
+ },
+ "shopstr/s-market": {
+  "w": 2000,
+  "h": 1250
+ },
+ "shopstr/s-orders": {
+  "w": 1536,
+  "h": 1000
+ },
+ "shopstr/s-prod-0": {
+  "w": 600,
+  "h": 600
+ },
+ "shopstr/s-prod-1": {
+  "w": 600,
+  "h": 600
+ },
+ "shopstr/s-prod-2": {
+  "w": 600,
+  "h": 600
+ },
+ "shopstr/s-prod-3": {
+  "w": 600,
+  "h": 600
+ },
+ "shopstr/s-reviews": {
+  "w": 1064,
+  "h": 784
+ },
+ "shopstr/s-sell": {
+  "w": 1800,
+  "h": 1125
+ },
+ "shopstr/s-wallet": {
+  "w": 1800,
+  "h": 1125
  },
  "smile-share/01": {
   "w": 2000,
@@ -394,10 +965,73 @@
   "h": 1264,
   "video": true
  },
+ "social-content-tool/clip-intro": {
+  "w": 1440,
+  "h": 900,
+  "video": true
+ },
+ "social-content-tool/clip-reroll": {
+  "w": 900,
+  "h": 868,
+  "video": true
+ },
+ "social-content-tool/clip-sizes": {
+  "w": 1100,
+  "h": 942,
+  "video": true
+ },
  "social-content-tool/cover": {
   "w": 1574,
   "h": 1590,
   "video": true
+ },
+ "social-content-tool/editor": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/editor-oktane": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/editor-story": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/editor-tip": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/export": {
+  "w": 1080,
+  "h": 840
+ },
+ "social-content-tool/help": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/home": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/library-empty": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/make-sizes": {
+  "w": 1680,
+  "h": 1560
+ },
+ "social-content-tool/settings": {
+  "w": 1680,
+  "h": 1680
+ },
+ "social-content-tool/templates": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/templates-story": {
+  "w": 2000,
+  "h": 1250
  },
  "sri-krishna-sagar/01": {
   "w": 2000,

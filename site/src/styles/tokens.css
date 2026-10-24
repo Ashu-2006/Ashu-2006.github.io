@@ -46,6 +46,175 @@
   --dash-burn-pale: #efca99;
   --dash-burn-soft: #f9ecdc;
 
+  /* Case: Papersseum. Its own paper, ink and the five player colours, identical to the engine's renderer. */
+  --pp-paper: #fafaf8;
+  --pp-surface: #ffffff;
+  --pp-ink: #111111;
+  --pp-muted: #666666;
+  --pp-rule: #e4e4e0;
+  --pp-ground: #efefec;
+  --pp-night: #121212;
+  --pp-night-ground: #1f1f1f;
+  --pp-render: #07080d;
+  --pp-up: #1f7a4d;
+  --pp-down: #b23b2a;
+  --pp-slot-0: #ff4d5e;
+  --pp-slot-1: #4d9dff;
+  --pp-slot-2: #35e07f;
+  --pp-slot-3: #ffd23f;
+  --pp-slot-4: #b36bff;
+  --pp-instant: 70ms;
+  --pp-fast: 140ms;
+  --pp-moderate: 240ms;
+  --pp-slow: 420ms;
+  --pp-loop: 1.6s;
+  --pp-smooth: cubic-bezier(0.23, 1, 0.32, 1);
+  --pp-swing: cubic-bezier(0.32, 0.72, 0, 1);
+  --pp-move: cubic-bezier(0.77, 0, 0.175, 1);
+
+  /* Case: Shopstr redesign ("Sticker Brutalism"). True-neutral greys, one purple, six playful accents. */
+  --sh-paper: #ececec;
+  --sh-paper-2: #e1e1e1;
+  --sh-paper-3: #d6d6d6;
+  --sh-pure: #ffffff;
+  --sh-ink: #121212;
+  --sh-muted: #6b6b6b;
+  --sh-purple: #5a51e5;
+  --sh-purple-soft: #e7e5fb;
+  --sh-orange: #ff8336;
+  --sh-yellow: #ffc313;
+  --sh-red: #ff4040;
+  --sh-green: #25c26e;
+  --sh-blue: #00aeff;
+  --sh-pink: #ff3dac;
+  --sh-yellow-soft: #fff1cc;
+  --sh-green-soft: #d3f5e3;
+  --sh-pink-soft: #ffdcef;
+  --sh-blue-soft: #cdeeff;
+  --sh-jumpy: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
+  /* ArmorIQ platform: mirrors the product's tokens.css (light theme) and motion/transitions.ts */
+  --aq-bg: #fbfbfb;
+  --aq-surface: #ffffff;
+  --aq-zebra: #f8f7f4;
+  --aq-border: #ebeae6;
+  --aq-border-strong: #d6d4cd;
+  --aq-ink: #1b1a17;
+  --aq-ink-soft: #46443f;
+  --aq-ink-muted: #80807a;
+  --aq-ink-faint: #a4a39c;
+  --aq-accent: #e85a19;
+  --aq-accent-hover: #d14f16;
+  --aq-accent-wash: #fdf1e9;
+  --aq-accent-line: #f3d2be;
+  --aq-good: #2e7d32;
+  --aq-good-soft: #e8f4e8;
+  --aq-warn: #a26a05;
+  --aq-warn-soft: #fcf6e2;
+  --aq-bad: #b91c1c;
+  --aq-bad-soft: #fce8e6;
+  --aq-bad-line: #f1b9b3;
+  --aq-info: #1e40af;
+  --aq-info-soft: #eaf1fd;
+  --aq-syntax-key: #0e7490;
+  --aq-syntax-comment: #994400;
+  --aq-panel: #0e0e10;
+  --aq-frame: #f1f0ec;
+  --aq-panel-2: #1c1c1f;
+  --aq-panel-line: #2e2e33;
+  --aq-on: #fbfbfb;
+  --aq-on-muted: #9f9c95;
+  --aq-iris: #7c3aed;
+  --aq-sans: "Geist", "Inter", system-ui, sans-serif;
+  --aq-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+  --aq-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --aq-ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+  --aq-fast: 120ms;
+  --aq-base: 200ms;
+  --aq-slow: 320ms;
+
+  /* Navu Kavacha: mirrors the app's tailwind.config.js. Restaurant green, collector orange, bins match their streams. */
+  --nk-canvas: #faf9f7;
+  --nk-surface: #ffffff;
+  --nk-sunk: #f5f2ec;
+  --nk-line: #dad4c8;
+  --nk-line-soft: #eee9df;
+  --nk-ink: #000000;
+  --nk-muted: #55534e;
+  --nk-r: #067f4b;
+  --nk-r-ink: #02492a;
+  --nk-r-tint: #e6f6ee;
+  --nk-c: #c2410c;
+  --nk-c-hover: #ad3a0b;
+  --nk-c-ink: #7c2d12;
+  --nk-c-tint: #ffedd5;
+  --nk-wet: #15803d;
+  --nk-wet-tint: #dcfce7;
+  --nk-dry: #1d4ed8;
+  --nk-dry-tint: #dbeafe;
+  --nk-sanitary: #b91c1c;
+  --nk-sanitary-tint: #fee2e2;
+  --nk-warn: #b45309;
+  --nk-warn-tint: #fef3c7;
+  --nk-wa: #e7f7e1;
+  --nk-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Kannada", "Noto Sans Tamil", sans-serif;
+
+  /* ArmorTools console (dark by default): mirrors armoriq-tools src/styles/globals.css @theme */
+  --at-bg: #0d0e10;
+  --at-sidebar: #151619;
+  --at-surface: #1c1e22;
+  --at-border: #34373d;
+  --at-border-soft: rgba(255, 255, 255, 0.06);
+  --at-ink: #fbfbfb;
+  --at-ink-soft: #eaeaea;
+  --at-muted: #b5b1aa;
+  --at-hint: #7c7a75;
+  --at-accent: #ff7a3a;
+  --at-accent-ink: #ff955c;
+  --at-nav-active: #30231d;
+  --at-nav-ink: #ffb58c;
+  --at-ok: #3ba55c;
+  --at-ok-soft: rgba(59, 165, 92, 0.12);
+  --at-danger: #f0605a;
+  --at-danger-soft: rgba(240, 96, 90, 0.12);
+  --at-warn-ink: #ffc078;
+  --at-warn-bg: #2b2218;
+  --at-warn-border: #705031;
+  --at-info: #7aa2ff;
+  --at-chip: rgba(255, 255, 255, 0.06);
+
+  /* ArmorTools design system (dark): mirrors design-system/armortools tokens/src semantic.dark.json */
+  --ds-canvas: #0c0b09;
+  --ds-chrome: #141412;
+  --ds-card: #191816;
+  --ds-inset: #100f0d;
+  --ds-raised: #1e1d1b;
+  --ds-border: rgba(255, 255, 255, 0.12);
+  --ds-border-subtle: rgba(255, 255, 255, 0.08);
+  --ds-fg: #efeeeb;
+  --ds-fg-2: #a4a19b;
+  --ds-muted: #8b8983;
+  --ds-accent: #e9703a;
+  --ds-accent-solid: #bf4a04;
+  --ds-danger: #f1645d;
+  --ds-danger-soft: #2d1513;
+  --ds-success: #49b166;
+  --ds-success-soft: #0e2213;
+  --ds-light: #efeeeb;
+
+  /* Social content tool: the editor's dark chrome and the brand's poster colours (template JSON fills) */
+  --sct-bg: #121214;
+  --sct-panel: #1b1b1e;
+  --sct-line: rgba(255, 255, 255, 0.09);
+  --sct-ink: #f2f2f2;
+  --sct-muted: #9a9a9e;
+  --sct-blue: #0015ff;
+  --sct-orange: #ff4c05;
+  --sct-cream: #fff6e8;
+  --sct-scrim: #0d0d0d;
+  --sct-ok: #3ba55c;
+  --sct-bad: #f0605a;
+
   /* Type */
   --f-sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --f-serif: "Instrument Serif", "Times New Roman", serif;

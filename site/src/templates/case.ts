@@ -32,6 +32,8 @@ const FRAMED_COVERS = new Set([
   "kuzara-green",
   "distil",
   "dash",
+  "papersseum",
+  "navu-kavacha",
 ]);
 const INSET_COVERS = new Set(["shopstr"]);
 const heroClass = (slug: string) =>

@@ -448,6 +448,13 @@
   align-items: flex-end;
 }
 
+/* A strip capture runs edge to edge of its frame */
+.fr--strip .fr__stage > img {
+  width: calc(100% + 2 * var(--fr-p));
+  max-width: none;
+  margin-inline: calc(var(--fr-p) * -1);
+}
+
 .fr--spec .fr__stage {
   align-items: stretch;
 }

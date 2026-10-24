@@ -9,8 +9,8 @@ import "./styles/home.css";
 import "./styles/footer.css";
 import "./styles/case.css";
 import "./styles/story.css";
-/* One stylesheet per case story, picked up by filename */
-import.meta.glob("./styles/stories/*.css", { eager: true });
+/* One stylesheet per case story, after the kit so a story can override it */
+import "./styles/stories";
 import "./styles/tldr.css";
 import "./styles/about.css";
 import "./styles/work.css";

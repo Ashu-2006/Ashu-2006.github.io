@@ -279,7 +279,7 @@ export const PROJECTS: Project[] = [
       "Layouts and backgrounds are separate, so a composition can be reused with different imagery. Headlines fit their boxes, and the editor checks text contrast against the image underneath and adjusts the scrim when it fails.",
     ],
     decision: {
-      title: "Compose by default, construct on purpose",
+      title: "On brand in under two minutes",
       context: "The same editor serves a teammate changing a date and a designer building a new template.",
       choice: "Geometry is locked unless you switch modes. The common path is a layout, a headline and an export.",
       cost: "Someone who wants to nudge a block has to switch modes first. One extra step, in exchange for nobody breaking the grid by accident.",
@@ -565,6 +565,43 @@ export const PROJECTS: Project[] = [
     },
     result: ["A working prototype and an assignment deliverable. Not evidence of a conversion lift."],
     shots: [{ file: "dash/cover", alt: "DASH home page: take a shot, it's time to dash, beside the Glow box and bottles on coral" }],
+  },
+  {
+    slug: "papersseum",
+    name: "Papersseum",
+    headline: "A bot tournament designed so you can watch your bot fight",
+    summary:
+      "Papersseum is a season-long tournament where students' Python bots fight for territory every 15 minutes. I led the redesign of its web app: the structure, the design system, 14,400 pixel characters and the screens people watch.",
+    org: "IIITDM Jabalpur",
+    year: "2026",
+    role: ["Product design", "Design system", "Frontend"],
+    kinds: ["product", "web"],
+    tier: "case",
+    evidence: "Shipped",
+    work: [
+      "I mapped the platform on one FigJam board (sitemap, architecture, state machines, six flows, 165 edge cases), then built the design system, the pixel characters and the pages on it.",
+    ],
+    result: ["Live with 51 bots on the ladder and 4,438 matches played on 2026-10-23."],
+    links: [{ label: "Live site", href: "https://papersseum.vercel.app" }],
+    shots: [{ file: "papersseum/cover", alt: "Papersseum home: the wordmark beside a live arena where five pixel bots fight for territory" }],
+  },
+  {
+    slug: "navu-kavacha",
+    name: "Navu Kavacha",
+    headline: "A shared record for every bin of restaurant waste, owned by the people who move it",
+    summary:
+      "Navu Kavacha turns the hand-off of restaurant wet waste in Bengaluru into a record both sides sign. I reframed the brief from scheduling to trust, designed the collector and restaurant apps around two-touch handovers, and built a presenter that plays twelve flows.",
+    org: "IIITDM Jabalpur",
+    year: "2026",
+    role: ["Product strategy", "Product design", "Frontend"],
+    kinds: ["product", "concept"],
+    tier: "case",
+    evidence: "Live prototype",
+    work: [
+      "I replaced a rating-and-tiers concept with a handover record: two touches on the collector's phone become a receipt for the kitchen and a work passbook the collector owns.",
+    ],
+    result: ["Twelve flows and 57 steps playable in the presenter, in Kannada, Tamil and English."],
+    shots: [{ file: "navu-kavacha/cover", alt: "Three phones in the Navu Kavacha presenter: the collector's done screen, the restaurant's receipt and a WhatsApp message" }],
   },
   {
     slug: "udte-bhawre",
