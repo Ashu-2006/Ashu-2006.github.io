@@ -162,6 +162,25 @@
   --at-info: #7aa2ff;
   --at-chip: rgba(255, 255, 255, 0.06);
 
+  /* ArmorTools design system (dark): mirrors design-system/armortools tokens/src semantic.dark.json */
+  --ds-canvas: #0c0b09;
+  --ds-chrome: #141412;
+  --ds-card: #191816;
+  --ds-inset: #100f0d;
+  --ds-raised: #1e1d1b;
+  --ds-border: rgba(255, 255, 255, 0.12);
+  --ds-border-subtle: rgba(255, 255, 255, 0.08);
+  --ds-fg: #efeeeb;
+  --ds-fg-2: #a4a19b;
+  --ds-muted: #8b8983;
+  --ds-accent: #e9703a;
+  --ds-accent-solid: #bf4a04;
+  --ds-danger: #f1645d;
+  --ds-danger-soft: #2d1513;
+  --ds-success: #49b166;
+  --ds-success-soft: #0e2213;
+  --ds-light: #efeeeb;
+
   /* Type */
   --f-sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --f-serif: "Instrument Serif", "Times New Roman", serif;

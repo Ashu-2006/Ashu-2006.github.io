@@ -1,8 +1,75 @@
 {
+ "armoriq-design-system/clip-badge": {
+  "w": 1400,
+  "h": 756,
+  "video": true
+ },
+ "armoriq-design-system/clip-playground": {
+  "w": 1400,
+  "h": 784,
+  "video": true
+ },
+ "armoriq-design-system/clip-systems": {
+  "w": 1400,
+  "h": 876,
+  "video": true
+ },
  "armoriq-design-system/cover": {
   "w": 1506,
   "h": 1776,
   "video": true
+ },
+ "armoriq-design-system/launcher": {
+  "w": 2000,
+  "h": 1250
+ },
+ "armoriq-design-system/p-button": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/p-color": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/p-intro": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/p-skill": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/p-states": {
+  "w": 2000,
+  "h": 962
+ },
+ "armoriq-design-system/t-button": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/t-color": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/t-components": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/t-intro": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/t-policies": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/t-run-detail": {
+  "w": 2000,
+  "h": 1546
+ },
+ "armoriq-design-system/t-type": {
+  "w": 2000,
+  "h": 1546
  },
  "armoriq-platform/01": {
   "w": 1752,
