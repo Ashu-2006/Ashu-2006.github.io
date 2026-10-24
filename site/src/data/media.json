@@ -224,6 +224,137 @@
   "w": 1800,
   "h": 1200
  },
+ "papersseum/clip-forge": {
+  "w": 1400,
+  "h": 898,
+  "video": true
+ },
+ "papersseum/clip-intro": {
+  "w": 1440,
+  "h": 780,
+  "video": true
+ },
+ "papersseum/clip-match": {
+  "w": 600,
+  "h": 600,
+  "video": true
+ },
+ "papersseum/cover": {
+  "w": 2000,
+  "h": 1250
+ },
+ "papersseum/cta": {
+  "w": 1800,
+  "h": 694
+ },
+ "papersseum/elo": {
+  "w": 1800,
+  "h": 435
+ },
+ "papersseum/fj-arch": {
+  "w": 2400,
+  "h": 1332
+ },
+ "papersseum/fj-board": {
+  "w": 1711,
+  "h": 9000
+ },
+ "papersseum/fj-matrix": {
+  "w": 2400,
+  "h": 972
+ },
+ "papersseum/fj-sitemap": {
+  "w": 2400,
+  "h": 1960
+ },
+ "papersseum/fj-states": {
+  "w": 2400,
+  "h": 2069
+ },
+ "papersseum/fj-upload": {
+  "w": 2400,
+  "h": 1250
+ },
+ "papersseum/forge-page": {
+  "w": 1800,
+  "h": 1155
+ },
+ "papersseum/lbtable": {
+  "w": 1248,
+  "h": 1120
+ },
+ "papersseum/lbtable-dark": {
+  "w": 1248,
+  "h": 1120
+ },
+ "papersseum/m-bot": {
+  "w": 780,
+  "h": 1688
+ },
+ "papersseum/m-home": {
+  "w": 780,
+  "h": 1688
+ },
+ "papersseum/m-leaderboard": {
+  "w": 780,
+  "h": 1688
+ },
+ "papersseum/matchrows": {
+  "w": 1800,
+  "h": 861
+ },
+ "papersseum/matchrows-dark": {
+  "w": 1800,
+  "h": 861
+ },
+ "papersseum/me-check": {
+  "w": 1800,
+  "h": 569
+ },
+ "papersseum/podium": {
+  "w": 1800,
+  "h": 771
+ },
+ "papersseum/podium-dark": {
+  "w": 1800,
+  "h": 771
+ },
+ "papersseum/profile": {
+  "w": 1800,
+  "h": 484
+ },
+ "papersseum/result": {
+  "w": 1800,
+  "h": 580
+ },
+ "papersseum/roster": {
+  "w": 1800,
+  "h": 252
+ },
+ "papersseum/rules": {
+  "w": 1800,
+  "h": 1354
+ },
+ "papersseum/rules-dark": {
+  "w": 1800,
+  "h": 1354
+ },
+ "papersseum/versions": {
+  "w": 1800,
+  "h": 857
+ },
+ "papersseum/welcome": {
+  "w": 1800,
+  "h": 1015
+ },
+ "papersseum/wipe-a": {
+  "w": 1440,
+  "h": 900
+ },
+ "papersseum/wipe-b": {
+  "w": 1440,
+  "h": 900
+ },
  "play/agent": {
   "w": 2000,
   "h": 1038,

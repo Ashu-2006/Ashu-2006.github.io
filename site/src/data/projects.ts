@@ -567,6 +567,25 @@ export const PROJECTS: Project[] = [
     shots: [{ file: "dash/cover", alt: "DASH home page: take a shot, it's time to dash, beside the Glow box and bottles on coral" }],
   },
   {
+    slug: "papersseum",
+    name: "Papersseum",
+    headline: "A bot tournament designed so you can watch your bot fight",
+    summary:
+      "Papersseum is a season-long tournament where students' Python bots fight for territory every 15 minutes. I led the redesign of its web app: the structure, the design system, 14,400 pixel characters and the screens people watch.",
+    org: "IIITDM Jabalpur",
+    year: "2026",
+    role: ["Product design", "Design system", "Frontend"],
+    kinds: ["product", "web"],
+    tier: "case",
+    evidence: "Shipped",
+    work: [
+      "I mapped the platform on one FigJam board (sitemap, architecture, state machines, six flows, 165 edge cases), then built the design system, the pixel characters and the pages on it.",
+    ],
+    result: ["Live with 51 bots on the ladder and 4,438 matches played on 2026-10-23."],
+    links: [{ label: "Live site", href: "https://papersseum.vercel.app" }],
+    shots: [{ file: "papersseum/cover", alt: "Papersseum home: the wordmark beside a live arena where five pixel bots fight for territory" }],
+  },
+  {
     slug: "udte-bhawre",
     name: "Udte Bhawre",
     headline: "AI companions that live beside the work",

@@ -46,6 +46,32 @@
   --dash-burn-pale: #efca99;
   --dash-burn-soft: #f9ecdc;
 
+  /* Case: Papersseum. Its own paper, ink and the five player colours, identical to the engine's renderer. */
+  --pp-paper: #fafaf8;
+  --pp-surface: #ffffff;
+  --pp-ink: #111111;
+  --pp-muted: #666666;
+  --pp-rule: #e4e4e0;
+  --pp-ground: #efefec;
+  --pp-night: #121212;
+  --pp-night-ground: #1f1f1f;
+  --pp-render: #07080d;
+  --pp-up: #1f7a4d;
+  --pp-down: #b23b2a;
+  --pp-slot-0: #ff4d5e;
+  --pp-slot-1: #4d9dff;
+  --pp-slot-2: #35e07f;
+  --pp-slot-3: #ffd23f;
+  --pp-slot-4: #b36bff;
+  --pp-instant: 70ms;
+  --pp-fast: 140ms;
+  --pp-moderate: 240ms;
+  --pp-slow: 420ms;
+  --pp-loop: 1.6s;
+  --pp-smooth: cubic-bezier(0.23, 1, 0.32, 1);
+  --pp-swing: cubic-bezier(0.32, 0.72, 0, 1);
+  --pp-move: cubic-bezier(0.77, 0, 0.175, 1);
+
   /* Type */
   --f-sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --f-serif: "Instrument Serif", "Times New Roman", serif;
