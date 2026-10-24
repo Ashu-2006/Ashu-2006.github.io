@@ -96,7 +96,7 @@ export type Result = {
   kind: string;
   /** TL;DR prose */
   text: string;
-  /** Evidence bars: [label, value, formatted value] */
+  /** Evidence bars: [label, value, formatted value]. Leave empty when no comparison is fair. */
   bars: [string, number, string][];
 };
 
@@ -104,7 +104,7 @@ export type Result = {
 export function results(rows: Result[], foot = "") {
   return `<ol class="res">${rows
     .map((r) => {
-      const max = Math.max(...r.bars.map((b) => b[1]));
+      const max = Math.max(1, ...r.bars.map((b) => b[1]));
       return `<li class="res__row" data-reveal="up">
           <div class="res__main"><p class="res__n">${esc(r.n)}</p><p class="res__title">${esc(r.title)}</p><p class="res__text prose">${skim(r.text)}</p></div>
           <div class="res__viz"><p class="label res__kind">${esc(r.kind)}</p>${r.bars
