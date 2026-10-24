@@ -9,10 +9,74 @@
   "h": 1010,
   "video": true
  },
+ "armoriq-platform/agent-peek": {
+  "w": 1080,
+  "h": 856
+ },
+ "armoriq-platform/certificates": {
+  "w": 2000,
+  "h": 1214
+ },
+ "armoriq-platform/clip-graph": {
+  "w": 1440,
+  "h": 844,
+  "video": true
+ },
+ "armoriq-platform/clip-kill": {
+  "w": 1400,
+  "h": 742,
+  "video": true
+ },
+ "armoriq-platform/clip-persona": {
+  "w": 1440,
+  "h": 900,
+  "video": true
+ },
+ "armoriq-platform/clip-wizard": {
+  "w": 1080,
+  "h": 640,
+  "video": true
+ },
  "armoriq-platform/cover": {
   "w": 1582,
   "h": 1118,
   "video": true
+ },
+ "armoriq-platform/graph-empty": {
+  "w": 1560,
+  "h": 940
+ },
+ "armoriq-platform/graph-full": {
+  "w": 2000,
+  "h": 1172
+ },
+ "armoriq-platform/graph-sparse": {
+  "w": 1560,
+  "h": 940
+ },
+ "armoriq-platform/kill-intent": {
+  "w": 960,
+  "h": 676
+ },
+ "armoriq-platform/kill-open": {
+  "w": 1960,
+  "h": 720
+ },
+ "armoriq-platform/mcp-peek": {
+  "w": 1460,
+  "h": 1480
+ },
+ "armoriq-platform/overview": {
+  "w": 2000,
+  "h": 1250
+ },
+ "armoriq-platform/v1-builder": {
+  "w": 2000,
+  "h": 1080
+ },
+ "armoriq-platform/wizard": {
+  "w": 2000,
+  "h": 1185
  },
  "armortools/cover": {
   "w": 1544,

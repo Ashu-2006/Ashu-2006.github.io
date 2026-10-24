@@ -72,6 +72,46 @@
   --pp-swing: cubic-bezier(0.32, 0.72, 0, 1);
   --pp-move: cubic-bezier(0.77, 0, 0.175, 1);
 
+  /* ArmorIQ platform: mirrors the product's tokens.css (light theme) and motion/transitions.ts */
+  --aq-bg: #fbfbfb;
+  --aq-surface: #ffffff;
+  --aq-zebra: #f8f7f4;
+  --aq-border: #ebeae6;
+  --aq-border-strong: #d6d4cd;
+  --aq-ink: #1b1a17;
+  --aq-ink-soft: #46443f;
+  --aq-ink-muted: #80807a;
+  --aq-ink-faint: #a4a39c;
+  --aq-accent: #e85a19;
+  --aq-accent-hover: #d14f16;
+  --aq-accent-wash: #fdf1e9;
+  --aq-accent-line: #f3d2be;
+  --aq-good: #2e7d32;
+  --aq-good-soft: #e8f4e8;
+  --aq-warn: #a26a05;
+  --aq-warn-soft: #fcf6e2;
+  --aq-bad: #b91c1c;
+  --aq-bad-soft: #fce8e6;
+  --aq-bad-line: #f1b9b3;
+  --aq-info: #1e40af;
+  --aq-info-soft: #eaf1fd;
+  --aq-syntax-key: #0e7490;
+  --aq-syntax-comment: #994400;
+  --aq-panel: #0e0e10;
+  --aq-frame: #f1f0ec;
+  --aq-panel-2: #1c1c1f;
+  --aq-panel-line: #2e2e33;
+  --aq-on: #fbfbfb;
+  --aq-on-muted: #9f9c95;
+  --aq-iris: #7c3aed;
+  --aq-sans: "Geist", "Inter", system-ui, sans-serif;
+  --aq-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+  --aq-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --aq-ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+  --aq-fast: 120ms;
+  --aq-base: 200ms;
+  --aq-slow: 320ms;
+
   /* Type */
   --f-sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --f-serif: "Instrument Serif", "Times New Roman", serif;
