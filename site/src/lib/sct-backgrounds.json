@@ -1,0 +1,54 @@
+[
+ {
+  "id": "berkeley-campanile",
+  "label": "Berkeley campanile",
+  "params": {
+   "shadow": "#ff4c05",
+   "highlight": "#fff6e8",
+   "dotSize": 5,
+   "dotStrength": 0.85,
+   "gamma": 0.9
+  },
+  "w": 738,
+  "h": 414
+ },
+ {
+  "id": "robot-arm",
+  "label": "Robot arm",
+  "params": {
+   "shadow": "#ff4800",
+   "highlight": "#fffaf2",
+   "dotSize": 5,
+   "dotStrength": 0.85,
+   "gamma": 0.9
+  },
+  "w": 789,
+  "h": 900
+ },
+ {
+  "id": "headphones-window",
+  "label": "Headphones at a window",
+  "params": {
+   "shadow": "#1a0b00",
+   "highlight": "#ffb347",
+   "dotSize": 4,
+   "dotStrength": 0.9,
+   "gamma": 0.75
+  },
+  "w": 657,
+  "h": 584
+ },
+ {
+  "id": "dinner-table",
+  "label": "Dinner table from above",
+  "params": {
+   "shadow": "#1a1a1a",
+   "highlight": "#f5f5f5",
+   "dotSize": 5,
+   "dotStrength": 0.85,
+   "gamma": 0.85
+  },
+  "w": 693,
+  "h": 900
+ }
+]

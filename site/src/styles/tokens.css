@@ -181,6 +181,19 @@
   --ds-success-soft: #0e2213;
   --ds-light: #efeeeb;
 
+  /* Social content tool: the editor's dark chrome and the brand's poster colours (template JSON fills) */
+  --sct-bg: #121214;
+  --sct-panel: #1b1b1e;
+  --sct-line: rgba(255, 255, 255, 0.09);
+  --sct-ink: #f2f2f2;
+  --sct-muted: #9a9a9e;
+  --sct-blue: #0015ff;
+  --sct-orange: #ff4c05;
+  --sct-cream: #fff6e8;
+  --sct-scrim: #0d0d0d;
+  --sct-ok: #3ba55c;
+  --sct-bad: #f0605a;
+
   /* Type */
   --f-sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --f-serif: "Instrument Serif", "Times New Roman", serif;

@@ -279,7 +279,7 @@ export const PROJECTS: Project[] = [
       "Layouts and backgrounds are separate, so a composition can be reused with different imagery. Headlines fit their boxes, and the editor checks text contrast against the image underneath and adjusts the scrim when it fails.",
     ],
     decision: {
-      title: "Compose by default, construct on purpose",
+      title: "On brand in under two minutes",
       context: "The same editor serves a teammate changing a date and a designer building a new template.",
       choice: "Geometry is locked unless you switch modes. The common path is a layout, a headline and an export.",
       cost: "Someone who wants to nudge a block has to switch modes first. One extra step, in exchange for nobody breaking the grid by accident.",

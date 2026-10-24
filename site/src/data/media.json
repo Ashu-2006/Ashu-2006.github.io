@@ -838,10 +838,73 @@
   "h": 1264,
   "video": true
  },
+ "social-content-tool/clip-intro": {
+  "w": 1440,
+  "h": 900,
+  "video": true
+ },
+ "social-content-tool/clip-reroll": {
+  "w": 900,
+  "h": 868,
+  "video": true
+ },
+ "social-content-tool/clip-sizes": {
+  "w": 1100,
+  "h": 942,
+  "video": true
+ },
  "social-content-tool/cover": {
   "w": 1574,
   "h": 1590,
   "video": true
+ },
+ "social-content-tool/editor": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/editor-oktane": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/editor-story": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/editor-tip": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/export": {
+  "w": 1080,
+  "h": 840
+ },
+ "social-content-tool/help": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/home": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/library-empty": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/make-sizes": {
+  "w": 1680,
+  "h": 1560
+ },
+ "social-content-tool/settings": {
+  "w": 1680,
+  "h": 1680
+ },
+ "social-content-tool/templates": {
+  "w": 2000,
+  "h": 1250
+ },
+ "social-content-tool/templates-story": {
+  "w": 2000,
+  "h": 1250
  },
  "sri-krishna-sagar/01": {
   "w": 2000,
