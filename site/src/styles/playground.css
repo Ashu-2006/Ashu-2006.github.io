@@ -160,15 +160,25 @@
   gap: 6px;
   text-align: right;
 }
+/* The note bottom right sits on frosted glass: the mosaic stays readable through it as it scrolls past */
+.pl__lede,
+.pl__hint {
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--paper) 58%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  backdrop-filter: blur(18px) saturate(1.6);
+}
 .pl__lede {
   max-width: 24ch;
   padding: 0.35em 0.6em;
-  border-radius: var(--r-xs);
-  background: var(--paper);
   color: var(--ink-2);
 }
+.pl__hint {
+  padding: 0.5em 0.7em 0.45em;
+  color: var(--mute);
+  white-space: nowrap;
+}
 
-/* Filter bar */
 .pl__bar {
   position: fixed;
   left: var(--gutter);
@@ -176,76 +186,11 @@
   bottom: var(--gutter);
   z-index: 3;
   display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: var(--gap);
+  justify-content: flex-end;
   pointer-events: none;
 }
 .pl__bar > * {
   pointer-events: auto;
-}
-.pl__pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-}
-.pl__pill {
-  position: relative;
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.5em;
-  padding: 0.5em 0.85em 0.46em;
-  border: 1px solid var(--line);
-  border-radius: var(--r-xs);
-  background: var(--paper);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
-  overflow: hidden;
-  isolation: isolate;
-  transition:
-    color var(--dur-xs) var(--ease-out),
-    border-color var(--dur-xs) var(--ease-out);
-}
-.pl__pill::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  z-index: -1;
-  background: var(--ink);
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path var(--dur-s) var(--ease-out);
-}
-.pl__pill-n {
-  font-family: var(--f-mono);
-  font-size: calc(var(--t-xs) * 0.9);
-  color: var(--mute);
-}
-.pl__pill[aria-pressed="true"] {
-  color: var(--paper);
-  border-color: var(--ink);
-}
-.pl__pill[aria-pressed="true"]::before {
-  clip-path: inset(0 0 0 0);
-}
-.pl__pill[aria-pressed="true"] .pl__pill-n {
-  color: var(--paper);
-  opacity: 0.6;
-}
-@media (hover: hover) {
-  .pl__pill:hover {
-    border-color: var(--ink);
-  }
-}
-.pl__hint {
-  padding: 0.5em 0.7em 0.45em;
-  border-radius: var(--r-xs);
-  background: var(--paper);
-  color: var(--mute);
-  white-space: nowrap;
-}
-.pl__hint span {
-  color: var(--ink);
 }
 
 @media (max-width: 767px) {
@@ -260,19 +205,6 @@
   }
   .pl__about {
     display: none;
-  }
-  .pl__pills {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-    margin-inline: calc(var(--gutter) * -1);
-    padding-inline: var(--gutter);
-  }
-  .pl__pills::-webkit-scrollbar {
-    display: none;
-  }
-  .pl__pill {
-    flex: none;
   }
 }
 

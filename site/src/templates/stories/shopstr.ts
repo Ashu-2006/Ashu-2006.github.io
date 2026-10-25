@@ -99,7 +99,7 @@ function system(base: string) {
       )}
       ${frame(
         { tone: "grey", cls: "b-5 fr--sh fr--swap", crumb: "Community / Heading", cap: "A sticker takes the place of a letter. Hover the heading.", tag: "Hover" },
-        `<p class="swap-h">Your pe<span class="swap">${sticker(base, "shape-sunstar-purple")}</span>ple</p>`,
+        `<p class="lswap">Your pe<span class="lswap__o">${sticker(base, "shape-sunstar-purple")}</span>ple</p>`,
       )}
       ${frame({ tone: "grey", cls: "b-7 fr--sh", crumb: "Figma / Iterations", cap: "Colour, type and component rounds before the system locked." }, mediaTag(base, "shopstr/b-design-system-iterations", "Design system iterations: colour, type and component studies"))}
       ${frame({ tone: "grey", cls: "b-full fr--sh fr--strip", crumb: "Marketplace / Categories", cap: "Each category takes one of the six accents; the stickers carry the personality." }, mediaTag(base, "shopstr/s-cats", "Category tiles in green, pink, blue and orange, each with a sticker"))}

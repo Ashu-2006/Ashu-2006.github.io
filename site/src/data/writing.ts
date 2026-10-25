@@ -8,6 +8,10 @@ export type Post = {
   date: string;
   /** Leave unset while the piece is still in draft; the row renders as "In draft" and does not link */
   href?: string;
+  /** The post's own image as a media key (public/media/<key>.jpg, sized in media.json). Decorative: the title names the link */
+  image?: string;
+  /** Where a cropped image anchors (CSS object-position); a text screenshot reads from its top left */
+  focus?: string;
 };
 
 /* Newest first. Published on LinkedIn; dates are LinkedIn's publish dates, not the old site's card dates. */
@@ -18,6 +22,8 @@ export const WRITING: Post[] = [
     where: "LinkedIn",
     date: "25 Feb 2026",
     href: "https://www.linkedin.com/posts/ashutosh-rana04_theres-a-reading-behavior-almost-everyone-activity-7432507160342929408-RBdq",
+    image: "writing/post-1",
+    focus: "left top",
   },
   {
     title: "Less features, better product",
@@ -25,6 +31,7 @@ export const WRITING: Post[] = [
     where: "LinkedIn",
     date: "19 Feb 2026",
     href: "https://www.linkedin.com/posts/ashutosh-rana04_pov-youre-building-a-product-and-keep-adding-share-7430314392128315392-p5ne",
+    image: "writing/post-2",
   },
   {
     title: "Hidden features are basically unused features",
@@ -32,6 +39,7 @@ export const WRITING: Post[] = [
     where: "LinkedIn",
     date: "16 Feb 2026",
     href: "https://www.linkedin.com/posts/ashutosh-rana04_i-was-driving-the-other-day-using-google-share-7429265089129713664-oPWe",
+    image: "writing/post-3",
   },
   {
     title: "Why most B2B software feels complex",
@@ -39,5 +47,6 @@ export const WRITING: Post[] = [
     where: "LinkedIn",
     date: "11 Feb 2026",
     href: "https://www.linkedin.com/posts/ashutosh-rana04_the-enterprise-fog-b2b-software-ux-breakdown-activity-7427331313281675264-TWkq",
+    image: "writing/post-4",
   },
 ];

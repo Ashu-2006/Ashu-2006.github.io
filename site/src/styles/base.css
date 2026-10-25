@@ -180,6 +180,24 @@ em {
   white-space: nowrap;
 }
 
+/* Roll (lib/html.ts roll()): letters lift one line to their copy, one after another, while the link or button is hovered or focused */
+.roll__w {
+  --roll-h: 1.25em;
+  display: inline-flex;
+  height: var(--roll-h);
+  line-height: var(--roll-h);
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.roll__c {
+  display: inline-block;
+  text-shadow: 0 var(--roll-h) currentColor;
+  transition: transform var(--dur-s) var(--ease-out) calc(var(--i) * 18ms);
+}
+:is(a, button):is(:hover, :focus-visible) .roll__c {
+  transform: translateY(calc(-1 * var(--roll-h)));
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

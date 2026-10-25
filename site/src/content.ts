@@ -15,6 +15,12 @@ export const INTRO =
   "Product designer. I read the codebase before I open Figma. Design and frontend at ArmorIQ, lead product design at Ivish AI. Interfaces built for real data, not the happy-path mockup.";
 
 export const ABOUT = {
+  /** The About page, Vedant style: one line, two short paragraphs, the photos and the connection line (lead) */
+  hero: "Ash, a.k.a. Ashutosh Rana, is a product designer who writes the frontend for teams building with AI.",
+  thinking:
+    "I read the codebase before I open Figma. What the API returns, which components already exist and where the data runs out decide more of the interface than a moodboard does.",
+  making:
+    "I design every state the demo skips, then build the interface myself. What I hand over is the system, not the screen: tokens, primitives and rules the next person can follow without me.",
   title: "I design the interface, then I build it.",
   lead: "I'm Ashutosh, a product designer from Jabalpur, India. I taught myself design from YouTube during the 2020 lockdown, and I'm the first person in my family to choose it.",
   body: [

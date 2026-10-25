@@ -250,7 +250,7 @@
 .fr--swap .fr__stage {
   container-type: inline-size;
 }
-.swap-h {
+.lswap {
   font-size: clamp(28px, 14.5cqi, 84px);
   font-weight: 700;
   line-height: 1;
@@ -258,20 +258,20 @@
   text-transform: uppercase;
   white-space: nowrap;
 }
-.swap {
+.lswap__o {
   display: inline-block;
   width: 0.78em;
   height: 0.78em;
   margin-inline: 0.02em;
   vertical-align: -0.04em;
 }
-.swap img {
+.lswap__o img {
   width: 100%;
   height: 100%;
   transition: transform 600ms var(--sh-jumpy);
 }
 @media (hover: hover) and (pointer: fine) {
-  .swap-h:hover .swap img {
+  .lswap:hover .lswap__o img {
     transform: rotate(200deg) scale(1.12);
   }
 }
@@ -956,7 +956,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .stk img,
-  .swap img,
+  .lswap__o img,
   .ctl__stk,
   .od__track i {
     transition: none;

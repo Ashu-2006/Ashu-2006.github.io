@@ -221,14 +221,6 @@
   "w": 2000,
   "h": 1226
  },
- "atherna/01": {
-  "w": 2000,
-  "h": 1157
- },
- "atherna/cover": {
-  "w": 1625,
-  "h": 1225
- },
  "dash/clip-buy": {
   "w": 1110,
   "h": 1350,
@@ -345,14 +337,6 @@
  "impressions-of-japan/cover": {
   "w": 2000,
   "h": 1500
- },
- "ivish-website/01": {
-  "w": 2000,
-  "h": 1394
- },
- "ivish-website/cover": {
-  "w": 2000,
-  "h": 1409
  },
  "jobshapes/01": {
   "w": 2000,
@@ -1090,5 +1074,37 @@
  "verbx/cover": {
   "w": 2000,
   "h": 1091
+ },
+ "writing/post-1": {
+  "w": 800,
+  "h": 549
+ },
+ "writing/post-2": {
+  "w": 800,
+  "h": 800
+ },
+ "writing/post-3": {
+  "w": 800,
+  "h": 760
+ },
+ "writing/post-4": {
+  "w": 390,
+  "h": 487
+ },
+ "voices/ankith": {
+  "w": 320,
+  "h": 320
+ },
+ "voices/sahith": {
+  "w": 320,
+  "h": 320
+ },
+ "voices/sanjay": {
+  "w": 320,
+  "h": 320
+ },
+ "voices/ujjwal": {
+  "w": 320,
+  "h": 320
  }
 }

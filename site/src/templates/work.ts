@@ -1,5 +1,6 @@
 import { KINDS, LEDE, PROJECTS, type Project } from "../content";
 import { esc, hasVideo, mediaInfo, mediaUrl, pad2 } from "../lib/html";
+import { workCard } from "./home";
 
 type KindKey = keyof typeof KINDS;
 
@@ -52,23 +53,33 @@ function row(base: string, p: Project, i: number) {
 const pill = (key: string, label: string, count: number, on: boolean) =>
   `<li><button class="wk__pill" type="button" data-wk-filter="${key}" aria-pressed="${on}"><span class="wk__pill-t">${esc(label)}</span><span class="label wk__pill-n">${pad2(count)}</span></button></li>`;
 
+/** A view switch at the top right: the active one carries the square marker */
+const viewBtn = (key: string, label: string, on: boolean) =>
+  `<button class="label wk__view" type="button" data-wk-view="${key}" aria-pressed="${on}">${label}</button>`;
+
 /**
- * Work index (/work/): every project as a row on the 12-column grid. Rows dim to .3 around the hovered
- * one (bybang) while a single 4:5 cover rides the lane beside them, following the pointer. Kind filters
- * re-set the list through its masks and mirror into ?kind=. Behaviour lives in views/work.ts.
+ * Work index (/work/). Two views, switched at the top right and mirrored into ?view=:
+ * - Grid (default): every cover in the home page's five-column grid, bottom-aligned so each keeps its shape.
+ * - List: every project as a row on the 12-column grid. Rows dim to .3 around the hovered one (bybang) while a
+ *   single 4:5 cover rides the lane beside them, following the pointer. Kind filters re-set the list through its
+ *   masks and mirror into ?kind=.
+ * Behaviour lives in views/work.ts.
  */
 export function workIndex(base: string) {
   const n = PROJECTS.length;
   const pills = [pill("all", "All", n, true), ...WORK_FILTERS.map((f) => pill(f.key, f.label, f.count, false))].join("");
   return `
-<section class="wk page-x" data-section="work" aria-labelledby="wk-title">
+<section class="wk page-x" data-section="work" data-view="grid" aria-labelledby="wk-title">
   <header class="wk__head">
     <div class="wk__tw">
       <h1 class="wk__title" id="wk-title"><span class="mask"><span class="mask__in" data-reveal="rise" data-reveal-now>All <em>work</em></span></span></h1>
       <p class="label wk__count" aria-hidden="true"><span class="mask"><span class="mask__in" data-reveal="rise" data-reveal-now data-delay="0.1">(<span data-wk-count>${pad2(n)}</span>)</span></span></p>
     </div>
     <p class="wk__lede" data-reveal="lines" data-reveal-now data-delay="0.15">${esc(LEDE.work)}</p>
+    <div class="wk__views" role="group" aria-label="View" data-reveal="up" data-reveal-now data-delay="0.2">${viewBtn("grid", "Grid", true)}${viewBtn("list", "List", false)}</div>
   </header>
+  <ol class="hw__grid wk__grid" data-wk-grid>${PROJECTS.map((p, i) => workCard(base, p, i)).join("")}
+  </ol>
   <div class="wk__bar" data-reveal="up" data-reveal-now data-delay="0.25">
     <p class="label wk__bar-l" id="wk-filter-l">Filter</p>
     <ul class="wk__pills" role="group" aria-labelledby="wk-filter-l">${pills}</ul>

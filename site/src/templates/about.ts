@@ -1,79 +1,49 @@
-import { ABOUT, CAPABILITIES, EDUCATION, EXPERIENCE, FACTS, PRINCIPLES, SITE } from "../content";
-import { esc, mediaTag, pad2 } from "../lib/html";
+import { ABOUT, EDUCATION, EXPERIENCE } from "../content";
+import { esc, mediaTag } from "../lib/html";
+import { head, skills } from "./home";
 
-/** The human voice inside the headline: one word set in Instrument Serif italic */
-const EM_WORD = "build";
+const row = (role: string, org: string, when: string) => `
+      <li class="row abt-exp__row" data-reveal="up">
+        <span class="abt-exp__role">${esc(role)}</span>
+        <span class="label abt-exp__org">${esc(org)}</span>
+        <span class="label abt-exp__when">${esc(when)}</span>
+      </li>`;
 
-const title = () => esc(ABOUT.title).replace(new RegExp(`\\b${EM_WORD}\\b`), `<em>${EM_WORD}</em>`);
-
-const row = (org: string, role: string, when: string) => `<li class="about__row" data-reveal="up">
-      <span class="about__org">${esc(org)}</span>
-      <span class="about__role">${esc(role)}</span>
-      <span class="label about__when">${esc(when)}</span>
-    </li>`;
+/** A personal photo in a clip frame that opens as it enters */
+const photo = (base: string, key: string, alt: string, cls: string, delay = 0) =>
+  `<figure class="abt-how__ph ${cls}" data-reveal="media" data-delay="${delay}">${mediaTag(base, key, alt)}</figure>`;
 
 /**
- * About: a short bio beside a portrait, how I work (three principles driving the rolling polygon,
- * pinned while they step through), experience, capabilities and three facts.
+ * About, after vedantjamwal.com/about: one line on ink, how I work in two short paragraphs beside the photos and
+ * the line about where I come from, experience as hairline rows, then the home page's Skill(s) section.
  */
 export function about(base: string) {
   return `
 <article class="about" data-section="about" aria-labelledby="about-title">
-  <header class="about__intro page-x">
-    <p class="label about__kicker" data-reveal="scramble" data-reveal-now>About</p>
-    <h1 class="about__title" id="about-title" data-reveal="lines" data-reveal-now data-delay="0.1">${title()}</h1>
+  <header class="abt-hero tone-ink page-x" data-chrome-tone="ink">
+    <p class="label abt-hero__k" data-reveal="scramble" data-reveal-now>About</p>
+    <p class="label abt-hero__x" data-reveal="scramble" data-reveal-now>Info</p>
+    <h1 class="abt-hero__t" id="about-title" data-reveal="lines" data-reveal-now data-delay="0.15">${esc(ABOUT.hero)}</h1>
+    <p class="label abt-hero__scroll" aria-hidden="true">[ Scroll down ]</p>
   </header>
 
-  <section class="about__bio page-x" aria-label="Bio">
-    <figure class="about__portrait">
-      <div class="about__frame plx" data-reveal="media" data-reveal-now data-delay="0.2" data-parallax><div class="plx__in">${mediaTag(base, "me/portrait", `Portrait of ${SITE.name}`, { eager: true })}</div></div>
-      <figcaption class="label about__cap">${esc(SITE.name)}, ${esc(SITE.location)}</figcaption>
-    </figure>
-    <div class="about__text">
-      <p class="about__lead" data-reveal="lines">${esc(ABOUT.lead)}</p>
-      <div class="about__body">${ABOUT.body.map((p) => `<p data-reveal="up">${esc(p)}</p>`).join("")}</div>
+  <section class="abt-how page-x" aria-labelledby="abt-how-title">${head("abt-how-title", "How I work", "How I work, <em>and build</em>", "Process")}
+    <div class="abt-how__cols">
+      <div class="abt-how__col" data-reveal="up"><p class="label abt-how__k">Thinking</p><p class="abt-how__p">${esc(ABOUT.thinking)}</p></div>
+      <div class="abt-how__col" data-reveal="up" data-delay="0.08"><p class="label abt-how__k">Making</p><p class="abt-how__p">${esc(ABOUT.making)}</p></div>
     </div>
+    <div class="abt-how__photos">
+      ${photo(base, "me/portrait", "Ashutosh, portrait", "abt-how__ph--a")}
+      ${photo(base, "me/riverside", "Ashutosh by the river", "abt-how__ph--b", 0.08)}
+      ${photo(base, "me/working", "Ashutosh at work", "abt-how__ph--c", 0.04)}
+    </div>
+    <p class="abt-how__note" data-reveal="lines">${esc(ABOUT.lead)}</p>
   </section>
 
-  <section class="about__how" aria-labelledby="about-how">
-    <div class="about__stage page-x">
-      <div class="about__how-head">
-        <h2 class="label about__how-title" id="about-how" data-reveal="scramble">How I work</h2>
-        <p class="label about__sides" aria-hidden="true">Sides <span class="about__sides-n">04</span></p>
-      </div>
-      <ol class="about__principles">${PRINCIPLES.map(
-        (p, i) => `
-        <li class="about__principle${i === 0 ? " is-active" : ""}">
-          <span class="label about__pn">${pad2(i + 1)}</span>
-          <h3 class="about__ptitle">${esc(p.title)}</h3>
-          <p class="about__pbody">${esc(p.body)}</p>
-        </li>`,
-      ).join("")}
-      </ol>
-      <div class="about__canvas" aria-hidden="true"><canvas class="about__poly"></canvas></div>
-    </div>
+  <section class="abt-exp page-x" aria-labelledby="abt-exp-title">${head("abt-exp-title", "Practice", "Experi<em>ence</em>", "Career")}
+    <ul class="rows abt-exp__rows">${EXPERIENCE.map((r) => row(r.title, r.org, r.when)).join("")}${row(EDUCATION.title, EDUCATION.org, EDUCATION.when)}
+    </ul>
   </section>
-
-  <section class="about__cv page-x" aria-label="Experience and capabilities">
-    <div class="about__exp">
-      <h2 class="label about__h" data-reveal="scramble">Experience</h2>
-      <ul class="about__rows">${EXPERIENCE.map((r) => row(r.org, r.title, r.when)).join("")}</ul>
-      <h2 class="label about__h about__h--edu" data-reveal="scramble">Education</h2>
-      <ul class="about__rows">${row(EDUCATION.org, EDUCATION.title, EDUCATION.when)}</ul>
-    </div>
-    <div class="about__caps">
-      <h2 class="label about__h" data-reveal="scramble">Capabilities</h2>
-      <div class="about__caplists">
-        <div><p class="label about__capk">Design</p><ul class="about__caplist">${CAPABILITIES.design.map((c) => `<li>${esc(c)}</li>`).join("")}</ul></div>
-        <div><p class="label about__capk">Build</p><ul class="about__caplist">${CAPABILITIES.build.map((c) => `<li>${esc(c)}</li>`).join("")}</ul></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="about__facts page-x" aria-label="Facts">
-    <dl class="about__factlist">${FACTS.map(
-      (f) => `<div class="about__fact" data-reveal="up"><dt class="about__num">${esc(f.value)}</dt><dd class="about__flabel">${esc(f.label)}</dd></div>`,
-    ).join("")}</dl>
-  </section>
+${skills(base, false)}
 </article>`;
 }

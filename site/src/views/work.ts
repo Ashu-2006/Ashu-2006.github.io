@@ -1,5 +1,5 @@
 import { bus } from "../core/bus";
-import { DUR, d, finePointer, gsap, reducedMotion, whenIdle } from "../core/motion";
+import { DUR, ScrollTrigger, d, finePointer, gsap, reducedMotion, whenIdle } from "../core/motion";
 import { pad2 } from "../lib/html";
 import { mountReveals } from "../lib/reveal";
 import { mountFooter } from "../sections/footer";
@@ -356,8 +356,41 @@ function mountIndex(root: HTMLElement): () => void {
   };
 }
 
-/** Work index: reveals, the index behaviour and the footer */
+/**
+ * Grid or List. Grid is the default; List is kept in ?view=list, and a ?kind= filter link opens in List since
+ * only the list filters. Switching swaps the two in place and refreshes anything measured.
+ */
+function mountViews(root: HTMLElement): () => void {
+  const section = root.querySelector<HTMLElement>(".wk");
+  const btns = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-wk-view]"));
+  if (!section || !btns.length) return () => {};
+  const set = (view: string, push: boolean) => {
+    section.dataset.view = view;
+    btns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.wkView === view)));
+    if (push) {
+      const url = new URL(location.href);
+      if (view === "list") url.searchParams.set("view", "list");
+      else {
+        url.searchParams.delete("view");
+        url.searchParams.delete("kind");
+      }
+      if (url.href !== location.href) history.replaceState(history.state, "", url);
+    }
+    ScrollTrigger.refresh();
+    bus.emit("cursor:refresh", {});
+  };
+  const q = new URLSearchParams(location.search);
+  if (q.get("view") === "list" || q.has("kind")) set("list", false);
+  const onClick = (e: Event) => {
+    const view = (e.currentTarget as HTMLElement).dataset.wkView ?? "grid";
+    if (view !== section.dataset.view) set(view, true);
+  };
+  btns.forEach((b) => b.addEventListener("click", onClick));
+  return () => btns.forEach((b) => b.removeEventListener("click", onClick));
+}
+
+/** Work index: reveals, the view switch, the list behaviour and the footer */
 export function mount(root: HTMLElement) {
-  const cleanups = [mountReveals(root), mountIndex(root), mountFooter(root)];
+  const cleanups = [mountViews(root), mountReveals(root), mountIndex(root), mountFooter(root)];
   return () => cleanups.forEach((fn) => fn());
 }

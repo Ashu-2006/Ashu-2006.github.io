@@ -58,7 +58,7 @@ export const EXPERIENCE: Role[] = [
     when: "Now",
     note: "Multimodal translation across text, voice and video.",
     current: true,
-    projects: ["verbx", "ivish-website"],
+    projects: ["verbx"],
   },
   {
     org: "Summer of Bitcoin",
@@ -72,7 +72,7 @@ export const EXPERIENCE: Role[] = [
     title: "Product design and build",
     when: "Ongoing",
     note: "Brand, web and product for founders and small teams.",
-    projects: ["kuzara-green", "jobshapes", "atherna", "impressions-of-japan", "distil", "sri-krishna-sagar"],
+    projects: ["kuzara-green", "jobshapes", "impressions-of-japan", "distil", "sri-krishna-sagar"],
   },
   {
     org: "Hackathons and side projects",
@@ -124,28 +124,33 @@ export const FACTS = [
   { value: "SoB '26", label: "Summer of Bitcoin, Designer track at Shopstr" },
 ] as const;
 
-export type Quote = { text: string; name: string; role: string };
+/** photo: a media key (public/media/voices/<name>.jpg); without one the slide shows initials */
+export type Quote = { text: string; name: string; role: string; photo?: string };
 
 /* Verbatim from the old site (ashutoshdesigns.me), typos fixed. Names and titles checked against LinkedIn, Oct 2026. */
 export const QUOTES: Quote[] = [
   {
     text: "As a founding designer, Ashutosh led the design across multiple products, including mobile apps and SaaS platforms. He built a scalable component system in Figma, which improved design consistency and made it easier for developers to implement features efficiently.",
     name: "Ankith M",
+    photo: "voices/ankith",
     role: "Co-founder, Ivish AI (VerbX)",
   },
   {
     text: "Helped us define the flows and designed core screens for our AI communication tools. His focus on clarity made complex AI interactions feel simple for users.",
     name: "Sahith Vutukuri",
+    photo: "voices/sahith",
     role: "Founder and CEO, Ivish AI",
   },
   {
     text: "Our website conversion rate improved significantly thanks to Ashutosh's expertise.",
     name: "Sanjay Kumar",
+    photo: "voices/sanjay",
     role: "Co-founder, Kuzara Green",
   },
   {
     text: "He went beyond visuals, restructuring our content and user flow made our offering much easier to understand. The site not only looked better but communicated our product more clearly.",
     name: "Ujjwal",
+    photo: "voices/ujjwal",
     role: "Co-founder, BeBest",
   },
 ];
@@ -176,7 +181,7 @@ export const SKILLS: Skill[] = [
     name: "Brand and web",
     sub: "Identity, landing pages",
     body: "Identities and marketing sites for founders. Fast to load, one clear message.",
-    projects: ["kuzara-green:1", "impressions-of-japan:1", "atherna:1", "sri-krishna-sagar:1", "ivish-website:1"],
+    projects: ["kuzara-green:1", "impressions-of-japan:1", "sri-krishna-sagar:1", "distil:0"],
   },
 ];
 
@@ -212,7 +217,7 @@ export const FAQ = [
   {
     q: "Do you work on multiple projects at once?",
     tag: "Focus",
-    a: "One freelance project at a time, next to my roles at ArmorIQ and Ivish AI. That's why the availability line says one.",
+    a: "One freelance project at a time, next to my roles at ArmorIQ and Ivish AI.",
   },
   {
     q: "What kind of teams do you work best with?",

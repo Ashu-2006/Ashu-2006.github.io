@@ -185,12 +185,12 @@ function personas(base: string) {
     <div class="bento">
       ${frame(
         { tone: "grey", cls: "b-full fr--aq fr--persona", crumb: "Shell / Persona lens", cap: "Pick a role. The rail reorders around its question; nothing it may see ever disappears.", tag: "Live" },
-        `<div class="pl" data-pl>
-          <ol class="pl__rail" data-pl-rail aria-label="Navigation rail">${rail}</ol>
-          <div class="pl__main">
-            <div class="pl__chips" role="group" aria-label="Role">${chips}</div>
-            <p class="pl__q" data-pl-q aria-live="polite">What happened, and what do I do about it?</p>
-            <dl class="pl__meta"><div><dt>Lens</dt><dd data-pl-lens>Security</dd></div><div><dt>Scope</dt><dd data-pl-scope>Mine</dd></div><div><dt>Density</dt><dd data-pl-density>Operational</dd></div><div><dt>Lands on</dt><dd data-pl-land>Overview</dd></div></dl>
+        `<div class="plens" data-pl>
+          <ol class="plens__rail" data-pl-rail aria-label="Navigation rail">${rail}</ol>
+          <div class="plens__main">
+            <div class="plens__chips" role="group" aria-label="Role">${chips}</div>
+            <p class="plens__q" data-pl-q aria-live="polite">What happened, and what do I do about it?</p>
+            <dl class="plens__meta"><div><dt>Lens</dt><dd data-pl-lens>Security</dd></div><div><dt>Scope</dt><dd data-pl-scope>Mine</dd></div><div><dt>Density</dt><dd data-pl-density>Operational</dd></div><div><dt>Lands on</dt><dd data-pl-land>Overview</dd></div></dl>
           </div>
         </div>`,
       )}
