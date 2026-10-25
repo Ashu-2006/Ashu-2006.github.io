@@ -24,6 +24,7 @@ export class Swap {
   private live: HTMLSpanElement;
   private radius: number;
   private rows: boolean;
+  private still: boolean;
   private dirty = true;
   private lastWidth = -1;
 
@@ -31,6 +32,8 @@ export class Swap {
     this.root = root;
     this.radius = Number(root.dataset.radius ?? 80);
     this.rows = root.hasAttribute("data-swap-rows");
+    /* data-swap-still: split into characters and rows for an entrance, but never swap faces under the pointer */
+    this.still = root.hasAttribute("data-swap-still");
     const text = (root.textContent ?? "").trim().replace(/\s+/g, " ");
     root.textContent = "";
     const sr = document.createElement("span");
@@ -148,6 +151,7 @@ export class Swap {
 
   /** Swaps every idle character within the radius of (px, py), staggered by distance when rippling */
   update(px: number, py: number, ripple: number) {
+    if (this.still) return;
     const box = this.root.getBoundingClientRect();
     const R = this.radius;
     if (px < box.left - R || px > box.right + R || py < box.top - R || py > box.bottom + R) return;

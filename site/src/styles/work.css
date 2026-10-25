@@ -48,6 +48,51 @@
   color: var(--ink-2);
 }
 
+/* View switch, top right: Grid / List stacked, the active one marked with a square (as on the footer links) */
+.wk__views {
+  grid-column: 11 / 13;
+  justify-self: end;
+  align-self: start;
+  display: grid;
+  justify-items: end;
+}
+.wk__view {
+  display: inline-flex;
+  align-items: center;
+  padding-block: 0.15em;
+  color: var(--mute);
+  transition: color var(--dur-xs) var(--ease-out);
+}
+.wk__view::before {
+  content: "";
+  width: 0;
+  height: 0.62em;
+  margin-right: 0;
+  background: currentColor;
+  transition:
+    width var(--dur-xs) var(--ease-out),
+    margin var(--dur-xs) var(--ease-out);
+}
+.wk__view[aria-pressed="true"] {
+  color: var(--ink);
+}
+.wk__view[aria-pressed="true"]::before {
+  width: 0.62em;
+  margin-right: 0.45em;
+}
+@media (hover: hover) {
+  .wk__view:hover {
+    color: var(--ink);
+  }
+}
+.wk__grid {
+  margin-top: calc(var(--gap) * 6);
+}
+.wk[data-view="grid"] :is(.wk__bar, .wk__body),
+.wk[data-view="list"] .wk__grid {
+  display: none;
+}
+
 /* Filter bar: the label sits in the index column, the pills start where the names start */
 .wk__bar {
   align-items: center;
@@ -375,5 +420,18 @@
   }
   .wk__rule {
     grid-row: 3;
+  }
+}
+
+/* Narrower screens: the view switch drops under the lede, side by side at the right */
+@media (max-width: 1023px) {
+  .wk__views {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 1.4em;
+    margin-top: 1.6em;
+  }
+  .wk__grid {
+    margin-top: calc(var(--gap) * 3);
   }
 }

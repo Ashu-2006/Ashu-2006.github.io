@@ -27,3 +27,13 @@ export function mediaTag(base: string, file: string, alt: string, opts: { small?
 }
 
 export const pad2 = (n: number) => String(n).padStart(2, "0");
+
+/**
+ * Text that rolls on hover: each letter carries a copy of itself one line below (text-shadow) and, when the
+ * enclosing link or button is hovered or focused, the letters lift one line in a short stagger (base.css .roll).
+ * The full text sits in an sr-only span so assistive tech reads a word, not letters.
+ */
+export const roll = (text: string) =>
+  `<span class="roll"><span class="sr-only">${esc(text)}</span><span class="roll__w" aria-hidden="true">${Array.from(text)
+    .map((c, i) => `<span class="roll__c" style="--i:${i}">${c === " " ? "&nbsp;" : esc(c)}</span>`)
+    .join("")}</span></span>`;

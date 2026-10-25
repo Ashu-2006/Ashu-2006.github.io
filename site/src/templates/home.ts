@@ -1,11 +1,11 @@
-import { FAQ, INTRO, KINDS, PLAY, PLAY_KINDS, PROJECTS, QUOTES, SITE, SKILLS, SOCIALS, STATS, WRITING, bySlug, type Project } from "../content";
-import { esc, mediaInfo, mediaUrl, pad2 } from "../lib/html";
+import { FAQ, INTRO, KINDS, PLAY, PROJECTS, QUOTES, SITE, SKILLS, SOCIALS, STATS, WRITING, bySlug, type Project } from "../content";
+import { esc, mediaInfo, mediaTag, mediaUrl, pad2, roll } from "../lib/html";
 
 /** The portrait slot between the two lines of the name cycles through these */
 export const PHOTO_COUNT = 8;
 
 /** Work grid: every case study, then two client sites, ten in all (two rows of five) */
-export const GRID = [...PROJECTS.filter((p) => p.tier === "case"), ...["kuzara-green", "atherna"].flatMap((s) => bySlug(s) ?? [])].slice(0, 10);
+export const GRID = [...PROJECTS.filter((p) => p.tier === "case"), ...["kuzara-green"].flatMap((s) => bySlug(s) ?? [])].slice(0, 10);
 
 /** Show case: the first five case studies, in array order */
 export const SHOWCASE = PROJECTS.filter((p) => p.tier === "case").slice(0, 5);
@@ -22,13 +22,13 @@ function still(base: string, file: string, alt: string, { small = true, eager = 
 
 /** "[ View all ]": the bracketed mono action used across the page */
 const action = (href: string, text: string, attrs = "") =>
-  `<a class="label act" href="${href}" ${attrs} data-scramble-hover><span aria-hidden="true">[</span><span data-scramble-text>${esc(text)}</span><span aria-hidden="true">]</span></a>`;
+  `<a class="label act" href="${href}" ${attrs}><span aria-hidden="true">[</span>${roll(text)}<span aria-hidden="true">]</span></a>`;
 
 /**
  * The section head every section after Work uses: what it is (left), the heading from the half column, and its
  * theme in one word (right).
  */
-const head = (id: string, k: string, title: string, x: string) => `
+export const head = (id: string, k: string, title: string, x: string) => `
   <header class="hh">
     <p class="label hh__k" data-reveal="scramble">${esc(k)}</p>
     <h2 class="hh__t" id="${id}"><span class="mask"><span class="mask__in" data-reveal="rise">${title}</span></span></h2>
@@ -60,22 +60,23 @@ function hero(base: string) {
     </div>
   </div>
   <div class="hero__foot">
-    <p class="hero__intro" data-swap data-swap-rows data-radius="80">${esc(INTRO)}</p>
+    <p class="hero__intro" data-swap data-swap-rows data-swap-still>${esc(INTRO)}</p>
   </div>
 </section>`;
 }
 
-/** Work [16]: ten covers in a five-column grid, bottom-aligned so each keeps its own shape */
-function work(base: string) {
-  const cards = GRID.map(
-    (p, i) => `
+/** One cover card of the five-column, bottom-aligned work grid (home Work and the /work/ grid view) */
+export const workCard = (base: string, p: Project, i: number) => `
       <li class="hw__card" data-reveal="up" data-delay="${((i % 5) * 0.05).toFixed(2)}">
         <a class="hw__link" href="${href(base, p)}" data-cursor="media" data-cursor-label="Open case">
           <span class="hw__media" data-flip>${still(base, p.shots[0].file, p.shots[0].alt)}</span>
           <span class="hw__cap"><span class="label hw__name">${esc(p.name)}</span><span class="label hw__year">${esc(p.year)}</span><span class="label hw__kinds">${esc(kinds(p))}</span></span>
         </a>
-      </li>`,
-  ).join("");
+      </li>`;
+
+/** Work [16]: ten covers in a five-column grid, bottom-aligned so each keeps its own shape */
+function work(base: string) {
+  const cards = GRID.map((p, i) => workCard(base, p, i)).join("");
   return `
 <section class="hw page-x" id="work" data-section="work" aria-labelledby="hw-title">
   <header class="hw__head">
@@ -88,28 +89,28 @@ function work(base: string) {
 }
 
 /** Skill(s): four indexed rows, each with an image strip or, on the toggle, a description */
-function skills(base: string) {
+export function skills(base: string, more = true) {
   const rows = SKILLS.map((s, i) => {
     const id = `sk-${i + 1}`;
     const imgs = s.projects
-      .map((entry) => {
+      .map((entry, j) => {
         const [slug, n] = entry.split(":");
         const p = bySlug(slug);
         const shot = p?.shots[Number(n)] ?? p?.shots[0];
-        return shot ? `<span class="sk__img">${still(base, shot.file, shot.alt)}</span>` : "";
+        return shot ? `<span class="sk__img" data-reveal="up" data-delay="${(0.1 + j * 0.06).toFixed(2)}">${still(base, shot.file, shot.alt)}</span>` : "";
       })
       .join("");
     return `
-    <li class="sk__row" data-skill>
+    <li class="sk__row" data-skill data-reveal="up">
       <div class="sk__info">
         <p class="label sk__n">[${pad2(i + 1)}]</p>
         <h3 class="label sk__name">${esc(s.name)}</h3>
         <div class="sk__foot">
           <p class="label sk__sub">${esc(s.sub)}</p>
           <div class="label sk__tabs" role="tablist" aria-label="${esc(s.name)}">
-            <button class="sk__tab" type="button" role="tab" id="${id}-t1" aria-controls="${id}-p1" aria-selected="true">Images</button>
+            <button class="sk__tab" type="button" role="tab" id="${id}-t1" aria-controls="${id}-p1" aria-selected="true">${roll("Images")}</button>
             <span aria-hidden="true">/</span>
-            <button class="sk__tab" type="button" role="tab" id="${id}-t2" aria-controls="${id}-p2" aria-selected="false" tabindex="-1">Description</button>
+            <button class="sk__tab" type="button" role="tab" id="${id}-t2" aria-controls="${id}-p2" aria-selected="false" tabindex="-1">${roll("Description")}</button>
           </div>
         </div>
       </div>
@@ -123,7 +124,7 @@ function skills(base: string) {
 <section class="sk page-x" data-section="skills" aria-labelledby="sk-title">
   <header class="hw__head">
     <h2 class="hh__t" id="sk-title"><span class="mask"><span class="mask__in" data-reveal="rise">Skill<em>(s)</em></span></span></h2>
-    ${action(`${base}about/`, "About me")}
+    ${more ? action(`${base}about/`, "About me") : ""}
   </header>
   <ol class="sk__rows">${rows}
   </ol>
@@ -200,6 +201,17 @@ function advantage() {
 </section>`;
 }
 
+/**
+ * What I do, Credits and The advantage share one stack (sections/approach.ts): What I do sticks, the Credits collage
+ * rises over it, the ink panel follows over the gap, then The advantage covers both and the page scrolls on.
+ */
+function stack(base: string) {
+  return `
+<div class="hstk">${approach()}${credits(base)}
+<div class="hstk__gap" aria-hidden="true"></div>${advantage()}
+</div>`;
+}
+
 /** Show case: a window that grows to full bleed, then steps through five case studies (sections/showcase.ts) */
 function showcase(base: string) {
   const slides = SHOWCASE.map(
@@ -264,28 +276,29 @@ function questions() {
 }
 
 /** Writing: the posts as rows, each opening on LinkedIn */
-function writing() {
+/** Writing: the posts as cards, each with the post's own image (home.css) */
+function writing(base: string) {
   const rows = WRITING.map((p, i) => {
-    const inner = `
+    const inner = `${p.image ? `<span class="wr__img"${p.focus ? ` style="--focus:${p.focus}"` : ""}>${still(base, p.image, "")}</span>` : ""}
           <span class="label row__n">[${pad2(i + 1)}]</span>
           <span class="wr__main"><span class="wr__title">${esc(p.title)}</span><span class="wr__note">${esc(p.note)}</span></span>
-          <span class="label wr__meta">${p.href ? `${esc(p.where)}<br>${esc(p.date)}` : "In draft"}</span>`;
+          <span class="label wr__meta">${p.href ? esc(p.where) : "In draft"}</span>`;
     return `
-    <li class="row wr__row${p.href ? "" : " is-draft"}" data-reveal="up">${
+    <li class="row wr__row${p.href ? "" : " is-draft"}" data-reveal="up" data-delay="${(i * 0.06).toFixed(2)}">${
       p.href ? `<a class="wr__link" href="${p.href}" ${ext} data-cursor="media" data-cursor-label="Read">${inner}</a>` : `<div class="wr__link">${inner}</div>`
     }</li>`;
   }).join("");
   const li = SOCIALS.find((s) => s.label === "LinkedIn");
   return `
 <section class="wr page-x" data-section="writing" aria-labelledby="wr-title">${head("wr-title", "Writing", "Notes from <em>the work</em>", "Thinking")}
-  <ol class="rows">${rows}
+  <ol class="rows wr__list">${rows}
   </ol>
   ${li ? `<div class="wr__more">${action(li.href, "More on LinkedIn", ext)}</div>` : ""}
 </section>`;
 }
 
 /** Voices: one quote at a time on ink, stepped with Prev and Next (sections/voices.ts) */
-function voices() {
+function voices(base: string) {
   const initials = (n: string) =>
     n
       .split(" ")
@@ -294,41 +307,48 @@ function voices() {
       .slice(0, 2);
   const slides = QUOTES.map(
     (q, i) => `
-      <figure class="vc__slide${i ? "" : " is-on"}" data-vc-slide${i ? " hidden" : ""}>
+      <figure class="vc__slide${i ? "" : " is-on"}" data-vc-slide aria-roledescription="slide" aria-label="${i + 1} of ${QUOTES.length}">
         <blockquote class="vc__q"><p>"${esc(q.text)}"</p></blockquote>
-        <figcaption class="vc__who"><span class="vc__face" aria-hidden="true">${esc(initials(q.name))}</span><span class="label vc__name">${esc(q.name)}</span><span class="label vc__role">${esc(q.role)}</span></figcaption>
+        <figcaption class="vc__who">${
+          q.photo ? `<span class="vc__face">${still(base, q.photo, "")}</span>` : `<span class="vc__face" aria-hidden="true">${esc(initials(q.name))}</span>`
+        }<span class="label vc__name">${esc(q.name)}</span><span class="label vc__role">${esc(q.role)}</span></figcaption>
       </figure>`,
   ).join("");
   return `
 <section class="vc tone-ink page-x" data-section="voices" data-chrome-tone="ink" aria-labelledby="vc-title">
   <div class="vc__labels"><p class="label" data-reveal="scramble">Trust</p><p class="label" data-reveal="scramble">Testimonial</p></div>
   <h2 class="vc__title" id="vc-title"><span class="mask"><span class="mask__in" data-reveal="rise">Words from the <em>teams</em></span></span></h2>
-  <div class="vc__stage" data-vc>${slides}
+  <div class="vc__stage" data-vc aria-roledescription="carousel" aria-labelledby="vc-title">
+    <div class="vc__track" data-vc-track>${slides}
+    </div>
   </div>
   <div class="label vc__nav">
-    <button class="vc__btn" type="button" data-vc-prev>[ Prev ]</button>
+    <button class="vc__btn" type="button" data-vc-prev aria-label="Previous quote">[ ${roll("Prev")} ]</button>
     <span class="vc__count"><span data-vc-n>01</span> / ${pad2(QUOTES.length)}</span>
-    <button class="vc__btn" type="button" data-vc-next>[ Next ]</button>
+    <button class="vc__btn" type="button" data-vc-next aria-label="Next quote">[ ${roll("Next")} ]</button>
   </div>
+  <span class="vc__bar" aria-hidden="true"><i data-vc-bar></i></span>
 </section>`;
 }
 
 const TOPICS = ["Product design", "Design system", "Frontend build", "Full-time role", "Something else"];
 
 /** Contact: the ask on ink. The form writes an email in the visitor's mail app (sections/closer.ts). */
-function contact() {
+export function contact() {
+  /* Each field rises in turn, as on the reference; n sets its place in the stagger */
+  const rise = (n: number) => `data-reveal="up" data-delay="${(n * 0.08).toFixed(2)}"`;
+  let n = 0;
   const field = (label: string, input: string, wide = false) =>
-    `<label class="iq__f${wide ? " iq__f--wide" : ""}"><span class="label iq__l">${label}</span>${input}</label>`;
+    `<label class="iq__f${wide ? " iq__f--wide" : ""}" ${rise(n++)}><span class="label iq__l">${label}</span>${input}</label>`;
   return `
 <section class="iq tone-ink page-x" data-section="contact" data-chrome-tone="ink" aria-labelledby="iq-title">${head("iq-title", "Contact", "Say <em>hello</em>", "Inquiry")}
   <div class="iq__body">
     <div class="iq__side">
-      <p class="label iq__avail"><span class="hero__dot" aria-hidden="true"></span>${esc(SITE.availability)}</p>
       <p class="label iq__direct">Or write to<br><a href="mailto:${SITE.email}" data-copy-source data-scramble-hover><span data-scramble-text>${esc(SITE.email)}</span></a></p>
     </div>
     <div class="iq__main">
       <p class="iq__lede" data-reveal="lines">Every good product starts as a conversation. Tell me what you're building and where it's stuck.</p>
-      <form class="iq__form" data-inquiry data-reveal="up">
+      <form class="iq__form" data-inquiry>
         ${field("Name", `<input class="iq__in" name="name" type="text" autocomplete="name" placeholder="Jane Smith">`)}
         ${field("Company", `<input class="iq__in" name="company" type="text" autocomplete="organization" placeholder="Acme AI">`)}
         ${field(
@@ -337,12 +357,12 @@ function contact() {
           true,
         )}
         ${field("Your message", `<textarea class="iq__in iq__area" name="message" rows="3" placeholder="What you're building, and where it's stuck"></textarea>`, true)}
-        <div class="iq__actions">
-          <button class="label act iq__send" type="submit">[ Send ]</button>
+        <div class="iq__actions" ${rise(4)}>
+          <button class="label act iq__send" type="submit">[ ${roll("Send")} ]</button>
           ${action(SITE.booking, "Book a call", ext)}
           <button class="label act" type="button" data-copy><span aria-hidden="true">[</span><span data-copy-label>Copy email</span><span aria-hidden="true">]</span></button>
         </div>
-        <p class="label iq__fine">Opens your mail app with this filled in. Nothing is sent from the page.</p>
+        <p class="label iq__fine" ${rise(5)}>Opens your mail app with this filled in. Nothing is sent from the page.</p>
       </form>
     </div>
   </div>
@@ -350,17 +370,37 @@ function contact() {
 }
 
 /** The last look at the work: the playground on the curved ticker (sections/ticker.ts), on ink */
-function strip(base: string) {
+/** Ticker order: the upright posters spread evenly through the wider pieces, so a tall one passes every few tiles */
+function stripOrder() {
+  const ratio = (p: (typeof PLAY)[number]) => mediaInfo(p.file).w / mediaInfo(p.file).h;
+  const tall = PLAY.filter((p) => ratio(p) < 0.85);
+  const rest = PLAY.filter((p) => ratio(p) >= 0.85);
+  const every = Math.max(1, Math.round(rest.length / Math.max(1, tall.length)));
+  const out: (typeof PLAY)[number][] = [];
+  rest.forEach((p, i) => {
+    if (i % every === 0 && tall.length) out.push(tall.shift()!);
+    out.push(p);
+  });
+  return [...out, ...tall].map((p) => ({ p, r: ratio(p) }));
+}
+
+/** Tile height as a share of the tallest: posters full, squares a step down, wide pieces lower and uneven */
+const WIDE_STEPS = [0.6, 0.7, 0.54, 0.66, 0.58];
+const stripHeight = (r: number, i: number) => (r < 0.85 ? 1 : r < 1.25 ? 0.78 : WIDE_STEPS[(i * 3) % WIDE_STEPS.length]);
+
+export function strip(base: string) {
+  const items = stripOrder();
   const tiles = (copy: boolean) =>
-    PLAY.map(
-      (p) => `
-      <li class="tk__item">
+    items
+      .map(
+        ({ p, r }, i) => `
+      <li class="tk__item" style="--k:${stripHeight(r, i)}">
         <a class="tk__tile" href="${base}playground/"${copy ? ' tabindex="-1"' : ""} data-cursor="media" data-cursor-label="Playground">
-          <span class="tk__media">${still(base, p.file, p.title)}</span>
-          <span class="tk__cap"><span class="label tk__name">${esc(p.title)}</span><span class="label tk__kind">${esc(PLAY_KINDS[p.kind])}</span></span>
+          <span class="tk__media">${mediaTag(base, p.file, p.title, { small: true })}</span>
         </a>
       </li>`,
-    ).join("");
+      )
+      .join("");
   return `
 <section class="tk tone-ink" data-section="playground" data-chrome-tone="ink" aria-labelledby="tk-title">
   <header class="tk__top page-x">
@@ -384,4 +424,4 @@ function strip(base: string) {
  * strip into the footer (appended by routes.ts).
  */
 export const home = (base: string) =>
-  [hero(base), work(base), skills(base), approach(), credits(base), advantage(), showcase(base), questions(), writing(), voices(), contact(), strip(base)].join("");
+  [hero(base), work(base), skills(base), stack(base), showcase(base), questions(), writing(base), voices(base), contact(), strip(base)].join("");

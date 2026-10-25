@@ -177,7 +177,7 @@ function persona(root: HTMLElement) {
   const rail = el.querySelector<HTMLElement>("[data-pl-rail]")!;
   const items = new Map([...rail.querySelectorAll<HTMLElement>("[data-rail]")].map((li) => [li.dataset.rail!, li]));
   const line = document.createElement("li");
-  line.className = "pl__line";
+  line.className = "plens__line";
   line.setAttribute("role", "separator");
   const field = (k: string) => el.querySelector<HTMLElement>(`[data-pl-${k}]`)!;
   const LENS = { security: "Security", ai: "AI", grc: "GRC" } as const;

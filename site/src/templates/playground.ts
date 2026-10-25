@@ -1,13 +1,6 @@
 import { LEDE, PLAY, PLAY_KINDS, type Play } from "../content";
 import { esc, mediaInfo, mediaTag, pad2 } from "../lib/html";
 
-type PlayKey = keyof typeof PLAY_KINDS;
-
-/** Every play kind in use, with its count */
-export const PLAY_FILTERS = (Object.keys(PLAY_KINDS) as PlayKey[])
-  .map((k) => ({ key: k, label: PLAY_KINDS[k], count: PLAY.filter((p) => p.kind === k).length }))
-  .filter((f) => f.count > 0);
-
 /**
  * The mosaic grids (bybang). Everything is measured in grid units u = column + gap, so one layout holds
  * at every width: a tile spans `c` columns, sits `t` units from the top of its cycle and is `h` units
@@ -93,17 +86,12 @@ function tile(base: string, p: Play, i: number) {
         </li>`;
 }
 
-const pill = (key: string, label: string, count: number, on: boolean) =>
-  `<li><button class="pl__pill" type="button" data-pl-filter="${key}" aria-pressed="${on}">${esc(label)}<span class="pl__pill-n">${pad2(count)}</span></button></li>`;
-
 /**
  * Playground (/playground/): the bybang home. A fixed wordmark in the middle, an endless mosaic of
- * pieces scrolling past it in both directions, a small filter row, and a near full page modal per
+ * pieces scrolling past it in both directions, a short note, and a near full page modal per
  * piece. The template renders one cycle; views/playground.ts clones it and runs the loop.
  */
 export function playground(base: string) {
-  const n = PLAY.length;
-  const pills = [pill("all", "All", n, true), ...PLAY_FILTERS.map((f) => pill(f.key, f.label, f.count, false))].join("");
   return `
 <section class="pl" data-section="playground" aria-labelledby="pl-title" data-page-fixed>
   <div class="pl__wrap" data-pl-wrap>
@@ -116,8 +104,7 @@ export function playground(base: string) {
     <h1 class="pl__title" id="pl-title" data-page-shift><span class="mask"><span class="mask__in" data-reveal="rise" data-reveal-now>Play<em>ground</em></span></span></h1>
   </div>
   <div class="pl__bar">
-    <ul class="pl__pills" data-page-shift role="group" aria-label="Filter by kind">${pills}</ul>
-    <div class="pl__about" data-page-shift><p class="pl__lede">${esc(LEDE.play)}</p><p class="label pl__hint" aria-live="polite"><span data-pl-count>${pad2(n)}</span> pieces. It loops, keep scrolling.</p></div>
+    <div class="pl__about" data-page-shift><p class="pl__lede">${esc(LEDE.play)}</p><p class="label pl__hint">Keep scrolling.</p></div>
   </div>
 </section>`;
 }

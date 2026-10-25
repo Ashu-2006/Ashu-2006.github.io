@@ -480,7 +480,7 @@
 .fr--persona .fr__stage {
   align-items: stretch;
 }
-.pl {
+.plens {
   width: 100%;
   display: grid;
   grid-template-columns: 220px minmax(0, 1fr);
@@ -490,7 +490,7 @@
   font-family: var(--aq-sans);
   overflow: hidden;
 }
-.pl__rail {
+.plens__rail {
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -499,7 +499,7 @@
   border-right: 1px solid var(--aq-border);
   background: var(--aq-bg);
 }
-.pl__rail li[data-rail] {
+.plens__rail li[data-rail] {
   position: relative;
   display: flex;
   align-items: center;
@@ -511,14 +511,14 @@
   font-weight: 500;
   color: var(--aq-ink-faint);
 }
-.pl__rail li.is-primary {
+.plens__rail li.is-primary {
   color: var(--aq-ink);
 }
-.pl__rail li.is-primary:first-child {
+.plens__rail li.is-primary:first-child {
   background: var(--aq-accent-wash);
   color: var(--aq-accent-hover);
 }
-.pl__rail svg {
+.plens__rail svg {
   width: 17px;
   height: 17px;
   flex: none;
@@ -541,23 +541,23 @@
   line-height: 18px;
   text-align: center;
 }
-.pl__line {
+.plens__line {
   height: 1px;
   margin: 8px 10px;
   background: var(--aq-border);
 }
-.pl__main {
+.plens__main {
   display: flex;
   flex-direction: column;
   gap: clamp(18px, 2.2vw, 30px);
   padding: clamp(18px, 2.4vw, 36px);
 }
-.pl__chips {
+.plens__chips {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
 }
-.pl__chips button {
+.plens__chips button {
   min-height: 34px;
   padding: 0 13px;
   border: 1px solid var(--aq-border);
@@ -573,12 +573,12 @@
     border-color var(--aq-fast) var(--aq-ease),
     color var(--aq-fast) var(--aq-ease);
 }
-.pl__chips [aria-pressed="true"] {
+.plens__chips [aria-pressed="true"] {
   border-color: var(--aq-ink);
   background: var(--aq-ink);
   color: var(--aq-on);
 }
-.pl__q {
+.plens__q {
   max-width: 22ch;
   min-height: 2.3em;
   font-size: clamp(26px, 2.6vw, 40px);
@@ -588,25 +588,25 @@
   color: var(--aq-ink);
   text-wrap: balance;
 }
-.pl__meta {
+.plens__meta {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
   margin-top: auto;
 }
-.pl__meta div {
+.plens__meta div {
   padding: 12px 14px;
   border: 1px solid var(--aq-border);
   border-radius: 10px;
 }
-.pl__meta dt {
+.plens__meta dt {
   font-family: var(--aq-mono);
   font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--aq-ink-muted);
 }
-.pl__meta dd {
+.plens__meta dd {
   margin-top: 6px;
   font-size: 15px;
   font-weight: 500;
@@ -795,7 +795,7 @@
 }
 
 /* 06 Removals, as a typographic tile */
-.fr--cut .fr__stage {
+.fr--aq.fr--cut .fr__stage {
   align-items: stretch;
 }
 .cut {
@@ -848,10 +848,10 @@
   .doors {
     grid-template-columns: 1fr;
   }
-  .pl {
+  .plens {
     grid-template-columns: 180px minmax(0, 1fr);
   }
-  .pl__meta {
+  .plens__meta {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -865,15 +865,15 @@
   .lens__ack {
     margin-left: 0;
   }
-  .pl {
+  .plens {
     grid-template-columns: 1fr;
   }
-  .pl__rail {
+  .plens__rail {
     order: 2;
     border-right: 0;
     border-top: 1px solid var(--aq-border);
   }
-  .pl__q {
+  .plens__q {
     min-height: 3.4em;
   }
   .ks__top {

@@ -245,7 +245,7 @@
 }
 
 /* 03 Persona spectrum */
-.fr--spec .fr__stage {
+.fr--nk.fr--spec .fr__stage {
   flex-direction: column;
   align-items: stretch;
   gap: 18px;
@@ -791,7 +791,7 @@
 }
 
 /* 06 What replaced ratings */
-.fr--cut .fr__stage {
+.fr--nk.fr--cut .fr__stage {
   align-items: stretch;
 }
 .nk-cut {

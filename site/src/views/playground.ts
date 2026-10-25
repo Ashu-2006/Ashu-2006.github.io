@@ -5,10 +5,8 @@ import { DUR, d, gsap, reducedMotion, whenIdle } from "../core/motion";
 import { startScroll, stopScroll } from "../core/scroll";
 import { esc, mediaInfo, mediaTag, pad2 } from "../lib/html";
 import { mountReveals } from "../lib/reveal";
-import { PLAY_FILTERS, mosaic, type Tile } from "../templates/playground";
 
 const BASE = import.meta.env.BASE_URL;
-const KEYS = new Set<string>(["all", ...PLAY_FILTERS.map((f) => f.key)]);
 /** The loop spans this many cycles; more copies follow only to fill the screen after the last one */
 const COPIES = 2;
 /** A press that travels further than this is a scroll or a drag, not a click */
@@ -326,8 +324,6 @@ function mountMosaic(root: HTMLElement): () => void {
   const cycle = root.querySelector<HTMLElement>("[data-pl-cycle]");
   if (!section || !wrap || !content || !cycle) return () => {};
   const reduced = reducedMotion();
-  const pills = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-pl-filter]"));
-  const countEl = root.querySelector<HTMLElement>("[data-pl-count]");
   const cleanups: (() => void)[] = [];
   const anims = new Set<gsap.core.Animation>();
   const track = <T extends gsap.core.Animation>(a: T) => {
@@ -336,7 +332,6 @@ function mountMosaic(root: HTMLElement): () => void {
     return a;
   };
   let dead = false;
-  let filter = "all";
 
   /* Copies: aria-hidden clones of the cycle. Their buttons stay clickable but out of the tab order. */
   const cycles = [cycle];
@@ -355,8 +350,8 @@ function mountMosaic(root: HTMLElement): () => void {
   const tiles = () => cycles.flatMap((c) => Array.from(c.querySelectorAll<HTMLElement>("[data-pl-tile]")));
 
   /*
-   * Loop length: COPIES cycles. Enough extra copies follow to fill one more screen (a filtered cycle can
-   * be shorter than the viewport), and the content is exactly one viewport taller than the loop, so the
+   * Loop length: COPIES cycles. Enough extra copies follow to fill one more screen (a cycle can be
+   * shorter than a tall viewport), and the content is exactly one viewport taller than the loop, so the
    * last screen before the wrap is identical to the first.
    */
   let loop = 0;
@@ -436,13 +431,11 @@ function mountMosaic(root: HTMLElement): () => void {
   };
 
   /* Modal */
-  const visibleItems = () => PLAY.map((_, i) => i).filter((i) => filter === "all" || PLAY[i].kind === filter);
   let opener: HTMLElement | null = null;
   const modal = createModal({
     onNav: (dir) => {
-      const list = visibleItems();
-      const at = (list.indexOf(modal.current()) + dir + list.length) % list.length;
-      modal.show(PLAY[list[at]], list[at], at, list.length, null);
+      const at = (modal.current() + dir + PLAY.length) % PLAY.length;
+      modal.show(PLAY[at], at, at, PLAY.length, null);
     },
     onOpen: () => lenis.stop(),
     onClose: () => lenis.start(),
@@ -471,8 +464,7 @@ function mountMosaic(root: HTMLElement): () => void {
     const i = Number(btn.closest<HTMLElement>("[data-pl-tile]")?.dataset.i);
     if (!PLAY[i]) return;
     opener = btn;
-    const list = visibleItems();
-    modal.show(PLAY[i], i, list.indexOf(i), list.length, btn);
+    modal.show(PLAY[i], i, i, PLAY.length, btn);
   };
   content.addEventListener("pointerdown", onDown);
   content.addEventListener("click", onClick);
@@ -480,68 +472,6 @@ function mountMosaic(root: HTMLElement): () => void {
     content.removeEventListener("pointerdown", onDown);
     content.removeEventListener("click", onClick);
   });
-
-  /* Filter: the mosaic drops out, re-lays with only the chosen kind and drops back in */
-  const relay = (key: string) => {
-    const keep = PLAY.map((play, index) => ({ play, index })).filter(({ play }) => key === "all" || play.kind === key);
-    const desk = mosaic(keep, "d");
-    const phone = mosaic(keep, "p");
-    const spot = new Map<number, [Tile, Tile]>();
-    keep.forEach(({ index }, k) => spot.set(index, [desk.tiles[k], phone.tiles[k]]));
-    tiles().forEach((t) => {
-      const s = spot.get(Number(t.dataset.i));
-      t.hidden = !s;
-      if (!s) return;
-      const [a, b] = s;
-      t.style.cssText = `--sd:${a.s};--cd:${a.c};--td:${a.t};--hd:${a.h};--sp:${b.s};--cp:${b.c};--tp:${b.t};--hp:${b.h}`;
-    });
-    content.style.setProperty("--Hd", String(desk.height));
-    content.style.setProperty("--Hp", String(phone.height));
-    measure();
-    lenis.resize();
-    home();
-    bus.emit("cursor:refresh", {});
-  };
-  let filterTl: gsap.core.Timeline | null = null;
-  const apply = (key: string, animate: boolean) => {
-    if (!KEYS.has(key)) key = "all";
-    filter = key;
-    pills.forEach((p) => p.setAttribute("aria-pressed", String(p.dataset.plFilter === key)));
-    const n = pad2(visibleItems().length);
-    if (countEl) countEl.textContent = n;
-    const url = new URL(location.href);
-    if (key === "all") url.searchParams.delete("kind");
-    else url.searchParams.set("kind", key);
-    if (url.href !== location.href) history.replaceState(history.state, "", url);
-    filterTl?.progress(1);
-    if (!animate || reduced) {
-      relay(key);
-      return;
-    }
-    const out = tiles().filter((t) => {
-      if (t.hidden) return false;
-      const r = t.getBoundingClientRect();
-      return r.bottom > 0 && r.top < innerHeight;
-    });
-    const tl = gsap.timeline();
-    tl.to(out, { y: () => innerHeight * 0.6, autoAlpha: 0, duration: d(DUR.s), ease: "expoInOut", stagger: { each: 0.012, from: "random" } }, 0);
-    tl.call(() => {
-      gsap.set(out, { clearProps: "transform,opacity,visibility" });
-      relay(key);
-      drop(true);
-    });
-    filterTl = track(tl);
-  };
-  pills.forEach((p) => {
-    const on = () => {
-      const key = p.dataset.plFilter ?? "all";
-      if (key !== filter) apply(key, true);
-    };
-    p.addEventListener("click", on);
-    cleanups.push(() => p.removeEventListener("click", on));
-  });
-  const initial = new URLSearchParams(location.search).get("kind");
-  if (initial && KEYS.has(initial) && initial !== "all") apply(initial, false);
 
   /* WebGL grain and edge curl on fine pointers, with the DOM as the fallback */
   cleanups.push(mountGrain(section, content, () => lenis.animatedScroll));
@@ -575,7 +505,6 @@ function mountMosaic(root: HTMLElement): () => void {
     dead = true;
     cleanups.reverse().forEach((fn) => fn());
     anims.forEach((a) => a.kill());
-    filterTl?.kill();
     section.classList.remove("is-dropped");
   };
 }

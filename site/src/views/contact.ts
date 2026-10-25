@@ -1,21 +1,19 @@
 import { mountReveals } from "../lib/reveal";
-import { mountClock } from "../sections/clock";
-import { fitText, mountCopy, mountScrambleHover } from "../sections/kit";
-import { mountMorph } from "../sections/morph";
+import { mountClosing } from "../sections/closer";
+import { mountFooter } from "../sections/footer";
+import { mountScrambleHover } from "../sections/kit";
+import { mountTicker } from "../sections/ticker";
 
-/** Contact: the address fitted to the width, copy, the scrubbed morph, socials and clock */
+/** Contact: the home page's inquiry form and playground strip, then the footer */
 export function mount(root: HTMLElement) {
-  const page = root.querySelector<HTMLElement>(".ct");
-  if (!page) return mountReveals(root);
-  const email = page.querySelector<HTMLElement>("[data-ct-email]");
-  const inner = page.querySelector<HTMLElement>(".ct__email-in");
+  const form = root.querySelector<HTMLElement>(".iq");
+  const tk = root.querySelector<HTMLElement>(".tk");
   const cleanups = [
-    email && inner ? fitText(email, inner, "--ct-fs") : () => {},
     mountReveals(root),
-    mountMorph(page, "ct__trail"),
-    mountCopy(page),
-    mountScrambleHover(page),
-    mountClock(page),
+    form ? mountClosing(form) : () => {},
+    mountTicker(root),
+    tk ? mountScrambleHover(tk) : () => {},
+    mountFooter(root),
   ];
   return () => cleanups.forEach((fn) => fn());
 }
